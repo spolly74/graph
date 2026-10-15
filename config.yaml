@@ -1,11 +1,33 @@
 # Pipeline configuration. Every setting lives here (DESIGN section 9).
 # Relative paths resolve against this file's directory.
-# Later phases add chunking, extraction, resolution, store, and evaluation.
+# Later phases add extraction, resolution, store, and evaluation.
 
 paths:
   out_dir: data/out
   review_dir: review
   state_db: data/out/state.sqlite
+
+ingest:
+  # Chunk sizes are estimated as characters / chars_per_token, so no
+  # tokenizer is needed and the estimate is deterministic.
+  chars_per_token: 4
+  chunk_target_tokens: 600
+  chunk_max_tokens: 1200
+  max_include_depth: 10
+  placeholder_format: "[[UNRESOLVED_INCLUDE: {path}]]"
+  # Include files whose repo-relative path matches one of these mark the
+  # surrounding section (or the whole article, if used before the first
+  # H2) as preview.
+  preview_include_patterns:
+    - "*preview*"
+  # Front matter keys copied into documents.jsonl.
+  front_matter_keys:
+    - title
+    - description
+    - ms.topic
+    - ms.subservice
+    - ms.date
+    - author
 
 corpus:
   # Local clone of spolly74/azure-ai-docs in a sibling folder of this repo.

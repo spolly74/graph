@@ -1,7 +1,7 @@
 """Command-line interface (DESIGN section 9).
 
-Phase 0 skeleton: every command loads and validates the config, then
-reports that its stage is not built yet and exits with NOT_IMPLEMENTED.
+Every command loads and validates the config. Stages that are not built
+yet report the phase that builds them and exit with NOT_IMPLEMENTED.
 """
 
 from __future__ import annotations
@@ -14,6 +14,7 @@ import typer
 
 from ckg import __version__
 from ckg.config import Config, ConfigError, load_config
+from ckg.ingest.pipeline import run_ingest
 
 NOT_IMPLEMENTED = 3
 
@@ -72,13 +73,18 @@ def ingest(
 ) -> None:
     """Load content files and split them into chunks."""
     cfg = _load(ctx)
+    if input is not None and not input.resolve().is_relative_to(cfg.repo_root):
+        typer.echo(f"error: --input must be inside corpus.repo_root ({cfg.repo_root})", err=True)
+        raise typer.Exit(code=2)
     try:
-        files = cfg.corpus_files(input)
+        report = run_ingest(cfg, input)
     except ConfigError as e:
         typer.echo(f"error: {e}", err=True)
         raise typer.Exit(code=2) from e
-    typer.echo(f"{len(files)} files in scope under {input or cfg.corpus_dir}")
-    _not_built("ingest", 1)
+    typer.echo(f"{report.documents} documents -> {report.chunks} chunks (largest about {report.max_tokens} tokens)")
+    typer.echo(f"{report.unresolved} unresolved includes, {len(report.oversize)} oversize chunks")
+    for path in report.outputs:
+        typer.echo(f"  wrote {path}")
 
 
 @app.command()

@@ -19,6 +19,15 @@ def sample_config_dict() -> dict:
             "exclude": ["v1/*", "data-science-virtual-machine/*", "includes/*"],
             "external_include_prefixes": ["~/reusable-content/", "~/azure-policy-autogen-docs/"],
         },
+        "ingest": {
+            "chars_per_token": 4,
+            "chunk_target_tokens": 600,
+            "chunk_max_tokens": 1200,
+            "max_include_depth": 10,
+            "placeholder_format": "[[UNRESOLVED_INCLUDE: {path}]]",
+            "preview_include_patterns": ["*preview*"],
+            "front_matter_keys": ["title", "description", "ms.topic", "ms.subservice", "ms.date", "author"],
+        },
     }
 
 

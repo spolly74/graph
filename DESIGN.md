@@ -76,6 +76,9 @@ content files
 - Split each document into chunks at heading boundaries, with a target of about 600 tokens and a hard maximum of 1,200. Smaller chunks improve recall in LLM extraction (Edge et al., 2024). **Never split a Markdown table**; a table larger than the maximum is split by rows, repeating the header row in each part.
 - Give every chunk a stable ID: `<relative file path>#<heading slug>[-<n>]`. IDs must not change when unrelated files change.
 - Store a SHA-256 hash of each chunk's resolved text. Later stages skip chunks whose hash has not changed. A change to an include file changes the hash of every chunk that uses it.
+- **Normalized text.** All offsets refer to normalized text: UTF-8 without BOM, line endings converted to LF. This keeps offsets and hashes identical whatever git's `core.autocrlf` did to the working copy.
+- **Merging and splitting.** Consecutive sections with the same interface merge while the chunk stays within the target. A heading with no text of its own (an H2 directly above an H3 or a tab group) always joins the next chunk. Later parts of a split section repeat the section's heading line.
+- **Outputs.** `documents.jsonl` holds one record per article: path, title, selected front matter, resolved-text hash, includes used, and chunk IDs. `chunks.jsonl` holds one record per chunk: ID, heading path, text, hash, size estimate, hints (interface, release status, callouts, has_table, has_code), and `pieces`. Pieces tile the chunk text; each maps a range of it to a source file and offset, or marks a placeholder. Chunk text can be non-contiguous in the source (repeated headings and table headers), and pieces still map every character back.
 
 ### 5.2 Extract (three tiers)
 
@@ -94,7 +97,7 @@ Tier 3 rules:
 - Use temperature 0. Record the model name and version on every assertion.
 - Make the model configurable in `config.yaml`. Default to an Apache 2.0 licensed 7–8B model with 4-bit quantization (Qwen family, chosen for reliable structured JSON output).
 - **Gating.** Run tier 3 only on chunks with at least two distinct mentions from tiers 1 and 2. The threshold is a config setting. Skipped chunks are logged with the reason.
-- **CPU runtime.** Expect roughly 1–2 minutes per chunk on CPU. Benchmark on the slice in Phase 4 and record the result here. Record progress per chunk in SQLite so an interrupted run resumes where it stopped.
+- **CPU runtime.** Expect roughly 1–2 minutes per chunk on CPU. Phase 1 produced 1,040 chunks for the slice (median about 340 tokens), more than the first estimate of about 450, so tier 3 on the full slice may take 15–30 hours. Benchmark in Phase 4 and record the result here; if it is too slow, raise the gating threshold or run tier 3 on a subset first. Record progress per chunk in SQLite so an interrupted run resumes where it stopped.
 - Chunk hints from ingest (tab interface, preview status) are passed to the model as candidate conditions.
 
 The schema-driven approach follows the SPIRES method used in OntoGPT (Caufield et al., 2024). Consider using OntoGPT directly for tier 3 if it fits; otherwise implement the same pattern.

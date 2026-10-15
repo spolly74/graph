@@ -13,7 +13,7 @@ from fnmatch import fnmatch
 from pathlib import Path
 
 import yaml
-from pydantic import BaseModel, ConfigDict, Field, ValidationError
+from pydantic import BaseModel, ConfigDict, Field, PositiveInt, ValidationError, model_validator
 
 CONFIG_ENV_VAR = "CKG_CONFIG"
 CONFIG_FILENAME = "config.yaml"
@@ -44,10 +44,33 @@ class PathsConfig(_Strict):
     state_db: Path
 
 
+class IngestConfig(_Strict):
+    chars_per_token: PositiveInt
+    chunk_target_tokens: PositiveInt
+    chunk_max_tokens: PositiveInt
+    max_include_depth: PositiveInt
+    placeholder_format: str
+    preview_include_patterns: list[str]
+    front_matter_keys: list[str]
+
+    @model_validator(mode="after")
+    def _check(self) -> "IngestConfig":
+        if self.chunk_target_tokens > self.chunk_max_tokens:
+            raise ValueError("chunk_target_tokens must not exceed chunk_max_tokens")
+        if "{path}" not in self.placeholder_format:
+            raise ValueError("placeholder_format must contain {path}")
+        return self
+
+
 class Config(_Strict):
     corpus: CorpusConfig
     paths: PathsConfig
+    ingest: IngestConfig
     config_dir: Path = Field(exclude=True)
+
+    @property
+    def repo_root(self) -> Path:
+        return self.resolve(self.corpus.repo_root)
 
     def resolve(self, path: Path) -> Path:
         """Resolve a config path relative to the config file's directory."""

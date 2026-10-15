@@ -10,6 +10,7 @@ from ckg.cli import NOT_IMPLEMENTED, app
 
 runner = CliRunner()
 COMMANDS = ["ingest", "extract", "resolve", "load", "validate", "evaluate", "run"]
+STUBS = [c for c in COMMANDS if c != "ingest"]
 
 
 def test_help_lists_every_command():
@@ -25,7 +26,7 @@ def test_version():
     assert __version__ in result.output
 
 
-@pytest.mark.parametrize("cmd", COMMANDS)
+@pytest.mark.parametrize("cmd", STUBS)
 def test_stages_report_not_implemented(cmd: str, sample_config: Path):
     result = runner.invoke(app, ["--config", str(sample_config), cmd])
     assert result.exit_code == NOT_IMPLEMENTED
@@ -38,9 +39,16 @@ def test_extract_accepts_tier_and_changed_only(sample_config: Path):
     assert "Phase 4" in result.output
 
 
-def test_ingest_counts_files_in_scope(sample_config: Path):
+def test_ingest_writes_outputs(sample_config: Path):
     result = runner.invoke(app, ["--config", str(sample_config), "ingest"])
-    assert "10 files in scope" in result.output
+    assert result.exit_code == 0
+    assert "10 documents ->" in result.output
+    assert (sample_config.parent / "out" / "chunks.jsonl").is_file()
+
+
+def test_ingest_input_outside_repo_is_an_error(sample_config: Path, tmp_path: Path):
+    result = runner.invoke(app, ["--config", str(sample_config), "ingest", "--input", str(tmp_path)])
+    assert result.exit_code == 2
 
 
 def test_bad_config_exits_with_error(tmp_path: Path):
