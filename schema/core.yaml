@@ -1,0 +1,261 @@
+# Core schema: classes that do not depend on the domain (DESIGN section 6).
+#
+# Owner: Claude Code. The domain schema (domain.yaml) imports this file and
+# must define the enum ConditionType, including every value of
+# CoreConditionType (a test checks this). Defining ConditionType in the
+# domain is how a domain adds its own condition types.
+
+id: https://example.org/ckg/core  # TODO(Scott): real namespace (DESIGN 12)
+name: ckg_core
+title: Content knowledge graph core schema
+version: 0.1.0
+license: CC0
+
+prefixes:
+  linkml: https://w3id.org/linkml/
+  ckg: https://example.org/ckg/
+  skos: http://www.w3.org/2004/02/skos/core#
+  prov: http://www.w3.org/ns/prov#
+  dcterms: http://purl.org/dc/terms/
+
+default_prefix: ckg
+default_range: string
+
+imports:
+  - linkml:types
+
+enums:
+
+  CoreConditionType:
+    description: >-
+      Condition types every domain must support. Not used as a range
+      directly: the domain's ConditionType enum must include these values.
+    permissible_values:
+      version:
+        description: Applies only to a product, API, or schema version.
+      role:
+        description: Applies only to users or identities with a given role.
+      environment:
+        description: Applies only in a given environment or deployment setting.
+      time:
+        description: Applies only before or after a date.
+      other:
+        description: Any qualifier that fits no other type. The value carries the text.
+
+  ExtractionMethod:
+    description: Which pipeline step produced a mention or assertion.
+    permissible_values:
+      metadata:
+        description: Taken from document metadata such as front matter.
+      vocabulary:
+        description: Tier 1, dictionary match against the vocabulary.
+      gliner:
+        description: Tier 2, zero-shot named entity recognition.
+      llm:
+        description: Tier 3, schema-guided extraction by a language model.
+      manual:
+        description: Entered or corrected by a person.
+
+classes:
+
+  Entity:
+    abstract: true
+    class_uri: ckg:Entity
+    description: Base class for all domain entities.
+    slots:
+      - id
+      - entity_type
+      - label
+      - aliases
+      - vocab_id
+
+  Mention:
+    class_uri: ckg:Mention
+    description: A span of chunk text that refers to an entity.
+    slots:
+      - id
+      - chunk_id
+      - start
+      - end
+      - text
+      - predicted_class
+      - entity
+      - method
+      - score
+      - model
+    slot_usage:
+      start:
+        required: true
+      end:
+        required: true
+
+  Assertion:
+    class_uri: ckg:Assertion
+    description: >-
+      One extracted fact: subject, predicate, and either an object entity or
+      a literal object value (exactly one of the two). Conditions qualify
+      the fact; provenance lists every chunk that supports it.
+    slots:
+      - id
+      - subject
+      - predicate
+      - object
+      - object_value
+      - negated
+      - conditions
+      - confidence
+      - provenance
+
+  Condition:
+    class_uri: ckg:Condition
+    description: A qualifier on an assertion, such as "only in East US 2" or "preview only".
+    slots:
+      - type
+      - value
+
+  Provenance:
+    class_uri: prov:Entity
+    description: Where a fact came from, down to the character offsets of the evidence.
+    slots:
+      - source_doc
+      - include_file
+      - chunk_id
+      - start
+      - end
+      - evidence
+      - method
+      - model
+      - extracted_at
+    slot_usage:
+      evidence:
+        required: true
+
+  KnowledgeGraph:
+    tree_root: true
+    description: Container for serializing a set of entities, mentions, and assertions.
+    slots:
+      - entities
+      - mentions
+      - assertions
+
+slots:
+
+  # --- identity
+
+  id:
+    identifier: true
+    range: uriorcurie
+  entity_type:
+    designates_type: true
+    description: The entity's class name, so serialized entities keep their type.
+  label:
+    required: true
+    slot_uri: skos:prefLabel
+  aliases:
+    multivalued: true
+    slot_uri: skos:altLabel
+    description: Every surface form seen for the entity, kept by resolution.
+  vocab_id:
+    range: uriorcurie
+    slot_uri: skos:exactMatch
+    description: The vocabulary concept this entity was matched to, if any.
+
+  # --- spans
+
+  chunk_id:
+    required: true
+    description: Chunk ID from chunks.jsonl, such as how-to-assign-roles.md#default-roles.
+  start:
+    range: integer
+    minimum_value: 0
+    description: Character offset in the chunk's normalized text, inclusive.
+  end:
+    range: integer
+    minimum_value: 0
+    description: Character offset in the chunk's normalized text, exclusive.
+  text:
+    required: true
+    description: The mentioned text. Must equal the chunk text from start to end.
+  predicted_class:
+    description: The schema class the extractor assigned before resolution.
+  entity:
+    range: Entity
+    description: The canonical entity, set by resolution.
+  method:
+    range: ExtractionMethod
+    required: true
+  score:
+    range: float
+    minimum_value: 0
+    maximum_value: 1
+  model:
+    description: Model name and version, for methods that use a model.
+
+  # --- assertions
+
+  subject:
+    range: Entity
+    required: true
+  predicate:
+    range: uriorcurie
+    required: true
+    description: A relationship or attribute slot from the domain schema.
+  object:
+    range: Entity
+  object_value:
+    description: Literal object, for attribute predicates such as limit_value.
+  negated:
+    range: boolean
+    description: True when the text states the relationship does not hold ("doesn't support").
+  conditions:
+    range: Condition
+    multivalued: true
+    inlined_as_list: true
+  confidence:
+    range: float
+    minimum_value: 0
+    maximum_value: 1
+  provenance:
+    range: Provenance
+    multivalued: true
+    inlined_as_list: true
+    required: true
+    minimum_cardinality: 1
+    description: Every assertion needs at least one supporting chunk (DESIGN goal 2).
+
+  # --- conditions
+
+  type:
+    range: ConditionType  # defined by the domain schema
+    required: true
+  value:
+    required: true
+
+  # --- provenance
+
+  source_doc:
+    required: true
+    slot_uri: prov:hadPrimarySource
+    description: Article doc_id from documents.jsonl.
+  include_file:
+    description: Repo-relative include file the evidence came from, when it is not the article itself.
+  evidence:
+    description: Text copied from the chunk. Must be an exact substring of it.
+  extracted_at:
+    range: datetime
+    slot_uri: prov:generatedAtTime
+
+  # --- containers
+
+  entities:
+    range: Entity
+    multivalued: true
+    inlined_as_list: true
+  mentions:
+    range: Mention
+    multivalued: true
+    inlined_as_list: true
+  assertions:
+    range: Assertion
+    multivalued: true
+    inlined_as_list: true

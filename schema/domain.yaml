@@ -1,11 +1,14 @@
 # Domain schema for the Azure Machine Learning docs knowledge graph.
 #
-# Owner: Scott. Status: DRAFT proposed by Claude Code, not yet approved.
+# Owner: Scott. Status: v0.2, approved by Scott 2026-10-15 (drafted by Claude Code).
+# v0.2 (Phase 2): ConditionType replaces DomainConditionType and includes the
+# core values; DomainEntity carries the generic relationships so SHACL can
+# check their domain and range.
 # Derived from eval/competency_questions.md. Each relationship notes the
 # competency questions (CQ) that need it, so unused ones are easy to prune.
 #
 # Class names match the ckg:domainClass values in vocab/vocabulary.ttl.
-# Entity and Condition come from core.yaml (Claude Code owns that file).
+# Entity, Assertion, Condition, and Provenance come from core.yaml.
 
 id: https://example.org/ckg/domain  # TODO(Scott): real namespace, same base as the vocabulary
 name: ckg_domain
@@ -39,12 +42,18 @@ enums:
       deprecated:
       retired:
 
-  DomainConditionType:
+  ConditionType:
     description: >-
-      Condition types this domain needs in addition to core's version, role,
-      environment, time, and other. Proposal for core.yaml: make
-      Condition.type accept these values (decide in Phase 2).
+      Range of Condition.type in core.yaml. Must include every value of
+      core's CoreConditionType; the rest are this domain's additions.
     permissible_values:
+      # core values
+      version:
+      role:
+      environment:
+      time:
+      other:
+      # domain values
       region:
         description: Applies only in listed Azure regions. (CQ 8)
       release_status:
@@ -75,33 +84,68 @@ classes:
       - release_status
       - retirement_date
 
+  DomainEntity:
+    is_a: Entity
+    abstract: true
+    description: >-
+      Base class for every domain class. Holds the relationships whose
+      subject can be any domain entity, so each one appears as a property
+      in the generated SHACL shapes with its range checked.
+    slots:
+      - supports
+      - requires
+      - part_of
+      - has_part
+      - replaced_by
+      - incompatible_with
+      - integrates_with
+      - runs_on
+      - deployable_to
+      - accepts_input_from
+      - available_in
+      - supports_auth_method
+      - uses_identity
+      - requires_role
+      - backed_by
+      - uses_algorithm
+      - supports_task
+      - has_input
+      - has_output
+      - defined_by_schema
+      - computes_metric
+      - has_limit
+      - affects
+      - differs_from
+
   # --- Products and interfaces -----------------------------------------------
 
   Product:
-    is_a: Entity
+    is_a: DomainEntity
     mixins: [Lifecycle]
     description: A product or platform, such as Azure Machine Learning, Microsoft Foundry, MLflow, or ONNX.
 
   Interface:
-    is_a: Entity
+    is_a: DomainEntity
     mixins: [Lifecycle]
     description: A way to work with the service, such as CLI v2, Python SDK v2, REST API, studio, Bicep, or Terraform.
 
   Capability:
-    is_a: Entity
+    is_a: DomainEntity
     mixins: [Lifecycle]
     description: A product feature or practice, such as automated ML, safe rollout, or model data collection.
 
   # --- Azure Machine Learning resources ---------------------------------------
 
   Resource:
-    is_a: Entity
+    is_a: DomainEntity
     mixins: [Lifecycle]
     description: Something you create and manage in Azure Machine Learning, such as a workspace, registry, datastore, or connection.
 
   ComputeTarget:
     is_a: Resource
     description: A compute resource for jobs or endpoints, such as a compute cluster, compute instance, serverless compute, or Kubernetes compute.
+    slots:
+      - has_gpu_support
 
   Endpoint:
     is_a: Resource
@@ -110,6 +154,8 @@ classes:
   Deployment:
     is_a: Resource
     description: A deployment that runs behind an endpoint, such as an online, batch, or pipeline component deployment.
+    slots:
+      - hosted_by
 
   FeatureStoreEntity:
     is_a: Resource
@@ -121,9 +167,12 @@ classes:
   # --- Assets and types ------------------------------------------------------
 
   Asset:
-    is_a: Entity
+    is_a: DomainEntity
     mixins: [Lifecycle]
     description: A versioned asset, such as a data asset, model, environment, component, feature set, or flow.
+    slots:
+      - contains_framework
+      - shareable_via
 
   DesignerComponent:
     is_a: Asset
@@ -134,71 +183,80 @@ classes:
     description: A built-in prompt flow tool, such as the LLM tool or the Python tool.
 
   DataType:
-    is_a: Entity
+    is_a: DomainEntity
     description: A data asset or input type, such as uri_file, uri_folder, or mltable. (CQ 21)
 
   ModelType:
-    is_a: Entity
+    is_a: DomainEntity
     description: A model asset type or format, such as custom_model, mlflow_model, or triton_model. (CQ 11)
 
   Framework:
-    is_a: Entity
+    is_a: DomainEntity
     description: An ML framework or library, such as PyTorch, TensorFlow, scikit-learn, or LightGBM. (CQ 28)
     slots:
       - framework_version
 
   Job:
-    is_a: Entity
+    is_a: DomainEntity
     description: A job type, such as a command, sweep, pipeline, parallel, Spark, or AutoML job. (CQ 25)
+    slots:
+      - pipeline_step_type
 
   AutomlTask:
-    is_a: Entity
+    is_a: DomainEntity
     description: An AutoML task type, such as classification, forecasting, or image object detection. (CQ 23)
 
   Algorithm:
-    is_a: Entity
+    is_a: DomainEntity
     description: A training algorithm or model architecture, such as LightGBM, Prophet, TCNForecaster, or ResNet. (CQ 23, 24)
 
   YamlSchema:
-    is_a: Entity
+    is_a: DomainEntity
     description: A CLI v2 YAML schema that defines an entity type. (CQ 29)
 
   # --- Azure services and security ------------------------------------------
 
   AzureService:
-    is_a: Entity
+    is_a: DomainEntity
     description: An Azure service the workspace depends on or integrates with, such as Azure Key Vault, Azure Container Registry, or AKS.
 
   SecurityConcept:
-    is_a: Entity
+    is_a: DomainEntity
     description: A network or data protection mechanism, such as a managed virtual network, private endpoint, or customer-managed key.
+    slots:
+      - secures
+      - encrypts
+      - allows_outbound_to
 
   IdentityConcept:
-    is_a: Entity
+    is_a: DomainEntity
     description: An identity or authentication mechanism, such as a managed identity, service principal, key auth, or Microsoft Entra token.
 
   Role:
-    is_a: Entity
+    is_a: DomainEntity
     description: An Azure RBAC role, built-in or custom. (CQ 12, 13)
+    slots:
+      - grants
 
   Permission:
-    is_a: Entity
+    is_a: DomainEntity
     description: An RBAC operation string, such as Microsoft.MachineLearningServices/workspaces/computes/write. (CQ 13)
 
   Policy:
-    is_a: Entity
+    is_a: DomainEntity
     description: An Azure Policy definition that applies to Azure Machine Learning. (CQ 19)
     slots:
       - policy_effect
+      - enforces
 
   Region:
-    is_a: Entity
+    is_a: DomainEntity
     description: An Azure region, such as East US 2. (CQ 8)
 
   # --- Facts that carry values or text --------------------------------------
 
   Limit:
-    is_a: Entity
+    is_a: DomainEntity
     description: A quota or service limit with a value, such as "Workspace name, 2-32 characters". (CQ 31)
     slots:
       - limit_value
@@ -206,24 +264,26 @@ classes:
       - adjustable
 
   Metric:
-    is_a: Entity
+    is_a: DomainEntity
     description: A monitoring signal or metric, such as data drift, prediction drift, or CpuUtilization. (CQ 30)
 
   Task:
-    is_a: Entity
+    is_a: DomainEntity
     description: >-
       A user goal that has prerequisites or ordered steps, such as "attach a
       Kubernetes cluster" or "perform a safe rollout". (CQ 4, 10)
+    slots:
+      - precedes
 
   KnownIssue:
-    is_a: Entity
+    is_a: DomainEntity
     description: A documented known issue. (CQ 34)
     slots:
       - workaround
       - issue_status
 
   ErrorMessage:
-    is_a: Entity
+    is_a: DomainEntity
     description: An error message or code that troubleshooting articles explain. (CQ 35)
     slots:
       - error_code
@@ -263,45 +323,45 @@ slots:
 
   supports:
     description: Subject works with or enables the object. Prefer a specific subproperty when one fits.
-    domain: Entity
-    range: Entity
+    domain: DomainEntity
+    range: DomainEntity
     multivalued: true
 
   requires:
     description: Subject needs the object first. (CQ 4, 13, 14, 16, 30)
-    domain: Entity
-    range: Entity
+    domain: DomainEntity
+    range: DomainEntity
     multivalued: true
 
   part_of:
     description: Subject is a component or member of the object. (CQ 22, 27)
-    domain: Entity
-    range: Entity
+    domain: DomainEntity
+    range: DomainEntity
     multivalued: true
     inverse: has_part
 
   has_part:
-    domain: Entity
-    range: Entity
+    domain: DomainEntity
+    range: DomainEntity
     multivalued: true
     inverse: part_of
 
   replaced_by:
     description: Subject is deprecated or retired in favor of the object. Pair with a time condition for the date. (CQ 33)
-    domain: Entity
-    range: Entity
+    domain: DomainEntity
+    range: DomainEntity
     multivalued: true
 
   incompatible_with:
     description: Subject can't be used together with the object. (CQ 18)
-    domain: Entity
-    range: Entity
+    domain: DomainEntity
+    range: DomainEntity
     multivalued: true
     symmetric: true
 
   integrates_with:
-    domain: Entity
-    range: Entity
+    domain: DomainEntity
+    range: DomainEntity
     multivalued: true
     symmetric: true
 
@@ -310,7 +370,7 @@ slots:
   runs_on:
     description: A job type or capability runs on a compute target. (CQ 1, 25)
     is_a: supports
-    domain: Entity
+    domain: DomainEntity
     range: ComputeTarget
     multivalued: true
 
@@ -318,7 +378,7 @@ slots:
     description: A compute target offers GPU for the given endpoint type or job type. (CQ 2)
     is_a: supports
     domain: ComputeTarget
-    range: Entity
+    range: DomainEntity
     multivalued: true
 
   pipeline_step_type:
@@ -333,7 +393,7 @@ slots:
   deployable_to:
     description: An asset or model type can be deployed to an endpoint type. (CQ 9, 11)
     is_a: supports
-    domain: Entity
+    domain: DomainEntity
     range: Endpoint
     multivalued: true
 
@@ -347,13 +407,13 @@ slots:
   accepts_input_from:
     description: An endpoint or job reads input from a data type, datastore, or service. (CQ 9)
     is_a: supports
-    domain: Entity
-    range: Entity
+    domain: DomainEntity
+    range: DomainEntity
     multivalued: true
 
   available_in:
     description: Subject is available in a region. (CQ 8)
-    domain: Entity
+    domain: DomainEntity
     range: Region
     multivalued: true
 
@@ -362,26 +422,26 @@ slots:
   supports_auth_method:
     description: A resource or endpoint accepts an authentication method. (CQ 7, 20)
     is_a: supports
-    domain: Entity
+    domain: DomainEntity
     range: IdentityConcept
     multivalued: true
 
   uses_identity:
     description: A resource uses an identity to access other resources. (CQ 14)
-    domain: Entity
+    domain: DomainEntity
     range: IdentityConcept
     multivalued: true
 
   grants:
     description: A role grants a permission or the ability to perform a task. (CQ 12, 13)
     domain: Role
-    range: Entity
+    range: DomainEntity
     multivalued: true
 
   requires_role:
     description: A task or operation needs the given role at minimum. (CQ 13)
     is_a: requires
-    domain: Entity
+    domain: DomainEntity
     range: Role
     multivalued: true
 
@@ -390,32 +450,32 @@ slots:
   secures:
     description: A security mechanism protects a resource or service. (CQ 16)
     domain: SecurityConcept
-    range: Entity
+    range: DomainEntity
     multivalued: true
 
   encrypts:
     description: An encryption mechanism protects a kind of data or resource. (CQ 17)
     domain: SecurityConcept
-    range: Entity
+    range: DomainEntity
     multivalued: true
 
   allows_outbound_to:
     description: A network mode or outbound rule allows traffic to a service. Pair with a network_mode condition. (CQ 15)
     domain: SecurityConcept
-    range: Entity
+    range: DomainEntity
     multivalued: true
 
   enforces:
     description: A policy constrains a resource or setting. (CQ 19)
     domain: Policy
-    range: Entity
+    range: DomainEntity
     multivalued: true
 
   # --- Data and storage
 
   backed_by:
     description: A datastore or resource is stored in an Azure service. (CQ 20)
-    domain: Entity
+    domain: DomainEntity
     range: AzureService
     multivalued: true
 
@@ -423,14 +483,14 @@ slots:
 
   uses_algorithm:
     description: An AutoML task or capability can use an algorithm. (CQ 23, 24)
-    domain: Entity
+    domain: DomainEntity
     range: Algorithm
     multivalued: true
 
   supports_task:
     description: A capability or component supports an AutoML task type. (CQ 23)
     is_a: supports
-    domain: Entity
+    domain: DomainEntity
     range: AutomlTask
     multivalued: true
 
@@ -442,13 +502,13 @@ slots:
 
   has_input:
     description: A component, tool, or job takes an input of the object type. (CQ 26)
-    domain: Entity
-    range: Entity
+    domain: DomainEntity
+    range: DomainEntity
     multivalued: true
 
   has_output:
-    domain: Entity
-    range: Entity
+    domain: DomainEntity
+    range: DomainEntity
     multivalued: true
 
   # --- Assets and MLOps
@@ -461,13 +521,13 @@ slots:
 
   defined_by_schema:
     description: An entity type is defined by a CLI v2 YAML schema. (CQ 29)
-    domain: Entity
+    domain: DomainEntity
     range: YamlSchema
     multivalued: true
 
   computes_metric:
     description: A monitoring capability computes a metric or signal. (CQ 30)
-    domain: Entity
+    domain: DomainEntity
     range: Metric
     multivalued: true
 
@@ -475,14 +535,14 @@ slots:
 
   has_limit:
     description: Subject is subject to a quota or service limit. (CQ 5, 31)
-    domain: Entity
+    domain: DomainEntity
     range: Limit
     multivalued: true
 
   affects:
     description: A known issue or error affects a resource or capability. (CQ 34, 35)
-    domain: Entity
-    range: Entity
+    domain: DomainEntity
+    range: DomainEntity
     multivalued: true
 
   precedes:
@@ -495,7 +555,7 @@ slots:
     description: >-
       Placeholder link used when the text compares two things (CQ 3, 6).
       The compared attribute goes in the assertion's conditions or evidence.
-    domain: Entity
-    range: Entity
+    domain: DomainEntity
+    range: DomainEntity
     multivalued: true
     symmetric: true

@@ -18,7 +18,7 @@ These items are owned by Scott. Claude Code should not invent them without appro
 
 | Item | Decision | Location |
 |---|---|---|
-| Domain | Azure Machine Learning, as documented in Microsoft Learn | `schema/domain.yaml` (drafted by Claude Code, pending Scott's approval) |
+| Domain | Azure Machine Learning, as documented in Microsoft Learn | `schema/domain.yaml` (v0.2, approved) |
 | Corpus | `articles/machine-learning/` in [spolly74/azure-ai-docs](https://github.com/spolly74/azure-ai-docs), excluding `v1/` and `data-science-virtual-machine/`. About 550 Markdown articles, 95 include files, about 940K words | Git checkout; path set in `config.yaml` |
 | First run | A slice of about 70 articles cited by the competency questions. Expanding to the full scope is a config change | Include list in `config.yaml` |
 | Competency questions | 35 questions in 8 areas (drafted by Claude Code, pending Scott's approval) | `eval/competency_questions.md` |
@@ -138,23 +138,30 @@ The schema is written in LinkML and is the single source of truth (Moxon et al.,
 Split it into two files:
 
 - `schema/core.yaml`: classes that do not depend on the domain. Claude Code owns this file.
-- `schema/domain.yaml`: domain classes and relationships. Scott owns this file. Claude Code drafted v0.1 (33 classes, 35 relationship slots) from the competency questions; it is pending Scott's approval.
+- `schema/domain.yaml`: domain classes and relationships. Scott owns this file. Claude Code drafted it from the competency questions; Scott approved v0.2 (34 classes, 35 relationship slots) on 2026-10-15.
+
+Generate with `uv run python tools/gen_schema.py` (`--check` fails if any output is stale; a test runs the same check). Outputs: Pydantic models in `src/ckg/generated/model.py` (importable by the pipeline, and depending only on Pydantic), and JSON Schema, SHACL, and OWL in `schema/generated/`. SHACL shapes are open (not closed), so nodes may carry triples beyond the schema; domain and range checks still apply. LinkML is a development dependency only.
 
 Core classes:
 
 | Class | Purpose | Key slots |
 |---|---|---|
-| `Entity` | Base class for all domain entities | `id`, `label`, `aliases`, `vocab_id` |
-| `Assertion` | One extracted fact | `subject`, `predicate`, `object`, `conditions`, `confidence`, `provenance` |
+| `Entity` | Base class for all domain entities | `id`, `entity_type`, `label`, `aliases`, `vocab_id` |
+| `Assertion` | One extracted fact | `subject`, `predicate`, `object` or `object_value`, `negated`, `conditions`, `confidence`, `provenance` (one or more) |
 | `Condition` | A qualifier on an assertion | `type`, `value` |
 | `Provenance` | Where a fact came from | `source_doc`, `include_file`, `chunk_id`, `start`, `end`, `evidence`, `method`, `model`, `extracted_at` |
-| `Mention` | A span of text that refers to an entity | `chunk_id`, `start`, `end`, `text`, `entity`, `method`, `score` |
+| `Mention` | A span of text that refers to an entity | `chunk_id`, `start`, `end`, `text`, `predicted_class`, `entity`, `method`, `score`, `model` |
+| `KnowledgeGraph` | Container for serializing entities, mentions, and assertions | `entities`, `mentions`, `assertions` |
 
-`Condition.type` accepts the core values (version, role, environment, time, other) plus values a domain schema adds. This domain adds `region`, `release_status`, `interface`, `endpoint_type`, `model_flavor`, `network_mode`, `workspace_configuration`, and `task_type` (enum `DomainConditionType` in `domain.yaml`).
+- `entity_type` names the entity's class, so serialized entities keep their type.
+- `object_value` holds a literal object for attribute predicates (for example, a `Limit`'s value). An assertion has exactly one of `object` and `object_value`; extraction code enforces this, since the generators don't.
+- `negated` records facts stated in the negative ("doesn't support"), which are common in this content.
+
+`Condition.type` has the range `ConditionType`, which the domain schema defines. It must include every value of core's `CoreConditionType` (version, role, environment, time, other); a test checks this. This domain adds `region`, `release_status`, `interface`, `endpoint_type`, `model_flavor`, `network_mode`, `workspace_configuration`, and `task_type`.
 
 `Provenance.include_file` is set when the evidence span came from a resolved include file.
 
-Domain classes subclass `Entity`. Domain relationships are slots with an explicit `domain` and `range`. Class names in `domain.yaml` match the `ckg:domainClass` values on the vocabulary's concept schemes.
+Domain classes subclass `DomainEntity`, an abstract subclass of `Entity`. Domain relationships are slots with an explicit `domain` and `range`, and each is attached to its domain class: relationships whose subject can be any domain entity sit on `DomainEntity`, and the rest on their specific class. Attaching them is what makes them appear in the SHACL shapes. Class names in `domain.yaml` match the `ckg:domainClass` values on the vocabulary's concept schemes.
 
 ## 7. Repository layout
 
@@ -166,9 +173,10 @@ Domain classes subclass `Entity`. Domain relationships are slots with an explici
 ├── pyproject.toml
 ├── schema/            core.yaml, domain.yaml, generated/
 ├── vocab/             vocabulary.ttl
-├── tools/             draft_vocabulary.py (one-time drafting aids)
+├── tools/             gen_schema.py; draft_vocabulary.py, make_sample.py (one-time aids)
 ├── src/ckg/
 │   ├── cli.py
+│   ├── generated/     model.py (generated Pydantic models)
 │   ├── ingest/        loaders, front matter, include resolver, chunker
 │   ├── extract/       tier1_vocab.py, tier2_gliner.py, tier3_llm.py
 │   ├── resolve/
@@ -189,7 +197,8 @@ The corpus is a separate clone of azure-ai-docs in a sibling folder (`../azure-a
 |---|---|---|
 | Language and environment | Python 3.11+, `uv` | PSF, MIT/Apache 2.0 |
 | CLI | Typer | MIT |
-| Schema | LinkML | CC0 |
+| Schema | LinkML (development only; generated models need only Pydantic) | CC0 |
+| Config and models | Pydantic, PyYAML | MIT |
 | Document loading | Built-in Markdown loader with front matter and include resolution | — |
 | Dictionary matching | spaCy | MIT |
 | Zero-shot NER | GLiNER (confirm the checkpoint's license) | Apache 2.0 code |
