@@ -94,8 +94,25 @@ def extract(
     changed_only: Annotated[bool, typer.Option("--changed-only", help="Skip chunks whose hash has not changed.")] = False,
 ) -> None:
     """Extract mentions (tiers 1 and 2) and assertions (tier 3)."""
-    _load(ctx)
-    _not_built("extract", 4 if tier is Tier.llm else 3)
+    cfg = _load(ctx)
+    if tier is Tier.llm:
+        _not_built("extract --tier 3", 4)
+    from ckg.extract.pipeline import run_extract  # deferred: tier 2 imports torch
+
+    try:
+        report = run_extract(cfg, [int(tier.value)] if tier else [1, 2], changed_only)
+    except FileNotFoundError as e:
+        typer.echo(f"error: {e}", err=True)
+        raise typer.Exit(code=2) from e
+    for t in report.tiers:
+        typer.echo(f"tier {t.tier}: {t.mentions} mentions from {t.processed} chunks processed, {t.reused} reused")
+    typer.echo(f"merged: {report.merged} mentions")
+    for reason, n in sorted(report.dropped.items()):
+        typer.echo(f"  dropped {n}: {reason}")
+    for path in report.outputs:
+        typer.echo(f"  wrote {path}")
+    if tier is None:
+        typer.echo("tier 3: not implemented yet (Phase 4).")
 
 
 @app.command()

@@ -86,9 +86,18 @@ Run the tiers in order on each chunk. Each tier records which method produced ea
 
 | Tier | Method | Output |
 |---|---|---|
-| 1 | spaCy `PhraseMatcher` built from the vocabulary file (preferred and alternate labels), case-insensitive | Entity mentions with exact offsets |
+| 1 | spaCy `PhraseMatcher` built from the vocabulary file (preferred and alternate labels) | Entity mentions with exact offsets and vocabulary IDs |
 | 2 | GLiNER zero-shot NER, using entity class names from the schema as labels | Additional entity mentions with scores |
 | 3 | Local LLM through Ollama, with JSON-schema structured output generated from the LinkML schema | Relationships (assertions) among mentions |
+
+Tier 1 and 2 rules:
+
+- **Masking.** Neither tier matches inside fenced code, link targets and bare URLs, Learn directives (`:::image ...:::`), HTML comments, callout markers (`[!NOTE]`), or unresolved-include placeholders. Each kind can be turned off in `config.yaml`. Matches inside masked text are logged as dropped, with the mask kind as the reason.
+- **Tier 1 case rule.** Single-word labels with a capital letter (Reader, Owner, Bicep) match only with that exact case, so the word "reader" doesn't become the Reader role. Every other label matches case-insensitively, along with its regular plural (endpoint → endpoints, policy → policies). Where matches overlap, the longest wins. spaCy runs with a blank English tokenizer, so no spaCy model is downloaded.
+- **Tier 2 labels and windows.** GLiNER's labels are the schema's concrete domain classes written as words ("ComputeTarget" becomes "compute target"), with overrides in config. Chunk text is cut into windows of at most `max_words` GLiNER tokens, avoiding masked text and breaking at line ends, and offsets are mapped back to the chunk. A prediction whose text doesn't match the chunk at its offsets is dropped.
+- **Merging.** Tier 1 wins wherever a tier 2 span overlaps it, because tier 1 carries an exact vocabulary ID. The overlapping tier 2 mention is logged as dropped.
+- **Outputs.** `mentions.tier1.jsonl` and `mentions.tier2.jsonl` (each tier's kept mentions), `mentions.jsonl` (merged), and `mentions.dropped.jsonl` (every rejected mention with its reason). Each mention conforms to the generated `Mention` model; `Mention.vocab_id` holds tier 1's vocabulary match.
+- **Changed-only.** `--changed-only` reuses a chunk's previous mentions when its hash and the tier's settings (vocabulary file, masks, model, labels, threshold) are unchanged, tracked in the SQLite state database. The result is identical to a full run.
 
 Tier 3 rules:
 
@@ -200,8 +209,8 @@ The corpus is a separate clone of azure-ai-docs in a sibling folder (`../azure-a
 | Schema | LinkML (development only; generated models need only Pydantic) | CC0 |
 | Config and models | Pydantic, PyYAML | MIT |
 | Document loading | Built-in Markdown loader with front matter and include resolution | — |
-| Dictionary matching | spaCy | MIT |
-| Zero-shot NER | GLiNER (confirm the checkpoint's license) | Apache 2.0 code |
+| Dictionary matching | spaCy (blank English tokenizer, no model download) | MIT |
+| Zero-shot NER | GLiNER 0.2, checkpoint `urchade/gliner_medium-v2.1` pinned to commit `40ec419` (DeBERTa-v3 backbone); runs on CPU PyTorch. GLiNER needs `transformers` below 5 (pinned) and `protobuf` | Apache 2.0 (code and checkpoint); PyTorch BSD; protobuf BSD |
 | LLM runtime | Ollama, CPU | MIT |
 | Fuzzy matching | rapidfuzz | MIT |
 | Embeddings | `sentence-transformers` with an Apache 2.0 model | Apache 2.0 |

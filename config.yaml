@@ -29,6 +29,39 @@ ingest:
     - ms.date
     - author
 
+extract:
+  vocabulary: vocab/vocabulary.ttl
+  # Text that tiers 1 and 2 never match inside. Placeholders for unresolved
+  # includes are always skipped.
+  mask:
+    code_blocks: true      # fenced code
+    link_targets: true     # the (url) part of [text](url)
+    directives: true       # Learn directive lines such as :::image ...:::
+    html_comments: true
+    callouts: true         # the [!NOTE] marker itself, not the callout text
+  tier1:
+    # Single-word labels with a capital letter (Reader, Owner, Bicep) match
+    # only with that exact case; other labels match case-insensitively.
+    case_sensitive_single_token: true
+    # Also match regular plurals of lowercase labels (endpoint -> endpoints,
+    # policy -> policies).
+    match_plurals: true
+  tier2:
+    model: urchade/gliner_medium-v2.1               # Apache 2.0
+    revision: 40ec419335d09393f298636f471328b722c6da9e
+    threshold: 0.5
+    max_words: 250        # GLiNER window size; longer text is split at line breaks
+    batch_size: 8
+    # GLiNER labels are the schema's concrete domain classes, written as
+    # words ("ComputeTarget" -> "compute target"). Override a label here
+    # when the default reads poorly, or list classes to leave out.
+    label_overrides:
+      AzureService: Azure service
+      AutomlTask: AutoML task
+      YamlSchema: YAML schema
+      PromptFlowTool: prompt flow tool
+    exclude_classes: []
+
 corpus:
   # Local clone of spolly74/azure-ai-docs in a sibling folder of this repo.
   repo_root: ../azure-ai-docs

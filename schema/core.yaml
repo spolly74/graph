@@ -79,6 +79,7 @@ classes:
       - end
       - text
       - predicted_class
+      - vocab_id
       - entity
       - method
       - score
@@ -158,7 +159,7 @@ slots:
   vocab_id:
     range: uriorcurie
     slot_uri: skos:exactMatch
-    description: The vocabulary concept this entity was matched to, if any.
+    description: The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.
 
   # --- spans
 

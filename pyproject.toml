@@ -5,8 +5,13 @@ description = "Content knowledge graph pipeline"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "gliner>=0.2.29",
+    "protobuf>=7.36.2",
     "pydantic>=2.7",
     "pyyaml>=6.0",
+    "rdflib>=7.6.0",
+    "spacy>=3.8.16",
+    "transformers>=4.51.3,<5",
     "typer>=0.12",
 ]
 

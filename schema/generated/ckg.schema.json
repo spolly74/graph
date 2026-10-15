@@ -268,7 +268,7 @@
                     ]
                 },
                 "vocab_id": {
-                    "description": "The vocabulary concept this entity was matched to, if any.",
+                    "description": "The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.",
                     "type": [
                         "string",
                         "null"
@@ -656,7 +656,7 @@
                     ]
                 },
                 "vocab_id": {
-                    "description": "The vocabulary concept this entity was matched to, if any.",
+                    "description": "The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.",
                     "type": [
                         "string",
                         "null"
@@ -938,7 +938,7 @@
                     ]
                 },
                 "vocab_id": {
-                    "description": "The vocabulary concept this entity was matched to, if any.",
+                    "description": "The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.",
                     "type": [
                         "string",
                         "null"
@@ -1220,7 +1220,7 @@
                     ]
                 },
                 "vocab_id": {
-                    "description": "The vocabulary concept this entity was matched to, if any.",
+                    "description": "The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.",
                     "type": [
                         "string",
                         "null"
@@ -1519,7 +1519,7 @@
                     ]
                 },
                 "vocab_id": {
-                    "description": "The vocabulary concept this entity was matched to, if any.",
+                    "description": "The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.",
                     "type": [
                         "string",
                         "null"
@@ -1828,7 +1828,7 @@
                     ]
                 },
                 "vocab_id": {
-                    "description": "The vocabulary concept this entity was matched to, if any.",
+                    "description": "The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.",
                     "type": [
                         "string",
                         "null"
@@ -2160,7 +2160,7 @@
                     ]
                 },
                 "vocab_id": {
-                    "description": "The vocabulary concept this entity was matched to, if any.",
+                    "description": "The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.",
                     "type": [
                         "string",
                         "null"
@@ -2469,7 +2469,7 @@
                     ]
                 },
                 "vocab_id": {
-                    "description": "The vocabulary concept this entity was matched to, if any.",
+                    "description": "The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.",
                     "type": [
                         "string",
                         "null"
@@ -2788,7 +2788,7 @@
                     ]
                 },
                 "vocab_id": {
-                    "description": "The vocabulary concept this entity was matched to, if any.",
+                    "description": "The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.",
                     "type": [
                         "string",
                         "null"
@@ -3070,7 +3070,7 @@
                     ]
                 },
                 "vocab_id": {
-                    "description": "The vocabulary concept this entity was matched to, if any.",
+                    "description": "The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.",
                     "type": [
                         "string",
                         "null"
@@ -3369,7 +3369,7 @@
                     ]
                 },
                 "vocab_id": {
-                    "description": "The vocabulary concept this entity was matched to, if any.",
+                    "description": "The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.",
                     "type": [
                         "string",
                         "null"
@@ -3414,7 +3414,7 @@
                     "type": "string"
                 },
                 "vocab_id": {
-                    "description": "The vocabulary concept this entity was matched to, if any.",
+                    "description": "The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.",
                     "type": [
                         "string",
                         "null"
@@ -3714,7 +3714,7 @@
                     ]
                 },
                 "vocab_id": {
-                    "description": "The vocabulary concept this entity was matched to, if any.",
+                    "description": "The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.",
                     "type": [
                         "string",
                         "null"
@@ -4025,7 +4025,7 @@
                     ]
                 },
                 "vocab_id": {
-                    "description": "The vocabulary concept this entity was matched to, if any.",
+                    "description": "The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.",
                     "type": [
                         "string",
                         "null"
@@ -4313,7 +4313,7 @@
                     ]
                 },
                 "vocab_id": {
-                    "description": "The vocabulary concept this entity was matched to, if any.",
+                    "description": "The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.",
                     "type": [
                         "string",
                         "null"
@@ -4595,7 +4595,7 @@
                     ]
                 },
                 "vocab_id": {
-                    "description": "The vocabulary concept this entity was matched to, if any.",
+                    "description": "The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.",
                     "type": [
                         "string",
                         "null"
@@ -4894,7 +4894,7 @@
                     ]
                 },
                 "vocab_id": {
-                    "description": "The vocabulary concept this entity was matched to, if any.",
+                    "description": "The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.",
                     "type": [
                         "string",
                         "null"
@@ -5186,7 +5186,7 @@
                     ]
                 },
                 "vocab_id": {
-                    "description": "The vocabulary concept this entity was matched to, if any.",
+                    "description": "The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.",
                     "type": [
                         "string",
                         "null"
@@ -5600,7 +5600,7 @@
                     ]
                 },
                 "vocab_id": {
-                    "description": "The vocabulary concept this entity was matched to, if any.",
+                    "description": "The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.",
                     "type": [
                         "string",
                         "null"
@@ -5933,7 +5933,7 @@
                     ]
                 },
                 "vocab_id": {
-                    "description": "The vocabulary concept this entity was matched to, if any.",
+                    "description": "The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.",
                     "type": [
                         "string",
                         "null"
@@ -6003,6 +6003,13 @@
                 "text": {
                     "description": "The mentioned text. Must equal the chunk text from start to end.",
                     "type": "string"
+                },
+                "vocab_id": {
+                    "description": "The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
                 }
             },
             "required": [
@@ -6284,7 +6291,7 @@
                     ]
                 },
                 "vocab_id": {
-                    "description": "The vocabulary concept this entity was matched to, if any.",
+                    "description": "The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.",
                     "type": [
                         "string",
                         "null"
@@ -6566,7 +6573,7 @@
                     ]
                 },
                 "vocab_id": {
-                    "description": "The vocabulary concept this entity was matched to, if any.",
+                    "description": "The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.",
                     "type": [
                         "string",
                         "null"
@@ -6848,7 +6855,7 @@
                     ]
                 },
                 "vocab_id": {
-                    "description": "The vocabulary concept this entity was matched to, if any.",
+                    "description": "The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.",
                     "type": [
                         "string",
                         "null"
@@ -7147,7 +7154,7 @@
                     ]
                 },
                 "vocab_id": {
-                    "description": "The vocabulary concept this entity was matched to, if any.",
+                    "description": "The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.",
                     "type": [
                         "string",
                         "null"
@@ -7446,7 +7453,7 @@
                     ]
                 },
                 "vocab_id": {
-                    "description": "The vocabulary concept this entity was matched to, if any.",
+                    "description": "The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.",
                     "type": [
                         "string",
                         "null"
@@ -7765,7 +7772,7 @@
                     ]
                 },
                 "vocab_id": {
-                    "description": "The vocabulary concept this entity was matched to, if any.",
+                    "description": "The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.",
                     "type": [
                         "string",
                         "null"
@@ -8113,7 +8120,7 @@
                     ]
                 },
                 "vocab_id": {
-                    "description": "The vocabulary concept this entity was matched to, if any.",
+                    "description": "The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.",
                     "type": [
                         "string",
                         "null"
@@ -8423,7 +8430,7 @@
                     ]
                 },
                 "vocab_id": {
-                    "description": "The vocabulary concept this entity was matched to, if any.",
+                    "description": "The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.",
                     "type": [
                         "string",
                         "null"
@@ -8715,7 +8722,7 @@
                     ]
                 },
                 "vocab_id": {
-                    "description": "The vocabulary concept this entity was matched to, if any.",
+                    "description": "The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.",
                     "type": [
                         "string",
                         "null"
@@ -9027,7 +9034,7 @@
                     ]
                 },
                 "vocab_id": {
-                    "description": "The vocabulary concept this entity was matched to, if any.",
+                    "description": "The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.",
                     "type": [
                         "string",
                         "null"
@@ -9319,7 +9326,7 @@
                     ]
                 },
                 "vocab_id": {
-                    "description": "The vocabulary concept this entity was matched to, if any.",
+                    "description": "The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.",
                     "type": [
                         "string",
                         "null"
@@ -9601,7 +9608,7 @@
                     ]
                 },
                 "vocab_id": {
-                    "description": "The vocabulary concept this entity was matched to, if any.",
+                    "description": "The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.",
                     "type": [
                         "string",
                         "null"

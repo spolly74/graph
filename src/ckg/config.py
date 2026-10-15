@@ -62,10 +62,41 @@ class IngestConfig(_Strict):
         return self
 
 
+class MaskConfig(_Strict):
+    code_blocks: bool
+    link_targets: bool
+    directives: bool
+    html_comments: bool
+    callouts: bool
+
+
+class Tier1Config(_Strict):
+    case_sensitive_single_token: bool
+    match_plurals: bool
+
+
+class Tier2Config(_Strict):
+    model: str
+    revision: str
+    threshold: float = Field(ge=0, le=1)
+    max_words: PositiveInt
+    batch_size: PositiveInt
+    label_overrides: dict[str, str]
+    exclude_classes: list[str]
+
+
+class ExtractConfig(_Strict):
+    vocabulary: Path
+    mask: MaskConfig
+    tier1: Tier1Config
+    tier2: Tier2Config
+
+
 class Config(_Strict):
     corpus: CorpusConfig
     paths: PathsConfig
     ingest: IngestConfig
+    extract: ExtractConfig
     config_dir: Path = Field(exclude=True)
 
     @property

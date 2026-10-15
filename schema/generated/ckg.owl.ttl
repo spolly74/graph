@@ -12,7 +12,7 @@
 @prefix pav: <http://purl.org/pav/> .
 ckg:Assertion a owl:Class , linkml:ClassDefinition ;
 	rdfs:label "Assertion" ;
-	rdfs:subClassOf _:c14n18 , _:c14n4 , _:c14n40 , _:c14n48 , _:c14n59 , _:c14n62 , _:c14n80 , _:c14n90 , _:c14n98 ;
+	rdfs:subClassOf _:c14n18 , _:c14n4 , _:c14n40 , _:c14n48 , _:c14n59 , _:c14n63 , _:c14n81 , _:c14n91 , _:c14n99 ;
 	skos:definition "One extracted fact: subject, predicate, and either an object entity or a literal object value (exactly one of the two). Conditions qualify the fact; provenance lists every chunk that supports it." ;
 	skos:exactMatch ckg:Assertion ;
 	skos:inScheme ckg:core .
@@ -24,7 +24,7 @@ ckg:Condition a owl:Class , linkml:ClassDefinition ;
 	skos:inScheme ckg:core .
 ckg:Entity a owl:Class , linkml:ClassDefinition ;
 	rdfs:label "Entity" ;
-	rdfs:subClassOf _:c14n19 , _:c14n44 , _:c14n73 , _:c14n74 ;
+	rdfs:subClassOf _:c14n19 , _:c14n44 , _:c14n74 , _:c14n75 ;
 	skos:definition "Base class for all domain entities." ;
 	skos:exactMatch ckg:Entity ;
 	skos:inScheme ckg:core .
@@ -34,13 +34,13 @@ ckg:KnowledgeGraph a owl:Class , linkml:ClassDefinition ;
 	skos:inScheme ckg:core .
 ckg:Mention a owl:Class , linkml:ClassDefinition ;
 	rdfs:label "Mention" ;
-	rdfs:subClassOf _:c14n0 , _:c14n1 , _:c14n106 , _:c14n29 , _:c14n38 , _:c14n39 , _:c14n46 , _:c14n47 , _:c14n7 , _:c14n79 , _:c14n89 ;
+	rdfs:subClassOf _:c14n0 , _:c14n1 , _:c14n107 , _:c14n29 , _:c14n38 , _:c14n39 , _:c14n46 , _:c14n47 , _:c14n62 , _:c14n7 , _:c14n80 , _:c14n90 ;
 	skos:definition "A span of chunk text that refers to an entity." ;
 	skos:exactMatch ckg:Mention ;
 	skos:inScheme ckg:core .
 ckg:Provenance a owl:Class , linkml:ClassDefinition ;
 	rdfs:label "Provenance" ;
-	rdfs:subClassOf _:c14n108 , _:c14n11 , _:c14n23 , _:c14n28 , _:c14n33 , _:c14n53 , _:c14n57 , _:c14n69 , _:c14n72 , _:c14n76 , _:c14n95 ;
+	rdfs:subClassOf _:c14n109 , _:c14n11 , _:c14n23 , _:c14n28 , _:c14n33 , _:c14n53 , _:c14n57 , _:c14n70 , _:c14n73 , _:c14n77 , _:c14n96 ;
 	skos:definition "Where a fact came from, down to the character offsets of the evidence." ;
 	skos:exactMatch prov:Entity ;
 	skos:inScheme ckg:core .
@@ -62,7 +62,7 @@ ckg:conditions a owl:ObjectProperty , linkml:SlotDefinition ;
 	skos:inScheme ckg:core .
 ckg:confidence a owl:ObjectProperty , linkml:SlotDefinition ;
 	rdfs:label "confidence" ;
-	rdfs:range _:c14n107 ;
+	rdfs:range _:c14n108 ;
 	skos:inScheme ckg:core .
 ckgd:Algorithm a owl:Class , linkml:ClassDefinition ;
 	rdfs:label "Algorithm" ;
@@ -143,7 +143,7 @@ ckgd:ConditionType\#workspace_configuration a owl:Class , ckgd:ConditionType ;
 	skos:definition "Applies only with CMK, private endpoints, or another workspace setting. (CQ 18)" .
 ckgd:ConditionType a owl:Class , linkml:EnumDefinition ;
 	rdfs:label "ConditionType" ;
-	owl:unionOf _:c14n66 ;
+	owl:unionOf _:c14n67 ;
 	skos:definition "Range of Condition.type in core.yaml. Must include every value of core's CoreConditionType; the rest are this domain's additions." ;
 	skos:inScheme ckg:domain ;
 	linkml:permissible_values ckgd:ConditionType\#endpoint_type , ckgd:ConditionType\#environment , ckgd:ConditionType\#interface , ckgd:ConditionType\#model_flavor , ckgd:ConditionType\#network_mode , ckgd:ConditionType\#other , ckgd:ConditionType\#region , ckgd:ConditionType\#release_status , ckgd:ConditionType\#role , ckgd:ConditionType\#task_type , ckgd:ConditionType\#time , ckgd:ConditionType\#version , ckgd:ConditionType\#workspace_configuration .
@@ -200,7 +200,7 @@ ckgd:Endpoint a owl:Class , linkml:ClassDefinition ;
 	skos:inScheme ckg:domain .
 ckgd:ErrorMessage a owl:Class , linkml:ClassDefinition ;
 	rdfs:label "ErrorMessage" ;
-	rdfs:subClassOf ckgd:DomainEntity , _:c14n52 , _:c14n81 , _:c14n92 ;
+	rdfs:subClassOf ckgd:DomainEntity , _:c14n52 , _:c14n82 , _:c14n93 ;
 	skos:definition "An error message or code that troubleshooting articles explain. (CQ 35)" ;
 	skos:inScheme ckg:domain .
 ckgd:ExtractionMethod\#gliner a owl:Class , ckgd:ExtractionMethod ;
@@ -256,17 +256,17 @@ ckgd:Job a owl:Class , linkml:ClassDefinition ;
 	skos:inScheme ckg:domain .
 ckgd:KnownIssue a owl:Class , linkml:ClassDefinition ;
 	rdfs:label "KnownIssue" ;
-	rdfs:subClassOf ckgd:DomainEntity , _:c14n58 , _:c14n64 ;
+	rdfs:subClassOf ckgd:DomainEntity , _:c14n58 , _:c14n65 ;
 	skos:definition "A documented known issue. (CQ 34)" ;
 	skos:inScheme ckg:domain .
 ckgd:Lifecycle a owl:Class , linkml:ClassDefinition ;
 	rdfs:label "Lifecycle" ;
-	rdfs:subClassOf _:c14n111 , _:c14n13 ;
+	rdfs:subClassOf _:c14n112 , _:c14n13 ;
 	skos:definition "Release status and retirement data for things that ship and retire." ;
 	skos:inScheme ckg:domain .
 ckgd:Limit a owl:Class , linkml:ClassDefinition ;
 	rdfs:label "Limit" ;
-	rdfs:subClassOf ckgd:DomainEntity , _:c14n21 , _:c14n27 , _:c14n94 ;
+	rdfs:subClassOf ckgd:DomainEntity , _:c14n21 , _:c14n27 , _:c14n95 ;
 	skos:definition "A quota or service limit with a value, such as \"Workspace name, 2-32 characters\". (CQ 31)" ;
 	skos:inScheme ckg:domain .
 ckgd:Metric a owl:Class , linkml:ClassDefinition ;
@@ -614,7 +614,7 @@ ckg:domain dcterms:license "CC0" ;
 	rdfs:label "ckg_domain" .
 ckg:end a owl:ObjectProperty , linkml:SlotDefinition ;
 	rdfs:label "end" ;
-	rdfs:range _:c14n100 ;
+	rdfs:range _:c14n101 ;
 	skos:definition "Character offset in the chunk's normalized text, exclusive." ;
 	skos:inScheme ckg:core .
 ckg:entities a owl:ObjectProperty , linkml:SlotDefinition ;
@@ -698,7 +698,7 @@ ckg:source_doc a owl:ObjectProperty , linkml:SlotDefinition ;
 	skos:inScheme ckg:core .
 ckg:start a owl:ObjectProperty , linkml:SlotDefinition ;
 	rdfs:label "start" ;
-	rdfs:range _:c14n97 ;
+	rdfs:range _:c14n98 ;
 	skos:definition "Character offset in the chunk's normalized text, inclusive." ;
 	skos:inScheme ckg:core .
 ckg:subject a owl:ObjectProperty , linkml:SlotDefinition ;
@@ -719,7 +719,7 @@ ckg:value a owl:ObjectProperty , linkml:SlotDefinition ;
 ckg:vocab_id a owl:ObjectProperty , linkml:SlotDefinition ;
 	rdfs:label "vocab_id" ;
 	rdfs:range linkml:Uriorcurie ;
-	skos:definition "The vocabulary concept this entity was matched to, if any." ;
+	skos:definition "The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities." ;
 	skos:inScheme ckg:core .
 _:c14n0 a owl:Restriction ;
 	owl:maxCardinality 1 ;
@@ -730,124 +730,124 @@ _:c14n1 a owl:Restriction ;
 _:c14n10 a owl:Restriction ;
 	owl:cardinality 1 ;
 	owl:onProperty ckg:value .
-_:c14n100 a rdfs:Datatype ;
-	owl:intersectionOf _:c14n169 .
-_:c14n101 rdf:first ckgd:ExtractionMethod\#gliner ;
+_:c14n100 rdf:first ckgd:ConditionType\#endpoint_type ;
+	rdf:rest _:c14n64 .
+_:c14n101 a rdfs:Datatype ;
+	owl:intersectionOf _:c14n121 .
+_:c14n102 rdf:first ckgd:ExtractionMethod\#gliner ;
 	rdf:rest _:c14n35 .
-_:c14n102 rdf:first ckgd:ConditionType\#workspace_configuration ;
+_:c14n103 rdf:first ckgd:ConditionType\#workspace_configuration ;
 	rdf:rest _:c14n25 .
-_:c14n103 rdf:first ckgd:ConditionType\#interface ;
-	rdf:rest _:c14n99 .
-_:c14n104 rdf:first ckgd:ExtractionMethod\#manual ;
+_:c14n104 rdf:first ckgd:ConditionType\#interface ;
+	rdf:rest _:c14n100 .
+_:c14n105 rdf:first ckgd:ExtractionMethod\#manual ;
 	rdf:rest rdf:nil .
-_:c14n105 a owl:Restriction ;
+_:c14n106 a owl:Restriction ;
 	rdfs:subClassOf ckgd:Capability ;
 	owl:onProperty ckg:entity_type ;
 	owl:someValuesFrom ckgd:Capability .
-_:c14n106 a owl:Restriction ;
+_:c14n107 a owl:Restriction ;
 	owl:cardinality 1 ;
 	owl:onProperty ckg:end .
-_:c14n107 a rdfs:Datatype ;
-	owl:intersectionOf _:c14n147 .
-_:c14n108 a owl:Restriction ;
+_:c14n108 a rdfs:Datatype ;
+	owl:intersectionOf _:c14n137 .
+_:c14n109 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty ckg:start .
-_:c14n109 rdf:first ckgd:CoreConditionType\#other ;
-	rdf:rest rdf:nil .
 _:c14n11 a owl:Restriction ;
 	owl:cardinality 1 ;
 	owl:onProperty ckg:chunk_id .
-_:c14n110 rdf:first ckgd:ExtractionMethod\#vocabulary ;
-	rdf:rest _:c14n101 .
-_:c14n111 a owl:Restriction ;
+_:c14n110 rdf:first ckgd:CoreConditionType\#other ;
+	rdf:rest rdf:nil .
+_:c14n111 rdf:first ckgd:ExtractionMethod\#vocabulary ;
+	rdf:rest _:c14n102 .
+_:c14n112 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty ckgd:retirement_date .
-_:c14n112 a rdfs:Datatype ;
+_:c14n113 a rdfs:Datatype ;
 	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:c14n116 .
-_:c14n113 rdf:first _:c14n112 ;
+	owl:withRestrictions _:c14n117 .
+_:c14n114 rdf:first _:c14n113 ;
 	rdf:rest rdf:nil .
-_:c14n114 rdf:first linkml:Integer ;
-	rdf:rest _:c14n113 .
-_:c14n115 a rdfs:Datatype ;
-	owl:intersectionOf _:c14n114 .
-_:c14n116 rdf:first _:c14n117 ;
+_:c14n115 rdf:first linkml:Integer ;
+	rdf:rest _:c14n114 .
+_:c14n116 a rdfs:Datatype ;
+	owl:intersectionOf _:c14n115 .
+_:c14n117 rdf:first _:c14n118 ;
 	rdf:rest rdf:nil .
-_:c14n117 xsd:minInclusive 0 .
-_:c14n118 a rdfs:Datatype ;
+_:c14n118 xsd:minInclusive 0 .
+_:c14n119 a rdfs:Datatype ;
 	owl:onDatatype xsd:integer ;
 	owl:withRestrictions _:c14n122 .
-_:c14n119 rdf:first _:c14n118 ;
-	rdf:rest rdf:nil .
 _:c14n12 rdf:first ckgd:ReleaseStatus\#preview ;
-	rdf:rest _:c14n78 .
-_:c14n120 rdf:first linkml:Integer ;
-	rdf:rest _:c14n119 .
-_:c14n121 a rdfs:Datatype ;
-	owl:intersectionOf _:c14n120 .
+	rdf:rest _:c14n79 .
+_:c14n120 rdf:first _:c14n119 ;
+	rdf:rest rdf:nil .
+_:c14n121 rdf:first linkml:Integer ;
+	rdf:rest _:c14n120 .
 _:c14n122 rdf:first _:c14n123 ;
 	rdf:rest rdf:nil .
 _:c14n123 xsd:minInclusive 0 .
 _:c14n124 a rdfs:Datatype ;
 	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:c14n125 .
-_:c14n125 rdf:first _:c14n126 ;
+	owl:withRestrictions _:c14n131 .
+_:c14n125 rdf:first _:c14n124 ;
 	rdf:rest rdf:nil .
-_:c14n126 xsd:minInclusive 0 .
-_:c14n127 rdf:first _:c14n124 ;
-	rdf:rest _:c14n130 .
-_:c14n128 rdf:first linkml:Float ;
-	rdf:rest _:c14n127 .
-_:c14n129 a rdfs:Datatype ;
-	owl:intersectionOf _:c14n128 .
+_:c14n126 rdf:first _:c14n128 ;
+	rdf:rest _:c14n125 .
+_:c14n127 rdf:first linkml:Float ;
+	rdf:rest _:c14n126 .
+_:c14n128 a rdfs:Datatype ;
+	owl:onDatatype xsd:integer ;
+	owl:withRestrictions _:c14n129 .
+_:c14n129 rdf:first _:c14n130 ;
+	rdf:rest rdf:nil .
 _:c14n13 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty ckgd:release_status .
-_:c14n130 rdf:first _:c14n131 ;
+_:c14n130 xsd:minInclusive 0 .
+_:c14n131 rdf:first _:c14n132 ;
 	rdf:rest rdf:nil .
-_:c14n131 a rdfs:Datatype ;
+_:c14n132 xsd:maxInclusive 1 .
+_:c14n133 a rdfs:Datatype ;
 	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:c14n132 .
-_:c14n132 rdf:first _:c14n133 ;
+	owl:withRestrictions _:c14n134 .
+_:c14n134 rdf:first _:c14n135 ;
 	rdf:rest rdf:nil .
-_:c14n133 xsd:maxInclusive 1 .
-_:c14n134 a rdfs:Datatype ;
-	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:c14n141 .
-_:c14n135 rdf:first _:c14n134 ;
-	rdf:rest rdf:nil .
-_:c14n136 rdf:first _:c14n138 ;
-	rdf:rest _:c14n135 .
+_:c14n135 xsd:minInclusive 0 .
+_:c14n136 rdf:first _:c14n133 ;
+	rdf:rest _:c14n138 .
 _:c14n137 rdf:first linkml:Float ;
 	rdf:rest _:c14n136 .
-_:c14n138 a rdfs:Datatype ;
-	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:c14n139 .
-_:c14n139 rdf:first _:c14n140 ;
+_:c14n138 rdf:first _:c14n139 ;
 	rdf:rest rdf:nil .
+_:c14n139 a rdfs:Datatype ;
+	owl:onDatatype xsd:integer ;
+	owl:withRestrictions _:c14n140 .
 _:c14n14 a owl:Restriction ;
 	rdfs:subClassOf ckgd:Framework ;
 	owl:onProperty ckg:entity_type ;
 	owl:someValuesFrom ckgd:Framework .
-_:c14n140 xsd:minInclusive 0 .
-_:c14n141 rdf:first _:c14n142 ;
+_:c14n140 rdf:first _:c14n141 ;
 	rdf:rest rdf:nil .
-_:c14n142 xsd:maxInclusive 1 .
-_:c14n143 a rdfs:Datatype ;
-	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:c14n144 .
-_:c14n144 rdf:first _:c14n145 ;
-	rdf:rest rdf:nil .
-_:c14n145 xsd:minInclusive 0 .
-_:c14n146 rdf:first _:c14n143 ;
-	rdf:rest _:c14n148 .
-_:c14n147 rdf:first linkml:Float ;
-	rdf:rest _:c14n146 .
-_:c14n148 rdf:first _:c14n149 ;
-	rdf:rest rdf:nil .
-_:c14n149 a rdfs:Datatype ;
+_:c14n141 xsd:maxInclusive 1 .
+_:c14n142 a rdfs:Datatype ;
 	owl:onDatatype xsd:integer ;
 	owl:withRestrictions _:c14n150 .
+_:c14n143 rdf:first _:c14n142 ;
+	rdf:rest rdf:nil .
+_:c14n144 rdf:first _:c14n147 ;
+	rdf:rest _:c14n143 .
+_:c14n145 rdf:first linkml:Float ;
+	rdf:rest _:c14n144 .
+_:c14n146 a rdfs:Datatype ;
+	owl:intersectionOf _:c14n145 .
+_:c14n147 a rdfs:Datatype ;
+	owl:onDatatype xsd:integer ;
+	owl:withRestrictions _:c14n148 .
+_:c14n148 rdf:first _:c14n149 ;
+	rdf:rest rdf:nil .
+_:c14n149 xsd:minInclusive 0 .
 _:c14n15 rdf:first ckgd:CoreConditionType\#version ;
 	rdf:rest _:c14n30 .
 _:c14n150 rdf:first _:c14n151 ;
@@ -855,50 +855,52 @@ _:c14n150 rdf:first _:c14n151 ;
 _:c14n151 xsd:maxInclusive 1 .
 _:c14n152 a rdfs:Datatype ;
 	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:c14n160 .
+	owl:withRestrictions _:c14n156 .
 _:c14n153 rdf:first _:c14n152 ;
 	rdf:rest rdf:nil .
-_:c14n154 rdf:first _:c14n157 ;
+_:c14n154 rdf:first linkml:Integer ;
 	rdf:rest _:c14n153 .
-_:c14n155 rdf:first linkml:Float ;
-	rdf:rest _:c14n154 .
-_:c14n156 a rdfs:Datatype ;
-	owl:intersectionOf _:c14n155 .
-_:c14n157 a rdfs:Datatype ;
-	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:c14n158 .
-_:c14n158 rdf:first _:c14n159 ;
+_:c14n155 a rdfs:Datatype ;
+	owl:intersectionOf _:c14n154 .
+_:c14n156 rdf:first _:c14n157 ;
 	rdf:rest rdf:nil .
-_:c14n159 xsd:minInclusive 0 .
+_:c14n157 xsd:minInclusive 0 .
+_:c14n158 a rdfs:Datatype ;
+	owl:onDatatype xsd:integer ;
+	owl:withRestrictions _:c14n161 .
+_:c14n159 rdf:first _:c14n158 ;
+	rdf:rest rdf:nil .
 _:c14n16 rdf:first ckgd:ExtractionMethod\#metadata ;
-	rdf:rest _:c14n110 .
-_:c14n160 rdf:first _:c14n161 ;
+	rdf:rest _:c14n111 .
+_:c14n160 rdf:first linkml:Integer ;
+	rdf:rest _:c14n159 .
+_:c14n161 rdf:first _:c14n162 ;
 	rdf:rest rdf:nil .
-_:c14n161 xsd:maxInclusive 1 .
-_:c14n162 a rdfs:Datatype ;
+_:c14n162 xsd:minInclusive 0 .
+_:c14n163 a rdfs:Datatype ;
 	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:c14n165 .
-_:c14n163 rdf:first _:c14n162 ;
+	owl:withRestrictions _:c14n164 .
+_:c14n164 rdf:first _:c14n165 ;
 	rdf:rest rdf:nil .
-_:c14n164 rdf:first linkml:Integer ;
-	rdf:rest _:c14n163 .
-_:c14n165 rdf:first _:c14n166 ;
+_:c14n165 xsd:minInclusive 0 .
+_:c14n166 rdf:first _:c14n163 ;
+	rdf:rest _:c14n169 .
+_:c14n167 rdf:first linkml:Float ;
+	rdf:rest _:c14n166 .
+_:c14n168 a rdfs:Datatype ;
+	owl:intersectionOf _:c14n167 .
+_:c14n169 rdf:first _:c14n170 ;
 	rdf:rest rdf:nil .
-_:c14n166 xsd:minInclusive 0 .
-_:c14n167 a rdfs:Datatype ;
-	owl:onDatatype xsd:integer ;
-	owl:withRestrictions _:c14n170 .
-_:c14n168 rdf:first _:c14n167 ;
-	rdf:rest rdf:nil .
-_:c14n169 rdf:first linkml:Integer ;
-	rdf:rest _:c14n168 .
 _:c14n17 a owl:Restriction ;
 	rdfs:subClassOf ckgd:Task ;
 	owl:onProperty ckg:entity_type ;
 	owl:someValuesFrom ckgd:Task .
-_:c14n170 rdf:first _:c14n171 ;
+_:c14n170 a rdfs:Datatype ;
+	owl:onDatatype xsd:integer ;
+	owl:withRestrictions _:c14n171 .
+_:c14n171 rdf:first _:c14n172 ;
 	rdf:rest rdf:nil .
-_:c14n171 xsd:minInclusive 0 .
+_:c14n172 xsd:maxInclusive 1 .
 _:c14n18 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty ckg:confidence .
@@ -909,7 +911,7 @@ _:c14n2 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty ckgd:policy_effect .
 _:c14n20 rdf:first ckgd:CoreConditionType\#environment ;
-	rdf:rest _:c14n87 .
+	rdf:rest _:c14n88 .
 _:c14n21 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty ckgd:limit_unit .
@@ -917,7 +919,7 @@ _:c14n22 a owl:Restriction ;
 	owl:cardinality 1 ;
 	owl:onProperty ckg:type .
 _:c14n23 a owl:Restriction ;
-	owl:allValuesFrom _:c14n115 ;
+	owl:allValuesFrom _:c14n116 ;
 	owl:onProperty ckg:end .
 _:c14n24 a owl:Restriction ;
 	rdfs:subClassOf ckgd:SecurityConcept ;
@@ -954,9 +956,9 @@ _:c14n33 a owl:Restriction ;
 	owl:cardinality 1 ;
 	owl:onProperty ckg:method .
 _:c14n34 rdf:first ckgd:ConditionType\#region ;
-	rdf:rest _:c14n86 .
+	rdf:rest _:c14n87 .
 _:c14n35 rdf:first ckgd:ExtractionMethod\#llm ;
-	rdf:rest _:c14n104 .
+	rdf:rest _:c14n105 .
 _:c14n36 a owl:Restriction ;
 	rdfs:subClassOf ckgd:Role ;
 	owl:onProperty ckg:entity_type ;
@@ -966,7 +968,7 @@ _:c14n37 a owl:Restriction ;
 	owl:onProperty ckg:entity_type ;
 	owl:someValuesFrom ckgd:ModelType .
 _:c14n38 a owl:Restriction ;
-	owl:allValuesFrom _:c14n156 ;
+	owl:allValuesFrom _:c14n146 ;
 	owl:onProperty ckg:score .
 _:c14n39 a owl:Restriction ;
 	owl:cardinality 1 ;
@@ -1013,7 +1015,7 @@ _:c14n5 a owl:Restriction ;
 	owl:onProperty ckg:entity_type ;
 	owl:someValuesFrom ckgd:Resource .
 _:c14n50 a rdfs:Datatype ;
-	owl:intersectionOf _:c14n137 .
+	owl:intersectionOf _:c14n127 .
 _:c14n51 a owl:Restriction ;
 	rdfs:subClassOf ckgd:Policy ;
 	owl:onProperty ckg:entity_type ;
@@ -1025,7 +1027,7 @@ _:c14n53 a owl:Restriction ;
 	owl:cardinality 1 ;
 	owl:onProperty ckg:source_doc .
 _:c14n54 rdf:first ckgd:ConditionType\#environment ;
-	rdf:rest _:c14n71 .
+	rdf:rest _:c14n72 .
 _:c14n55 rdf:first ckgd:ReleaseStatus\#deprecated ;
 	rdf:rest _:c14n8 .
 _:c14n56 a owl:Restriction ;
@@ -1042,7 +1044,7 @@ _:c14n59 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty ckg:negated .
 _:c14n6 rdf:first ckgd:ConditionType\#network_mode ;
-	rdf:rest _:c14n102 .
+	rdf:rest _:c14n103 .
 _:c14n60 a owl:Restriction ;
 	rdfs:subClassOf ckgd:FeatureStoreEntity ;
 	owl:onProperty ckg:entity_type ;
@@ -1052,129 +1054,130 @@ _:c14n61 a owl:Restriction ;
 	owl:onProperty ckg:entity_type ;
 	owl:someValuesFrom ckgd:Metric .
 _:c14n62 a owl:Restriction ;
-	owl:allValuesFrom _:c14n129 ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ckg:vocab_id .
+_:c14n63 a owl:Restriction ;
+	owl:allValuesFrom _:c14n168 ;
 	owl:onProperty ckg:confidence .
-_:c14n63 rdf:first ckgd:ConditionType\#model_flavor ;
+_:c14n64 rdf:first ckgd:ConditionType\#model_flavor ;
 	rdf:rest _:c14n6 .
-_:c14n64 a owl:Restriction ;
+_:c14n65 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty ckgd:issue_status .
-_:c14n65 a owl:Restriction ;
+_:c14n66 a owl:Restriction ;
 	rdfs:subClassOf ckgd:Region ;
 	owl:onProperty ckg:entity_type ;
 	owl:someValuesFrom ckgd:Region .
-_:c14n66 rdf:first ckgd:ConditionType\#version ;
+_:c14n67 rdf:first ckgd:ConditionType\#version ;
 	rdf:rest _:c14n31 .
-_:c14n67 a owl:Restriction ;
+_:c14n68 a owl:Restriction ;
 	rdfs:subClassOf ckgd:AzureService ;
 	owl:onProperty ckg:entity_type ;
 	owl:someValuesFrom ckgd:AzureService .
-_:c14n68 rdf:first ckgd:ConditionType\#other ;
+_:c14n69 rdf:first ckgd:ConditionType\#other ;
 	rdf:rest _:c14n34 .
-_:c14n69 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty ckg:extracted_at .
 _:c14n7 a owl:Restriction ;
 	owl:cardinality 1 ;
 	owl:onProperty ckg:start .
 _:c14n70 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ckg:extracted_at .
+_:c14n71 a owl:Restriction ;
 	rdfs:subClassOf ckgd:Asset ;
 	owl:onProperty ckg:entity_type ;
 	owl:someValuesFrom ckgd:Asset .
-_:c14n71 rdf:first ckgd:ConditionType\#time ;
-	rdf:rest _:c14n68 .
-_:c14n72 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty ckg:model .
+_:c14n72 rdf:first ckgd:ConditionType\#time ;
+	rdf:rest _:c14n69 .
 _:c14n73 a owl:Restriction ;
 	owl:maxCardinality 1 ;
-	owl:onProperty ckg:entity_type .
+	owl:onProperty ckg:model .
 _:c14n74 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ckg:entity_type .
+_:c14n75 a owl:Restriction ;
 	owl:cardinality 1 ;
 	owl:onProperty ckg:label .
-_:c14n75 a owl:Restriction ;
+_:c14n76 a owl:Restriction ;
 	rdfs:subClassOf ckgd:Job ;
 	owl:onProperty ckg:entity_type ;
 	owl:someValuesFrom ckgd:Job .
-_:c14n76 a owl:Restriction ;
-	owl:allValuesFrom _:c14n121 ;
-	owl:onProperty ckg:start .
 _:c14n77 a owl:Restriction ;
+	owl:allValuesFrom _:c14n155 ;
+	owl:onProperty ckg:start .
+_:c14n78 a owl:Restriction ;
 	rdfs:subClassOf ckgd:ErrorMessage ;
 	owl:onProperty ckg:entity_type ;
 	owl:someValuesFrom ckgd:ErrorMessage .
-_:c14n78 rdf:first ckgd:ReleaseStatus\#generally_available ;
+_:c14n79 rdf:first ckgd:ReleaseStatus\#generally_available ;
 	rdf:rest _:c14n55 .
-_:c14n79 a owl:Restriction ;
-	owl:cardinality 1 ;
-	owl:onProperty ckg:method .
 _:c14n8 rdf:first ckgd:ReleaseStatus\#retired ;
 	rdf:rest rdf:nil .
 _:c14n80 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty ckg:object_value .
+	owl:cardinality 1 ;
+	owl:onProperty ckg:method .
 _:c14n81 a owl:Restriction ;
 	owl:maxCardinality 1 ;
-	owl:onProperty ckgd:resolution_text .
+	owl:onProperty ckg:object_value .
 _:c14n82 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ckgd:resolution_text .
+_:c14n83 a owl:Restriction ;
 	rdfs:subClassOf ckgd:KnownIssue ;
 	owl:onProperty ckg:entity_type ;
 	owl:someValuesFrom ckgd:KnownIssue .
-_:c14n83 a owl:Restriction ;
+_:c14n84 a owl:Restriction ;
 	rdfs:subClassOf ckg:Entity ;
 	owl:onProperty ckg:entity_type ;
 	owl:someValuesFrom ckg:Entity .
-_:c14n84 a owl:Restriction ;
+_:c14n85 a owl:Restriction ;
 	rdfs:subClassOf ckgd:IdentityConcept ;
 	owl:onProperty ckg:entity_type ;
 	owl:someValuesFrom ckgd:IdentityConcept .
-_:c14n85 a owl:Restriction ;
+_:c14n86 a owl:Restriction ;
 	rdfs:subClassOf ckgd:DesignerComponent ;
 	owl:onProperty ckg:entity_type ;
 	owl:someValuesFrom ckgd:DesignerComponent .
-_:c14n86 rdf:first ckgd:ConditionType\#release_status ;
-	rdf:rest _:c14n103 .
-_:c14n87 rdf:first ckgd:CoreConditionType\#time ;
-	rdf:rest _:c14n109 .
-_:c14n88 a owl:Restriction ;
+_:c14n87 rdf:first ckgd:ConditionType\#release_status ;
+	rdf:rest _:c14n104 .
+_:c14n88 rdf:first ckgd:CoreConditionType\#time ;
+	rdf:rest _:c14n110 .
+_:c14n89 a owl:Restriction ;
 	rdfs:subClassOf ckgd:Permission ;
 	owl:onProperty ckg:entity_type ;
 	owl:someValuesFrom ckgd:Permission .
-_:c14n89 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty ckg:predicted_class .
 _:c14n9 a owl:Restriction ;
 	rdfs:subClassOf ckgd:Algorithm ;
 	owl:onProperty ckg:entity_type ;
 	owl:someValuesFrom ckgd:Algorithm .
 _:c14n90 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ckg:predicted_class .
+_:c14n91 a owl:Restriction ;
 	owl:cardinality 1 ;
 	owl:onProperty ckg:subject .
-_:c14n91 a owl:Restriction ;
+_:c14n92 a owl:Restriction ;
 	rdfs:subClassOf ckgd:Endpoint ;
 	owl:onProperty ckg:entity_type ;
 	owl:someValuesFrom ckgd:Endpoint .
-_:c14n92 a owl:Restriction ;
+_:c14n93 a owl:Restriction ;
 	owl:maxCardinality 1 ;
 	owl:onProperty ckgd:cause_text .
-_:c14n93 a owl:Restriction ;
+_:c14n94 a owl:Restriction ;
 	rdfs:subClassOf ckgd:Limit ;
 	owl:onProperty ckg:entity_type ;
 	owl:someValuesFrom ckgd:Limit .
-_:c14n94 a owl:Restriction ;
-	owl:maxCardinality 1 ;
-	owl:onProperty ckgd:limit_value .
 _:c14n95 a owl:Restriction ;
 	owl:maxCardinality 1 ;
-	owl:onProperty ckg:end .
+	owl:onProperty ckgd:limit_value .
 _:c14n96 a owl:Restriction ;
+	owl:maxCardinality 1 ;
+	owl:onProperty ckg:end .
+_:c14n97 a owl:Restriction ;
 	rdfs:subClassOf ckgd:Deployment ;
 	owl:onProperty ckg:entity_type ;
 	owl:someValuesFrom ckgd:Deployment .
-_:c14n97 a rdfs:Datatype ;
-	owl:intersectionOf _:c14n164 .
-_:c14n98 a owl:Restriction ;
+_:c14n98 a rdfs:Datatype ;
+	owl:intersectionOf _:c14n160 .
+_:c14n99 a owl:Restriction ;
 	owl:cardinality 1 ;
 	owl:onProperty ckg:predicate .
-_:c14n99 rdf:first ckgd:ConditionType\#endpoint_type ;
-	rdf:rest _:c14n63 .

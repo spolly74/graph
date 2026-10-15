@@ -202,7 +202,7 @@ class Entity(ConfiguredBaseModel):
     entity_type: Literal["Entity"] = Field(default="Entity", description="""The entity's class name, so serialized entities keep their type.""", json_schema_extra = { "linkml_meta": {'designates_type': True, 'domain_of': ['Entity']} })
     label: str = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:prefLabel'} })
     aliases: Optional[list[str]] = Field(default=None, description="""Every surface form seen for the entity, kept by resolution.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:altLabel'} })
-    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity was matched to, if any.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:exactMatch'} })
+    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity', 'Mention'], 'slot_uri': 'skos:exactMatch'} })
 
 
 class Mention(ConfiguredBaseModel):
@@ -220,6 +220,7 @@ class Mention(ConfiguredBaseModel):
     end: int = Field(default=..., description="""Character offset in the chunk's normalized text, exclusive.""", ge=0, json_schema_extra = { "linkml_meta": {'domain_of': ['Mention', 'Provenance']} })
     text: str = Field(default=..., description="""The mentioned text. Must equal the chunk text from start to end.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Mention']} })
     predicted_class: Optional[str] = Field(default=None, description="""The schema class the extractor assigned before resolution.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Mention']} })
+    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity', 'Mention'], 'slot_uri': 'skos:exactMatch'} })
     entity: Optional[str] = Field(default=None, description="""The canonical entity, set by resolution.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Mention']} })
     method: ExtractionMethod = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['Mention', 'Provenance']} })
     score: Optional[float] = Field(default=None, ge=0, le=1, json_schema_extra = { "linkml_meta": {'domain_of': ['Mention']} })
@@ -327,7 +328,7 @@ class DomainEntity(Entity):
     entity_type: Literal["DomainEntity"] = Field(default="DomainEntity", description="""The entity's class name, so serialized entities keep their type.""", json_schema_extra = { "linkml_meta": {'designates_type': True, 'domain_of': ['Entity']} })
     label: str = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:prefLabel'} })
     aliases: Optional[list[str]] = Field(default=None, description="""Every surface form seen for the entity, kept by resolution.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:altLabel'} })
-    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity was matched to, if any.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:exactMatch'} })
+    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity', 'Mention'], 'slot_uri': 'skos:exactMatch'} })
 
 
 class Product(DomainEntity, Lifecycle):
@@ -366,7 +367,7 @@ class Product(DomainEntity, Lifecycle):
     entity_type: Literal["Product"] = Field(default="Product", description="""The entity's class name, so serialized entities keep their type.""", json_schema_extra = { "linkml_meta": {'designates_type': True, 'domain_of': ['Entity']} })
     label: str = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:prefLabel'} })
     aliases: Optional[list[str]] = Field(default=None, description="""Every surface form seen for the entity, kept by resolution.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:altLabel'} })
-    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity was matched to, if any.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:exactMatch'} })
+    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity', 'Mention'], 'slot_uri': 'skos:exactMatch'} })
 
 
 class Interface(DomainEntity, Lifecycle):
@@ -405,7 +406,7 @@ class Interface(DomainEntity, Lifecycle):
     entity_type: Literal["Interface"] = Field(default="Interface", description="""The entity's class name, so serialized entities keep their type.""", json_schema_extra = { "linkml_meta": {'designates_type': True, 'domain_of': ['Entity']} })
     label: str = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:prefLabel'} })
     aliases: Optional[list[str]] = Field(default=None, description="""Every surface form seen for the entity, kept by resolution.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:altLabel'} })
-    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity was matched to, if any.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:exactMatch'} })
+    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity', 'Mention'], 'slot_uri': 'skos:exactMatch'} })
 
 
 class Capability(DomainEntity, Lifecycle):
@@ -444,7 +445,7 @@ class Capability(DomainEntity, Lifecycle):
     entity_type: Literal["Capability"] = Field(default="Capability", description="""The entity's class name, so serialized entities keep their type.""", json_schema_extra = { "linkml_meta": {'designates_type': True, 'domain_of': ['Entity']} })
     label: str = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:prefLabel'} })
     aliases: Optional[list[str]] = Field(default=None, description="""Every surface form seen for the entity, kept by resolution.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:altLabel'} })
-    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity was matched to, if any.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:exactMatch'} })
+    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity', 'Mention'], 'slot_uri': 'skos:exactMatch'} })
 
 
 class Resource(DomainEntity, Lifecycle):
@@ -483,7 +484,7 @@ class Resource(DomainEntity, Lifecycle):
     entity_type: Literal["Resource"] = Field(default="Resource", description="""The entity's class name, so serialized entities keep their type.""", json_schema_extra = { "linkml_meta": {'designates_type': True, 'domain_of': ['Entity']} })
     label: str = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:prefLabel'} })
     aliases: Optional[list[str]] = Field(default=None, description="""Every surface form seen for the entity, kept by resolution.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:altLabel'} })
-    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity was matched to, if any.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:exactMatch'} })
+    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity', 'Mention'], 'slot_uri': 'skos:exactMatch'} })
 
 
 class ComputeTarget(Resource):
@@ -523,7 +524,7 @@ class ComputeTarget(Resource):
     entity_type: Literal["ComputeTarget"] = Field(default="ComputeTarget", description="""The entity's class name, so serialized entities keep their type.""", json_schema_extra = { "linkml_meta": {'designates_type': True, 'domain_of': ['Entity']} })
     label: str = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:prefLabel'} })
     aliases: Optional[list[str]] = Field(default=None, description="""Every surface form seen for the entity, kept by resolution.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:altLabel'} })
-    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity was matched to, if any.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:exactMatch'} })
+    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity', 'Mention'], 'slot_uri': 'skos:exactMatch'} })
 
 
 class Endpoint(Resource):
@@ -562,7 +563,7 @@ class Endpoint(Resource):
     entity_type: Literal["Endpoint"] = Field(default="Endpoint", description="""The entity's class name, so serialized entities keep their type.""", json_schema_extra = { "linkml_meta": {'designates_type': True, 'domain_of': ['Entity']} })
     label: str = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:prefLabel'} })
     aliases: Optional[list[str]] = Field(default=None, description="""Every surface form seen for the entity, kept by resolution.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:altLabel'} })
-    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity was matched to, if any.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:exactMatch'} })
+    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity', 'Mention'], 'slot_uri': 'skos:exactMatch'} })
 
 
 class Deployment(Resource):
@@ -602,7 +603,7 @@ class Deployment(Resource):
     entity_type: Literal["Deployment"] = Field(default="Deployment", description="""The entity's class name, so serialized entities keep their type.""", json_schema_extra = { "linkml_meta": {'designates_type': True, 'domain_of': ['Entity']} })
     label: str = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:prefLabel'} })
     aliases: Optional[list[str]] = Field(default=None, description="""Every surface form seen for the entity, kept by resolution.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:altLabel'} })
-    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity was matched to, if any.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:exactMatch'} })
+    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity', 'Mention'], 'slot_uri': 'skos:exactMatch'} })
 
 
 class FeatureStoreEntity(Resource):
@@ -641,7 +642,7 @@ class FeatureStoreEntity(Resource):
     entity_type: Literal["FeatureStoreEntity"] = Field(default="FeatureStoreEntity", description="""The entity's class name, so serialized entities keep their type.""", json_schema_extra = { "linkml_meta": {'designates_type': True, 'domain_of': ['Entity']} })
     label: str = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:prefLabel'} })
     aliases: Optional[list[str]] = Field(default=None, description="""Every surface form seen for the entity, kept by resolution.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:altLabel'} })
-    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity was matched to, if any.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:exactMatch'} })
+    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity', 'Mention'], 'slot_uri': 'skos:exactMatch'} })
 
 
 class Asset(DomainEntity, Lifecycle):
@@ -682,7 +683,7 @@ class Asset(DomainEntity, Lifecycle):
     entity_type: Literal["Asset"] = Field(default="Asset", description="""The entity's class name, so serialized entities keep their type.""", json_schema_extra = { "linkml_meta": {'designates_type': True, 'domain_of': ['Entity']} })
     label: str = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:prefLabel'} })
     aliases: Optional[list[str]] = Field(default=None, description="""Every surface form seen for the entity, kept by resolution.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:altLabel'} })
-    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity was matched to, if any.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:exactMatch'} })
+    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity', 'Mention'], 'slot_uri': 'skos:exactMatch'} })
 
 
 class DesignerComponent(Asset):
@@ -723,7 +724,7 @@ class DesignerComponent(Asset):
     entity_type: Literal["DesignerComponent"] = Field(default="DesignerComponent", description="""The entity's class name, so serialized entities keep their type.""", json_schema_extra = { "linkml_meta": {'designates_type': True, 'domain_of': ['Entity']} })
     label: str = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:prefLabel'} })
     aliases: Optional[list[str]] = Field(default=None, description="""Every surface form seen for the entity, kept by resolution.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:altLabel'} })
-    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity was matched to, if any.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:exactMatch'} })
+    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity', 'Mention'], 'slot_uri': 'skos:exactMatch'} })
 
 
 class PromptFlowTool(Asset):
@@ -764,7 +765,7 @@ class PromptFlowTool(Asset):
     entity_type: Literal["PromptFlowTool"] = Field(default="PromptFlowTool", description="""The entity's class name, so serialized entities keep their type.""", json_schema_extra = { "linkml_meta": {'designates_type': True, 'domain_of': ['Entity']} })
     label: str = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:prefLabel'} })
     aliases: Optional[list[str]] = Field(default=None, description="""Every surface form seen for the entity, kept by resolution.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:altLabel'} })
-    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity was matched to, if any.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:exactMatch'} })
+    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity', 'Mention'], 'slot_uri': 'skos:exactMatch'} })
 
 
 class DataType(DomainEntity):
@@ -801,7 +802,7 @@ class DataType(DomainEntity):
     entity_type: Literal["DataType"] = Field(default="DataType", description="""The entity's class name, so serialized entities keep their type.""", json_schema_extra = { "linkml_meta": {'designates_type': True, 'domain_of': ['Entity']} })
     label: str = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:prefLabel'} })
     aliases: Optional[list[str]] = Field(default=None, description="""Every surface form seen for the entity, kept by resolution.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:altLabel'} })
-    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity was matched to, if any.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:exactMatch'} })
+    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity', 'Mention'], 'slot_uri': 'skos:exactMatch'} })
 
 
 class ModelType(DomainEntity):
@@ -838,7 +839,7 @@ class ModelType(DomainEntity):
     entity_type: Literal["ModelType"] = Field(default="ModelType", description="""The entity's class name, so serialized entities keep their type.""", json_schema_extra = { "linkml_meta": {'designates_type': True, 'domain_of': ['Entity']} })
     label: str = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:prefLabel'} })
     aliases: Optional[list[str]] = Field(default=None, description="""Every surface form seen for the entity, kept by resolution.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:altLabel'} })
-    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity was matched to, if any.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:exactMatch'} })
+    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity', 'Mention'], 'slot_uri': 'skos:exactMatch'} })
 
 
 class Framework(DomainEntity):
@@ -876,7 +877,7 @@ class Framework(DomainEntity):
     entity_type: Literal["Framework"] = Field(default="Framework", description="""The entity's class name, so serialized entities keep their type.""", json_schema_extra = { "linkml_meta": {'designates_type': True, 'domain_of': ['Entity']} })
     label: str = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:prefLabel'} })
     aliases: Optional[list[str]] = Field(default=None, description="""Every surface form seen for the entity, kept by resolution.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:altLabel'} })
-    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity was matched to, if any.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:exactMatch'} })
+    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity', 'Mention'], 'slot_uri': 'skos:exactMatch'} })
 
 
 class Job(DomainEntity):
@@ -914,7 +915,7 @@ class Job(DomainEntity):
     entity_type: Literal["Job"] = Field(default="Job", description="""The entity's class name, so serialized entities keep their type.""", json_schema_extra = { "linkml_meta": {'designates_type': True, 'domain_of': ['Entity']} })
     label: str = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:prefLabel'} })
     aliases: Optional[list[str]] = Field(default=None, description="""Every surface form seen for the entity, kept by resolution.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:altLabel'} })
-    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity was matched to, if any.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:exactMatch'} })
+    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity', 'Mention'], 'slot_uri': 'skos:exactMatch'} })
 
 
 class AutomlTask(DomainEntity):
@@ -951,7 +952,7 @@ class AutomlTask(DomainEntity):
     entity_type: Literal["AutomlTask"] = Field(default="AutomlTask", description="""The entity's class name, so serialized entities keep their type.""", json_schema_extra = { "linkml_meta": {'designates_type': True, 'domain_of': ['Entity']} })
     label: str = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:prefLabel'} })
     aliases: Optional[list[str]] = Field(default=None, description="""Every surface form seen for the entity, kept by resolution.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:altLabel'} })
-    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity was matched to, if any.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:exactMatch'} })
+    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity', 'Mention'], 'slot_uri': 'skos:exactMatch'} })
 
 
 class Algorithm(DomainEntity):
@@ -988,7 +989,7 @@ class Algorithm(DomainEntity):
     entity_type: Literal["Algorithm"] = Field(default="Algorithm", description="""The entity's class name, so serialized entities keep their type.""", json_schema_extra = { "linkml_meta": {'designates_type': True, 'domain_of': ['Entity']} })
     label: str = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:prefLabel'} })
     aliases: Optional[list[str]] = Field(default=None, description="""Every surface form seen for the entity, kept by resolution.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:altLabel'} })
-    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity was matched to, if any.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:exactMatch'} })
+    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity', 'Mention'], 'slot_uri': 'skos:exactMatch'} })
 
 
 class YamlSchema(DomainEntity):
@@ -1025,7 +1026,7 @@ class YamlSchema(DomainEntity):
     entity_type: Literal["YamlSchema"] = Field(default="YamlSchema", description="""The entity's class name, so serialized entities keep their type.""", json_schema_extra = { "linkml_meta": {'designates_type': True, 'domain_of': ['Entity']} })
     label: str = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:prefLabel'} })
     aliases: Optional[list[str]] = Field(default=None, description="""Every surface form seen for the entity, kept by resolution.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:altLabel'} })
-    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity was matched to, if any.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:exactMatch'} })
+    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity', 'Mention'], 'slot_uri': 'skos:exactMatch'} })
 
 
 class AzureService(DomainEntity):
@@ -1062,7 +1063,7 @@ class AzureService(DomainEntity):
     entity_type: Literal["AzureService"] = Field(default="AzureService", description="""The entity's class name, so serialized entities keep their type.""", json_schema_extra = { "linkml_meta": {'designates_type': True, 'domain_of': ['Entity']} })
     label: str = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:prefLabel'} })
     aliases: Optional[list[str]] = Field(default=None, description="""Every surface form seen for the entity, kept by resolution.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:altLabel'} })
-    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity was matched to, if any.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:exactMatch'} })
+    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity', 'Mention'], 'slot_uri': 'skos:exactMatch'} })
 
 
 class SecurityConcept(DomainEntity):
@@ -1102,7 +1103,7 @@ class SecurityConcept(DomainEntity):
     entity_type: Literal["SecurityConcept"] = Field(default="SecurityConcept", description="""The entity's class name, so serialized entities keep their type.""", json_schema_extra = { "linkml_meta": {'designates_type': True, 'domain_of': ['Entity']} })
     label: str = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:prefLabel'} })
     aliases: Optional[list[str]] = Field(default=None, description="""Every surface form seen for the entity, kept by resolution.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:altLabel'} })
-    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity was matched to, if any.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:exactMatch'} })
+    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity', 'Mention'], 'slot_uri': 'skos:exactMatch'} })
 
 
 class IdentityConcept(DomainEntity):
@@ -1139,7 +1140,7 @@ class IdentityConcept(DomainEntity):
     entity_type: Literal["IdentityConcept"] = Field(default="IdentityConcept", description="""The entity's class name, so serialized entities keep their type.""", json_schema_extra = { "linkml_meta": {'designates_type': True, 'domain_of': ['Entity']} })
     label: str = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:prefLabel'} })
     aliases: Optional[list[str]] = Field(default=None, description="""Every surface form seen for the entity, kept by resolution.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:altLabel'} })
-    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity was matched to, if any.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:exactMatch'} })
+    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity', 'Mention'], 'slot_uri': 'skos:exactMatch'} })
 
 
 class Role(DomainEntity):
@@ -1177,7 +1178,7 @@ class Role(DomainEntity):
     entity_type: Literal["Role"] = Field(default="Role", description="""The entity's class name, so serialized entities keep their type.""", json_schema_extra = { "linkml_meta": {'designates_type': True, 'domain_of': ['Entity']} })
     label: str = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:prefLabel'} })
     aliases: Optional[list[str]] = Field(default=None, description="""Every surface form seen for the entity, kept by resolution.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:altLabel'} })
-    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity was matched to, if any.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:exactMatch'} })
+    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity', 'Mention'], 'slot_uri': 'skos:exactMatch'} })
 
 
 class Permission(DomainEntity):
@@ -1214,7 +1215,7 @@ class Permission(DomainEntity):
     entity_type: Literal["Permission"] = Field(default="Permission", description="""The entity's class name, so serialized entities keep their type.""", json_schema_extra = { "linkml_meta": {'designates_type': True, 'domain_of': ['Entity']} })
     label: str = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:prefLabel'} })
     aliases: Optional[list[str]] = Field(default=None, description="""Every surface form seen for the entity, kept by resolution.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:altLabel'} })
-    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity was matched to, if any.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:exactMatch'} })
+    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity', 'Mention'], 'slot_uri': 'skos:exactMatch'} })
 
 
 class Policy(DomainEntity):
@@ -1253,7 +1254,7 @@ class Policy(DomainEntity):
     entity_type: Literal["Policy"] = Field(default="Policy", description="""The entity's class name, so serialized entities keep their type.""", json_schema_extra = { "linkml_meta": {'designates_type': True, 'domain_of': ['Entity']} })
     label: str = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:prefLabel'} })
     aliases: Optional[list[str]] = Field(default=None, description="""Every surface form seen for the entity, kept by resolution.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:altLabel'} })
-    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity was matched to, if any.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:exactMatch'} })
+    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity', 'Mention'], 'slot_uri': 'skos:exactMatch'} })
 
 
 class Region(DomainEntity):
@@ -1290,7 +1291,7 @@ class Region(DomainEntity):
     entity_type: Literal["Region"] = Field(default="Region", description="""The entity's class name, so serialized entities keep their type.""", json_schema_extra = { "linkml_meta": {'designates_type': True, 'domain_of': ['Entity']} })
     label: str = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:prefLabel'} })
     aliases: Optional[list[str]] = Field(default=None, description="""Every surface form seen for the entity, kept by resolution.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:altLabel'} })
-    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity was matched to, if any.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:exactMatch'} })
+    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity', 'Mention'], 'slot_uri': 'skos:exactMatch'} })
 
 
 class Limit(DomainEntity):
@@ -1330,7 +1331,7 @@ class Limit(DomainEntity):
     entity_type: Literal["Limit"] = Field(default="Limit", description="""The entity's class name, so serialized entities keep their type.""", json_schema_extra = { "linkml_meta": {'designates_type': True, 'domain_of': ['Entity']} })
     label: str = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:prefLabel'} })
     aliases: Optional[list[str]] = Field(default=None, description="""Every surface form seen for the entity, kept by resolution.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:altLabel'} })
-    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity was matched to, if any.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:exactMatch'} })
+    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity', 'Mention'], 'slot_uri': 'skos:exactMatch'} })
 
 
 class Metric(DomainEntity):
@@ -1367,7 +1368,7 @@ class Metric(DomainEntity):
     entity_type: Literal["Metric"] = Field(default="Metric", description="""The entity's class name, so serialized entities keep their type.""", json_schema_extra = { "linkml_meta": {'designates_type': True, 'domain_of': ['Entity']} })
     label: str = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:prefLabel'} })
     aliases: Optional[list[str]] = Field(default=None, description="""Every surface form seen for the entity, kept by resolution.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:altLabel'} })
-    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity was matched to, if any.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:exactMatch'} })
+    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity', 'Mention'], 'slot_uri': 'skos:exactMatch'} })
 
 
 class Task(DomainEntity):
@@ -1405,7 +1406,7 @@ class Task(DomainEntity):
     entity_type: Literal["Task"] = Field(default="Task", description="""The entity's class name, so serialized entities keep their type.""", json_schema_extra = { "linkml_meta": {'designates_type': True, 'domain_of': ['Entity']} })
     label: str = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:prefLabel'} })
     aliases: Optional[list[str]] = Field(default=None, description="""Every surface form seen for the entity, kept by resolution.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:altLabel'} })
-    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity was matched to, if any.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:exactMatch'} })
+    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity', 'Mention'], 'slot_uri': 'skos:exactMatch'} })
 
 
 class KnownIssue(DomainEntity):
@@ -1444,7 +1445,7 @@ class KnownIssue(DomainEntity):
     entity_type: Literal["KnownIssue"] = Field(default="KnownIssue", description="""The entity's class name, so serialized entities keep their type.""", json_schema_extra = { "linkml_meta": {'designates_type': True, 'domain_of': ['Entity']} })
     label: str = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:prefLabel'} })
     aliases: Optional[list[str]] = Field(default=None, description="""Every surface form seen for the entity, kept by resolution.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:altLabel'} })
-    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity was matched to, if any.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:exactMatch'} })
+    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity', 'Mention'], 'slot_uri': 'skos:exactMatch'} })
 
 
 class ErrorMessage(DomainEntity):
@@ -1484,7 +1485,7 @@ class ErrorMessage(DomainEntity):
     entity_type: Literal["ErrorMessage"] = Field(default="ErrorMessage", description="""The entity's class name, so serialized entities keep their type.""", json_schema_extra = { "linkml_meta": {'designates_type': True, 'domain_of': ['Entity']} })
     label: str = Field(default=..., json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:prefLabel'} })
     aliases: Optional[list[str]] = Field(default=None, description="""Every surface form seen for the entity, kept by resolution.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:altLabel'} })
-    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity was matched to, if any.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity'], 'slot_uri': 'skos:exactMatch'} })
+    vocab_id: Optional[str] = Field(default=None, description="""The vocabulary concept this entity or mention was matched to, if any. Tier 1 sets it on mentions; resolution sets it on entities.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Entity', 'Mention'], 'slot_uri': 'skos:exactMatch'} })
 
 
 # Model rebuild

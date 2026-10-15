@@ -28,6 +28,20 @@ def sample_config_dict() -> dict:
             "preview_include_patterns": ["*preview*"],
             "front_matter_keys": ["title", "description", "ms.topic", "ms.subservice", "ms.date", "author"],
         },
+        "extract": {
+            "vocabulary": str(PROJECT / "vocab" / "vocabulary.ttl"),
+            "mask": {"code_blocks": True, "link_targets": True, "directives": True, "html_comments": True, "callouts": True},
+            "tier1": {"case_sensitive_single_token": True, "match_plurals": True},
+            "tier2": {
+                "model": "urchade/gliner_medium-v2.1",
+                "revision": "40ec419335d09393f298636f471328b722c6da9e",
+                "threshold": 0.5,
+                "max_words": 250,
+                "batch_size": 8,
+                "label_overrides": {"AzureService": "Azure service"},
+                "exclude_classes": [],
+            },
+        },
     }
 
 
