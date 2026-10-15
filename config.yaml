@@ -1,0 +1,104 @@
+# Pipeline configuration. Every setting lives here (DESIGN section 9).
+# Relative paths resolve against this file's directory.
+# Later phases add chunking, extraction, resolution, store, and evaluation.
+
+paths:
+  out_dir: data/out
+  review_dir: review
+  state_db: data/out/state.sqlite
+
+corpus:
+  # Local clone of spolly74/azure-ai-docs in a sibling folder of this repo.
+  repo_root: ../azure-ai-docs
+  base_dir: articles/machine-learning
+  # Full scope, for later runs.
+  exclude:
+    - v1/**
+    - data-science-virtual-machine/**
+    - includes/**          # resolved into articles, not ingested on their own
+    - "**/media/**"
+  external_include_prefixes:  # left as placeholders (DESIGN 5.1)
+    - ~/reusable-content/
+    - ~/azure-policy-autogen-docs/
+  # First run: articles cited by eval/competency_questions.md, plus known
+  # issues, a few YAML schema references, troubleshooting articles, and
+  # sample designer components. 77 articles, about 172K words before includes.
+  # Remove `include` to run the full scope.
+  include:
+    - azure-machine-learning-release-notes-cli-v2.md
+    - component-reference-v2/classification.md
+    - component-reference/score-model.md
+    - component-reference/split-data.md
+    - component-reference/train-model.md
+    - concept-automated-ml.md
+    - concept-automl-forecasting-calendar-features.md
+    - concept-automl-forecasting-deep-learning.md
+    - concept-automl-forecasting-lags.md
+    - concept-automl-forecasting-methods.md
+    - concept-compute-instance.md
+    - concept-compute-target.md
+    - concept-customer-managed-keys.md
+    - concept-data-collection.md
+    - concept-data-encryption.md
+    - concept-data.md
+    - concept-endpoint-serverless-availability.md
+    - concept-endpoints-batch.md
+    - concept-endpoints-online-auth.md
+    - concept-endpoints-online.md
+    - concept-endpoints.md
+    - concept-environments.md
+    - concept-machine-learning-registries-mlops.md
+    - concept-ml-pipelines.md
+    - concept-mlflow-models.md
+    - concept-model-monitoring.md
+    - concept-secure-network-traffic-flow.md
+    - concept-top-level-entities-in-managed-feature-store.md
+    - concept-what-is-managed-feature-store.md
+    - data-import-migration-guide.md
+    - how-to-access-data-batch-endpoints-jobs.md
+    - how-to-administrate-data-authentication.md
+    - how-to-assign-roles.md
+    - how-to-attach-kubernetes-anywhere.md
+    - how-to-attach-kubernetes-to-workspace.md
+    - how-to-authenticate-online-endpoint.md
+    - how-to-configure-auto-train.md
+    - how-to-configure-network-isolation-with-v2.md
+    - how-to-configure-private-link.md
+    - how-to-create-attach-compute-cluster.md
+    - how-to-datastore.md
+    - how-to-deploy-kubernetes-extension.md
+    - how-to-deploy-mlflow-models.md
+    - how-to-identity-based-service-authentication.md
+    - how-to-integrate-azure-policy.md
+    - how-to-manage-quotas.md
+    - how-to-manage-registries.md
+    - how-to-managed-network.md
+    - how-to-mltable.md
+    - how-to-monitor-model-performance.md
+    - how-to-network-isolation-planning.md
+    - how-to-network-security-overview.md
+    - how-to-safely-rollout-online-endpoints.md
+    - how-to-setup-authentication.md
+    - how-to-share-data-across-workspaces-with-registries.md
+    - how-to-share-models-pipelines-across-workspaces-with-registries.md
+    - how-to-troubleshoot-batch-endpoints.md
+    - how-to-troubleshoot-managed-network.md
+    - how-to-troubleshoot-online-endpoints.md
+    - how-to-use-batch-model-deployments.md
+    - how-to-use-parallel-job-in-pipeline.md
+    - how-to-use-serverless-compute.md
+    - how-to-use-sweep-in-pipeline.md
+    - known-issues/azure-machine-learning-known-issues.md
+    - known-issues/inferencing-invalid-certificate.md
+    - known-issues/inferencing-updating-kubernetes-compute-appears-to-succeed.md
+    - policy-reference.md
+    - prompt-flow/migrate-prompt-flow-to-agent-framework.md
+    - reference-yaml-compute-aml.md
+    - reference-yaml-datastore-blob.md
+    - reference-yaml-deployment-managed-online.md
+    - reference-yaml-endpoint-batch.md
+    - reference-yaml-endpoint-online.md
+    - reference-yaml-job-command.md
+    - resource-curated-environments.md
+    - resource-limits-capacity.md
+    - security-controls-policy.md

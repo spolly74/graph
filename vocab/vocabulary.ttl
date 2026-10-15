@@ -1,0 +1,2177 @@
+# Draft vocabulary for the Azure Machine Learning docs corpus.
+# Generated 2026-10-15 by tools/draft_vocabulary.py. Owned by Scott; edit freely.
+# ckg:domainClass on each scheme names the domain.yaml class its concepts map to (proposed, not decided).
+
+@prefix v: <https://example.org/ckg/vocab/> .
+@prefix ckg: <https://example.org/ckg/vocab/terms#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+
+v:scheme-platform a skos:ConceptScheme ;
+    skos:prefLabel "Platforms and products"@en ;
+    ckg:domainClass "Product" .
+
+v:scheme-resource a skos:ConceptScheme ;
+    skos:prefLabel "Azure Machine Learning resources"@en ;
+    ckg:domainClass "Resource" .
+
+v:scheme-compute a skos:ConceptScheme ;
+    skos:prefLabel "Compute types"@en ;
+    ckg:domainClass "ComputeTarget" .
+
+v:scheme-endpoint a skos:ConceptScheme ;
+    skos:prefLabel "Endpoint types"@en ;
+    ckg:domainClass "Endpoint" .
+
+v:scheme-deployment a skos:ConceptScheme ;
+    skos:prefLabel "Deployment types"@en ;
+    ckg:domainClass "Deployment" .
+
+v:scheme-asset a skos:ConceptScheme ;
+    skos:prefLabel "Asset types"@en ;
+    ckg:domainClass "Asset" .
+
+v:scheme-data_type a skos:ConceptScheme ;
+    skos:prefLabel "Data types"@en ;
+    ckg:domainClass "DataType" .
+
+v:scheme-job a skos:ConceptScheme ;
+    skos:prefLabel "Job types"@en ;
+    ckg:domainClass "Job" .
+
+v:scheme-model_type a skos:ConceptScheme ;
+    skos:prefLabel "Model types and formats"@en ;
+    ckg:domainClass "ModelType" .
+
+v:scheme-automl_task a skos:ConceptScheme ;
+    skos:prefLabel "AutoML task types"@en ;
+    ckg:domainClass "AutomlTask" .
+
+v:scheme-feature_store a skos:ConceptScheme ;
+    skos:prefLabel "Managed feature store entities"@en ;
+    ckg:domainClass "FeatureStoreEntity" .
+
+v:scheme-azure_service a skos:ConceptScheme ;
+    skos:prefLabel "Associated Azure services"@en ;
+    ckg:domainClass "AzureService" .
+
+v:scheme-security a skos:ConceptScheme ;
+    skos:prefLabel "Security and networking concepts"@en ;
+    ckg:domainClass "SecurityConcept" .
+
+v:scheme-identity a skos:ConceptScheme ;
+    skos:prefLabel "Identity and access concepts"@en ;
+    ckg:domainClass "IdentityConcept" .
+
+v:scheme-role a skos:ConceptScheme ;
+    skos:prefLabel "Built-in roles"@en ;
+    ckg:domainClass "Role" .
+
+v:scheme-interface a skos:ConceptScheme ;
+    skos:prefLabel "Developer interfaces and tools"@en ;
+    ckg:domainClass "Interface" .
+
+v:scheme-capability a skos:ConceptScheme ;
+    skos:prefLabel "Product capabilities"@en ;
+    ckg:domainClass "Capability" .
+
+v:scheme-designer_component a skos:ConceptScheme ;
+    skos:prefLabel "Designer components"@en ;
+    ckg:domainClass "DesignerComponent" .
+
+v:scheme-yaml_schema a skos:ConceptScheme ;
+    skos:prefLabel "CLI v2 YAML schemas"@en ;
+    ckg:domainClass "YamlSchema" .
+
+v:scheme-promptflow_tool a skos:ConceptScheme ;
+    skos:prefLabel "Prompt flow tools"@en ;
+    ckg:domainClass "PromptFlowTool" .
+
+v:azure-machine-learning a skos:Concept ;
+    skos:inScheme v:scheme-platform ;
+    skos:prefLabel "Azure Machine Learning"@en ;
+    skos:altLabel "Azure ML"@en ;
+    skos:altLabel "AzureML"@en ;
+    skos:altLabel "AML"@en ;
+    skos:altLabel "Machine Learning"@en ;
+    skos:topConceptOf v:scheme-platform ;
+    dct:source "articles/machine-learning/overview-what-is-azure-machine-learning.md" .
+
+v:azure-machine-learning-studio a skos:Concept ;
+    skos:inScheme v:scheme-platform ;
+    skos:prefLabel "Azure Machine Learning studio"@en ;
+    skos:altLabel "Machine Learning studio"@en ;
+    skos:topConceptOf v:scheme-platform ;
+    dct:source "articles/machine-learning/overview-what-is-azure-machine-learning.md" .
+
+v:microsoft-foundry a skos:Concept ;
+    skos:inScheme v:scheme-platform ;
+    skos:prefLabel "Microsoft Foundry"@en ;
+    skos:altLabel "Foundry"@en ;
+    skos:altLabel "Azure AI Foundry"@en ;
+    skos:altLabel "Azure AI Studio"@en ;
+    skos:topConceptOf v:scheme-platform ;
+    dct:source "articles/machine-learning/overview-what-is-azure-machine-learning.md" .
+
+v:prompt-flow a skos:Concept ;
+    skos:inScheme v:scheme-platform ;
+    skos:prefLabel "prompt flow"@en ;
+    skos:altLabel "promptflow"@en ;
+    skos:topConceptOf v:scheme-platform ;
+    dct:source "articles/machine-learning/prompt-flow/overview-what-is-prompt-flow.md" .
+
+v:microsoft-agent-framework a skos:Concept ;
+    skos:inScheme v:scheme-platform ;
+    skos:prefLabel "Microsoft Agent Framework"@en ;
+    skos:altLabel "Agent Framework"@en ;
+    skos:topConceptOf v:scheme-platform ;
+    dct:source "articles/machine-learning/prompt-flow/migrate-prompt-flow-to-agent-framework.md" .
+
+v:mlflow a skos:Concept ;
+    skos:inScheme v:scheme-platform ;
+    skos:prefLabel "MLflow"@en ;
+    skos:topConceptOf v:scheme-platform ;
+    dct:source "articles/machine-learning/concept-mlflow.md" .
+
+v:microsoft-fabric a skos:Concept ;
+    skos:inScheme v:scheme-platform ;
+    skos:prefLabel "Microsoft Fabric"@en ;
+    skos:altLabel "Fabric"@en ;
+    skos:topConceptOf v:scheme-platform ;
+    dct:source "articles/machine-learning/data-import-migration-guide.md" .
+
+v:onnx a skos:Concept ;
+    skos:inScheme v:scheme-platform ;
+    skos:prefLabel "ONNX"@en ;
+    skos:altLabel "Open Neural Network Exchange"@en ;
+    skos:altLabel "ONNX Runtime"@en ;
+    skos:topConceptOf v:scheme-platform ;
+    dct:source "articles/machine-learning/concept-onnx.md" .
+
+v:apache-spark a skos:Concept ;
+    skos:inScheme v:scheme-platform ;
+    skos:prefLabel "Apache Spark"@en ;
+    skos:altLabel "Spark"@en ;
+    skos:topConceptOf v:scheme-platform ;
+    dct:source "articles/machine-learning/apache-spark-azure-ml-concepts.md" .
+
+v:model-catalog a skos:Concept ;
+    skos:inScheme v:scheme-platform ;
+    skos:prefLabel "model catalog"@en ;
+    skos:topConceptOf v:scheme-platform ;
+    dct:source "articles/machine-learning/foundry-models-overview.md" .
+
+v:hugging-face-hub a skos:Concept ;
+    skos:inScheme v:scheme-platform ;
+    skos:prefLabel "Hugging Face Hub"@en ;
+    skos:altLabel "Hugging Face"@en ;
+    skos:topConceptOf v:scheme-platform .
+
+v:workspace a skos:Concept ;
+    skos:inScheme v:scheme-resource ;
+    skos:prefLabel "workspace"@en ;
+    skos:altLabel "Azure Machine Learning workspace"@en ;
+    skos:altLabel "Machine Learning workspace"@en ;
+    skos:topConceptOf v:scheme-resource ;
+    dct:source "articles/machine-learning/azure-machine-learning-glossary.md" .
+
+v:hub-workspace a skos:Concept ;
+    skos:inScheme v:scheme-resource ;
+    skos:prefLabel "hub workspace"@en ;
+    skos:broader v:workspace ;
+    dct:source "articles/machine-learning/concept-hub-workspace.md" .
+
+v:project-workspace a skos:Concept ;
+    skos:inScheme v:scheme-resource ;
+    skos:prefLabel "project workspace"@en ;
+    skos:broader v:workspace ;
+    dct:source "articles/machine-learning/concept-hub-workspace.md" .
+
+v:registry a skos:Concept ;
+    skos:inScheme v:scheme-resource ;
+    skos:prefLabel "registry"@en ;
+    skos:altLabel "Azure Machine Learning registry"@en ;
+    skos:altLabel "machine learning registry"@en ;
+    skos:topConceptOf v:scheme-resource ;
+    dct:source "articles/machine-learning/concept-machine-learning-registries-mlops.md" .
+
+v:datastore a skos:Concept ;
+    skos:inScheme v:scheme-resource ;
+    skos:prefLabel "datastore"@en ;
+    skos:altLabel "data store"@en ;
+    skos:topConceptOf v:scheme-resource ;
+    dct:source "articles/machine-learning/azure-machine-learning-glossary.md" .
+
+v:connection a skos:Concept ;
+    skos:inScheme v:scheme-resource ;
+    skos:prefLabel "connection"@en ;
+    skos:altLabel "workspace connection"@en ;
+    skos:topConceptOf v:scheme-resource ;
+    dct:source "articles/machine-learning/how-to-connection.md" .
+
+v:compute a skos:Concept ;
+    skos:inScheme v:scheme-compute ;
+    skos:prefLabel "compute"@en ;
+    skos:altLabel "compute target"@en ;
+    skos:altLabel "compute resource"@en ;
+    skos:topConceptOf v:scheme-compute ;
+    dct:source "articles/machine-learning/azure-machine-learning-glossary.md" .
+
+v:endpoint a skos:Concept ;
+    skos:inScheme v:scheme-endpoint ;
+    skos:prefLabel "endpoint"@en ;
+    skos:topConceptOf v:scheme-endpoint ;
+    dct:source "articles/machine-learning/concept-endpoints.md" .
+
+v:deployment a skos:Concept ;
+    skos:inScheme v:scheme-deployment ;
+    skos:prefLabel "deployment"@en ;
+    skos:topConceptOf v:scheme-deployment ;
+    dct:source "articles/machine-learning/concept-endpoints.md" .
+
+v:schedule a skos:Concept ;
+    skos:inScheme v:scheme-resource ;
+    skos:prefLabel "schedule"@en ;
+    skos:topConceptOf v:scheme-resource ;
+    dct:source "articles/machine-learning/how-to-schedule-pipeline-job.md" .
+
+v:model-monitor a skos:Concept ;
+    skos:inScheme v:scheme-resource ;
+    skos:prefLabel "model monitor"@en ;
+    skos:altLabel "model monitoring"@en ;
+    skos:topConceptOf v:scheme-resource ;
+    dct:source "articles/machine-learning/concept-model-monitoring.md" .
+
+v:compute-cluster a skos:Concept ;
+    skos:inScheme v:scheme-compute ;
+    skos:prefLabel "compute cluster"@en ;
+    skos:altLabel "Azure Machine Learning compute cluster"@en ;
+    skos:altLabel "AmlCompute"@en ;
+    skos:altLabel "training cluster"@en ;
+    skos:broader v:compute ;
+    dct:source "articles/machine-learning/azure-machine-learning-glossary.md" .
+
+v:compute-instance a skos:Concept ;
+    skos:inScheme v:scheme-compute ;
+    skos:prefLabel "compute instance"@en ;
+    skos:altLabel "Azure Machine Learning compute instance"@en ;
+    skos:altLabel "ComputeInstance"@en ;
+    skos:broader v:compute ;
+    dct:source "articles/machine-learning/azure-machine-learning-glossary.md" .
+
+v:serverless-compute a skos:Concept ;
+    skos:inScheme v:scheme-compute ;
+    skos:prefLabel "serverless compute"@en ;
+    skos:altLabel "Azure Machine Learning serverless compute"@en ;
+    skos:broader v:compute ;
+    dct:source "articles/machine-learning/how-to-use-serverless-compute.md" .
+
+v:kubernetes-compute a skos:Concept ;
+    skos:inScheme v:scheme-compute ;
+    skos:prefLabel "Kubernetes compute"@en ;
+    skos:altLabel "Kubernetes compute target"@en ;
+    skos:altLabel "KubernetesCompute"@en ;
+    skos:altLabel "Azure Machine Learning Kubernetes"@en ;
+    skos:altLabel "Kubernetes cluster"@en ;
+    skos:broader v:compute ;
+    dct:source "articles/machine-learning/how-to-attach-kubernetes-anywhere.md" .
+
+v:attached-compute a skos:Concept ;
+    skos:inScheme v:scheme-compute ;
+    skos:prefLabel "attached compute"@en ;
+    skos:broader v:compute ;
+    dct:source "articles/machine-learning/azure-machine-learning-glossary.md" .
+
+v:remote-vm a skos:Concept ;
+    skos:inScheme v:scheme-compute ;
+    skos:prefLabel "remote VM"@en ;
+    skos:altLabel "attached virtual machine"@en ;
+    skos:altLabel "remote virtual machine"@en ;
+    skos:broader v:attached-compute ;
+    dct:source "articles/machine-learning/concept-compute-target.md" .
+
+v:synapse-spark-pool a skos:Concept ;
+    skos:inScheme v:scheme-compute ;
+    skos:prefLabel "Synapse Spark pool"@en ;
+    skos:altLabel "Apache Spark pool"@en ;
+    skos:altLabel "attached Synapse Spark pool"@en ;
+    skos:broader v:attached-compute ;
+    dct:source "articles/machine-learning/how-to-manage-synapse-spark-pool.md" .
+
+v:serverless-spark-compute a skos:Concept ;
+    skos:inScheme v:scheme-compute ;
+    skos:prefLabel "serverless Spark compute"@en ;
+    skos:altLabel "serverless Spark"@en ;
+    skos:broader v:compute ;
+    dct:source "articles/machine-learning/apache-spark-azure-ml-concepts.md" .
+
+v:azure-databricks-compute a skos:Concept ;
+    skos:inScheme v:scheme-compute ;
+    skos:prefLabel "Azure Databricks"@en ;
+    skos:altLabel "Databricks"@en ;
+    skos:broader v:attached-compute ;
+    dct:source "articles/machine-learning/concept-compute-target.md" .
+
+v:azure-hdinsight a skos:Concept ;
+    skos:inScheme v:scheme-compute ;
+    skos:prefLabel "Azure HDInsight"@en ;
+    skos:altLabel "HDInsight"@en ;
+    skos:broader v:attached-compute ;
+    dct:source "articles/machine-learning/concept-compute-target.md" .
+
+v:azure-batch a skos:Concept ;
+    skos:inScheme v:scheme-compute ;
+    skos:prefLabel "Azure Batch"@en ;
+    skos:broader v:attached-compute ;
+    dct:source "articles/machine-learning/concept-compute-target.md" .
+
+v:azure-data-lake-analytics a skos:Concept ;
+    skos:inScheme v:scheme-compute ;
+    skos:prefLabel "Azure Data Lake Analytics"@en ;
+    skos:broader v:attached-compute ;
+    dct:source "articles/machine-learning/concept-compute-target.md" .
+
+v:compute-session a skos:Concept ;
+    skos:inScheme v:scheme-compute ;
+    skos:prefLabel "compute session"@en ;
+    skos:altLabel "prompt flow compute session"@en ;
+    skos:topConceptOf v:scheme-compute ;
+    dct:source "articles/machine-learning/prompt-flow/concept-session.md" .
+
+v:instance-type a skos:Concept ;
+    skos:inScheme v:scheme-compute ;
+    skos:prefLabel "instance type"@en ;
+    skos:topConceptOf v:scheme-compute ;
+    dct:source "articles/machine-learning/how-to-manage-kubernetes-instance-types.md" .
+
+v:online-endpoint a skos:Concept ;
+    skos:inScheme v:scheme-endpoint ;
+    skos:prefLabel "online endpoint"@en ;
+    skos:altLabel "real-time endpoint"@en ;
+    skos:broader v:endpoint ;
+    dct:source "articles/machine-learning/concept-endpoints-online.md" .
+
+v:managed-online-endpoint a skos:Concept ;
+    skos:inScheme v:scheme-endpoint ;
+    skos:prefLabel "managed online endpoint"@en ;
+    skos:broader v:online-endpoint ;
+    dct:source "articles/machine-learning/concept-endpoints-online.md" .
+
+v:kubernetes-online-endpoint a skos:Concept ;
+    skos:inScheme v:scheme-endpoint ;
+    skos:prefLabel "Kubernetes online endpoint"@en ;
+    skos:broader v:online-endpoint ;
+    dct:source "articles/machine-learning/concept-endpoints-online.md" .
+
+v:batch-endpoint a skos:Concept ;
+    skos:inScheme v:scheme-endpoint ;
+    skos:prefLabel "batch endpoint"@en ;
+    skos:broader v:endpoint ;
+    dct:source "articles/machine-learning/concept-endpoints-batch.md" .
+
+v:serverless-api-endpoint a skos:Concept ;
+    skos:inScheme v:scheme-endpoint ;
+    skos:prefLabel "serverless API endpoint"@en ;
+    skos:altLabel "serverless API"@en ;
+    skos:altLabel "standard deployment"@en ;
+    skos:altLabel "serverless API deployment"@en ;
+    skos:broader v:endpoint ;
+    dct:source "articles/machine-learning/how-to-deploy-models-serverless.md" .
+
+v:online-deployment a skos:Concept ;
+    skos:inScheme v:scheme-deployment ;
+    skos:prefLabel "online deployment"@en ;
+    skos:broader v:deployment ;
+    dct:source "articles/machine-learning/concept-endpoints-online.md" .
+
+v:batch-deployment a skos:Concept ;
+    skos:inScheme v:scheme-deployment ;
+    skos:prefLabel "batch deployment"@en ;
+    skos:broader v:deployment ;
+    dct:source "articles/machine-learning/concept-endpoints-batch.md" .
+
+v:pipeline-component-deployment a skos:Concept ;
+    skos:inScheme v:scheme-deployment ;
+    skos:prefLabel "pipeline component deployment"@en ;
+    skos:broader v:batch-deployment ;
+    dct:source "articles/machine-learning/concept-endpoints-batch.md" .
+
+v:deployment-template a skos:Concept ;
+    skos:inScheme v:scheme-asset ;
+    skos:prefLabel "deployment template"@en ;
+    skos:topConceptOf v:scheme-asset ;
+    dct:source "articles/machine-learning/concept-deployment-template.md" .
+
+v:inference-router a skos:Concept ;
+    skos:inScheme v:scheme-resource ;
+    skos:prefLabel "inference router"@en ;
+    skos:altLabel "azureml-fe"@en ;
+    skos:topConceptOf v:scheme-resource ;
+    dct:source "articles/machine-learning/how-to-kubernetes-inference-routing-azureml-fe.md" .
+
+v:scoring-script a skos:Concept ;
+    skos:inScheme v:scheme-asset ;
+    skos:prefLabel "scoring script"@en ;
+    skos:altLabel "entry script"@en ;
+    skos:altLabel "score.py"@en ;
+    skos:topConceptOf v:scheme-asset ;
+    dct:source "articles/machine-learning/how-to-deploy-online-endpoints.md" .
+
+v:safe-rollout a skos:Concept ;
+    skos:inScheme v:scheme-capability ;
+    skos:prefLabel "safe rollout"@en ;
+    skos:altLabel "blue-green deployment"@en ;
+    skos:altLabel "mirrored traffic"@en ;
+    skos:altLabel "traffic mirroring"@en ;
+    skos:topConceptOf v:scheme-capability ;
+    dct:source "articles/machine-learning/how-to-safely-rollout-online-endpoints.md" .
+
+v:data-asset a skos:Concept ;
+    skos:inScheme v:scheme-asset ;
+    skos:prefLabel "data asset"@en ;
+    skos:altLabel "dataset"@en ;
+    skos:topConceptOf v:scheme-asset ;
+    dct:source "articles/machine-learning/concept-data.md" .
+
+v:model a skos:Concept ;
+    skos:inScheme v:scheme-asset ;
+    skos:prefLabel "model"@en ;
+    skos:altLabel "registered model"@en ;
+    skos:altLabel "model asset"@en ;
+    skos:topConceptOf v:scheme-asset ;
+    dct:source "articles/machine-learning/azure-machine-learning-glossary.md" .
+
+v:environment a skos:Concept ;
+    skos:inScheme v:scheme-asset ;
+    skos:prefLabel "environment"@en ;
+    skos:topConceptOf v:scheme-asset ;
+    dct:source "articles/machine-learning/azure-machine-learning-glossary.md" .
+
+v:curated-environment a skos:Concept ;
+    skos:inScheme v:scheme-asset ;
+    skos:prefLabel "curated environment"@en ;
+    skos:broader v:environment ;
+    dct:source "articles/machine-learning/resource-curated-environments.md" .
+
+v:custom-environment a skos:Concept ;
+    skos:inScheme v:scheme-asset ;
+    skos:prefLabel "custom environment"@en ;
+    skos:broader v:environment ;
+    dct:source "articles/machine-learning/azure-machine-learning-glossary.md" .
+
+v:component a skos:Concept ;
+    skos:inScheme v:scheme-asset ;
+    skos:prefLabel "component"@en ;
+    skos:topConceptOf v:scheme-asset ;
+    dct:source "articles/machine-learning/azure-machine-learning-glossary.md" .
+
+v:pipeline-component a skos:Concept ;
+    skos:inScheme v:scheme-asset ;
+    skos:prefLabel "pipeline component"@en ;
+    skos:broader v:component ;
+    dct:source "articles/machine-learning/how-to-use-pipeline-component.md" .
+
+v:feature-set a skos:Concept ;
+    skos:inScheme v:scheme-asset ;
+    skos:prefLabel "feature set"@en ;
+    skos:altLabel "featureset"@en ;
+    skos:topConceptOf v:scheme-asset ;
+    dct:source "articles/machine-learning/concept-what-is-managed-feature-store.md" .
+
+v:index a skos:Concept ;
+    skos:inScheme v:scheme-asset ;
+    skos:prefLabel "index"@en ;
+    skos:altLabel "vector index"@en ;
+    skos:topConceptOf v:scheme-asset ;
+    dct:source "articles/machine-learning/how-to-create-vector-index.md" .
+
+v:flow a skos:Concept ;
+    skos:inScheme v:scheme-asset ;
+    skos:prefLabel "flow"@en ;
+    skos:altLabel "prompt flow flow"@en ;
+    skos:topConceptOf v:scheme-asset ;
+    dct:source "articles/machine-learning/prompt-flow/concept-flows.md" .
+
+v:uri-file a skos:Concept ;
+    skos:inScheme v:scheme-data_type ;
+    skos:prefLabel "uri_file"@en ;
+    skos:topConceptOf v:scheme-data_type ;
+    dct:source "articles/machine-learning/azure-machine-learning-glossary.md" .
+
+v:uri-folder a skos:Concept ;
+    skos:inScheme v:scheme-data_type ;
+    skos:prefLabel "uri_folder"@en ;
+    skos:topConceptOf v:scheme-data_type ;
+    dct:source "articles/machine-learning/azure-machine-learning-glossary.md" .
+
+v:mltable a skos:Concept ;
+    skos:inScheme v:scheme-data_type ;
+    skos:prefLabel "mltable"@en ;
+    skos:topConceptOf v:scheme-data_type ;
+    dct:source "articles/machine-learning/azure-machine-learning-glossary.md" .
+
+v:job a skos:Concept ;
+    skos:inScheme v:scheme-job ;
+    skos:prefLabel "job"@en ;
+    skos:topConceptOf v:scheme-job ;
+    dct:source "articles/machine-learning/how-to-train-model.md" .
+
+v:command-job a skos:Concept ;
+    skos:inScheme v:scheme-job ;
+    skos:prefLabel "command job"@en ;
+    skos:broader v:job ;
+    dct:source "articles/machine-learning/reference-yaml-job-command.md" .
+
+v:sweep-job a skos:Concept ;
+    skos:inScheme v:scheme-job ;
+    skos:prefLabel "sweep job"@en ;
+    skos:altLabel "hyperparameter sweep"@en ;
+    skos:altLabel "hyperparameter tuning"@en ;
+    skos:broader v:job ;
+    dct:source "articles/machine-learning/reference-yaml-job-sweep.md" .
+
+v:pipeline-job a skos:Concept ;
+    skos:inScheme v:scheme-job ;
+    skos:prefLabel "pipeline job"@en ;
+    skos:altLabel "pipeline"@en ;
+    skos:altLabel "machine learning pipeline"@en ;
+    skos:altLabel "ML pipeline"@en ;
+    skos:broader v:job ;
+    dct:source "articles/machine-learning/concept-ml-pipelines.md" .
+
+v:parallel-job a skos:Concept ;
+    skos:inScheme v:scheme-job ;
+    skos:prefLabel "parallel job"@en ;
+    skos:broader v:job ;
+    dct:source "articles/machine-learning/reference-yaml-job-parallel.md" .
+
+v:spark-job a skos:Concept ;
+    skos:inScheme v:scheme-job ;
+    skos:prefLabel "Spark job"@en ;
+    skos:broader v:job ;
+    dct:source "articles/machine-learning/reference-yaml-job-spark.md" .
+
+v:automl-job a skos:Concept ;
+    skos:inScheme v:scheme-job ;
+    skos:prefLabel "AutoML job"@en ;
+    skos:altLabel "automated ML job"@en ;
+    skos:broader v:job ;
+    dct:source "articles/machine-learning/concept-automated-ml.md" .
+
+v:data-import a skos:Concept ;
+    skos:inScheme v:scheme-job ;
+    skos:prefLabel "data import"@en ;
+    skos:topConceptOf v:scheme-job ;
+    dct:source "articles/machine-learning/how-to-import-data-assets.md" .
+
+v:custom-model a skos:Concept ;
+    skos:inScheme v:scheme-model_type ;
+    skos:prefLabel "custom_model"@en ;
+    skos:topConceptOf v:scheme-model_type ;
+    dct:source "articles/machine-learning/azure-machine-learning-glossary.md" .
+
+v:mlflow-model a skos:Concept ;
+    skos:inScheme v:scheme-model_type ;
+    skos:prefLabel "mlflow_model"@en ;
+    skos:altLabel "MLflow model"@en ;
+    skos:topConceptOf v:scheme-model_type ;
+    dct:source "articles/machine-learning/azure-machine-learning-glossary.md" .
+
+v:triton-model a skos:Concept ;
+    skos:inScheme v:scheme-model_type ;
+    skos:prefLabel "triton_model"@en ;
+    skos:altLabel "Triton model"@en ;
+    skos:topConceptOf v:scheme-model_type ;
+    dct:source "articles/machine-learning/azure-machine-learning-glossary.md" .
+
+v:classification a skos:Concept ;
+    skos:inScheme v:scheme-automl_task ;
+    skos:prefLabel "Classification"@en ;
+    skos:topConceptOf v:scheme-automl_task ;
+    dct:source "articles/machine-learning/concept-automated-ml.md" .
+
+v:regression a skos:Concept ;
+    skos:inScheme v:scheme-automl_task ;
+    skos:prefLabel "Regression"@en ;
+    skos:topConceptOf v:scheme-automl_task ;
+    dct:source "articles/machine-learning/concept-automated-ml.md" .
+
+v:forecasting a skos:Concept ;
+    skos:inScheme v:scheme-automl_task ;
+    skos:prefLabel "Forecasting"@en ;
+    skos:altLabel "time-series forecasting"@en ;
+    skos:altLabel "time series forecasting"@en ;
+    skos:topConceptOf v:scheme-automl_task ;
+    dct:source "articles/machine-learning/concept-automated-ml.md" .
+
+v:image-classification a skos:Concept ;
+    skos:inScheme v:scheme-automl_task ;
+    skos:prefLabel "Image Classification"@en ;
+    skos:topConceptOf v:scheme-automl_task ;
+    dct:source "articles/machine-learning/how-to-auto-train-image-models.md" .
+
+v:image-classification-multilabel a skos:Concept ;
+    skos:inScheme v:scheme-automl_task ;
+    skos:prefLabel "Image Classification Multilabel"@en ;
+    skos:topConceptOf v:scheme-automl_task ;
+    dct:source "articles/machine-learning/how-to-auto-train-image-models.md" .
+
+v:image-object-detection a skos:Concept ;
+    skos:inScheme v:scheme-automl_task ;
+    skos:prefLabel "Image Object Detection"@en ;
+    skos:altLabel "object detection"@en ;
+    skos:topConceptOf v:scheme-automl_task ;
+    dct:source "articles/machine-learning/how-to-auto-train-image-models.md" .
+
+v:image-instance-segmentation a skos:Concept ;
+    skos:inScheme v:scheme-automl_task ;
+    skos:prefLabel "Image Instance Segmentation"@en ;
+    skos:altLabel "instance segmentation"@en ;
+    skos:topConceptOf v:scheme-automl_task ;
+    dct:source "articles/machine-learning/how-to-auto-train-image-models.md" .
+
+v:text-classification a skos:Concept ;
+    skos:inScheme v:scheme-automl_task ;
+    skos:prefLabel "Text Classification"@en ;
+    skos:topConceptOf v:scheme-automl_task ;
+    dct:source "articles/machine-learning/how-to-auto-train-nlp-models.md" .
+
+v:text-classification-multilabel a skos:Concept ;
+    skos:inScheme v:scheme-automl_task ;
+    skos:prefLabel "Text Classification Multilabel"@en ;
+    skos:topConceptOf v:scheme-automl_task ;
+    dct:source "articles/machine-learning/how-to-auto-train-nlp-models.md" .
+
+v:text-ner a skos:Concept ;
+    skos:inScheme v:scheme-automl_task ;
+    skos:prefLabel "Text NER"@en ;
+    skos:altLabel "Named Entity Recognition"@en ;
+    skos:altLabel "NER"@en ;
+    skos:topConceptOf v:scheme-automl_task ;
+    dct:source "articles/machine-learning/how-to-auto-train-nlp-models.md" .
+
+v:feature-store a skos:Concept ;
+    skos:inScheme v:scheme-feature_store ;
+    skos:prefLabel "feature store"@en ;
+    skos:altLabel "managed feature store"@en ;
+    skos:topConceptOf v:scheme-feature_store ;
+    dct:source "articles/machine-learning/concept-what-is-managed-feature-store.md" .
+
+v:feature-store-entity a skos:Concept ;
+    skos:inScheme v:scheme-feature_store ;
+    skos:prefLabel "feature store entity"@en ;
+    skos:topConceptOf v:scheme-feature_store ;
+    dct:source "articles/machine-learning/concept-top-level-entities-in-managed-feature-store.md" .
+
+v:materialization a skos:Concept ;
+    skos:inScheme v:scheme-feature_store ;
+    skos:prefLabel "materialization"@en ;
+    skos:altLabel "feature set materialization"@en ;
+    skos:altLabel "offline materialization"@en ;
+    skos:altLabel "online materialization"@en ;
+    skos:topConceptOf v:scheme-feature_store ;
+    dct:source "articles/machine-learning/feature-set-materialization-concepts.md" .
+
+v:feature-retrieval-specification a skos:Concept ;
+    skos:inScheme v:scheme-feature_store ;
+    skos:prefLabel "feature retrieval specification"@en ;
+    skos:altLabel "feature retrieval spec"@en ;
+    skos:topConceptOf v:scheme-feature_store ;
+    dct:source "articles/machine-learning/feature-retrieval-concepts.md" .
+
+v:point-in-time-join a skos:Concept ;
+    skos:inScheme v:scheme-feature_store ;
+    skos:prefLabel "point-in-time join"@en ;
+    skos:topConceptOf v:scheme-feature_store ;
+    dct:source "articles/machine-learning/offline-retrieval-point-in-time-join-concepts.md" .
+
+v:azure-storage-account a skos:Concept ;
+    skos:inScheme v:scheme-azure_service ;
+    skos:prefLabel "Azure Storage account"@en ;
+    skos:altLabel "storage account"@en ;
+    skos:altLabel "Azure Storage"@en ;
+    skos:topConceptOf v:scheme-azure_service ;
+    dct:source "articles/machine-learning/concept-workspace.md" .
+
+v:azure-blob-storage a skos:Concept ;
+    skos:inScheme v:scheme-azure_service ;
+    skos:prefLabel "Azure Blob Storage"@en ;
+    skos:altLabel "Blob Storage"@en ;
+    skos:altLabel "Azure Blob"@en ;
+    skos:broader v:azure-storage-account ;
+    dct:source "articles/machine-learning/azure-machine-learning-glossary.md" .
+
+v:azure-files a skos:Concept ;
+    skos:inScheme v:scheme-azure_service ;
+    skos:prefLabel "Azure Files"@en ;
+    skos:altLabel "Azure file share"@en ;
+    skos:broader v:azure-storage-account ;
+    dct:source "articles/machine-learning/azure-machine-learning-glossary.md" .
+
+v:azure-data-lake-storage-gen2 a skos:Concept ;
+    skos:inScheme v:scheme-azure_service ;
+    skos:prefLabel "Azure Data Lake Storage Gen2"@en ;
+    skos:altLabel "ADLS Gen2"@en ;
+    skos:altLabel "Data Lake Storage Gen2"@en ;
+    skos:topConceptOf v:scheme-azure_service ;
+    dct:source "articles/machine-learning/azure-machine-learning-glossary.md" .
+
+v:azure-data-lake-storage-gen1 a skos:Concept ;
+    skos:inScheme v:scheme-azure_service ;
+    skos:prefLabel "Azure Data Lake Storage Gen1"@en ;
+    skos:altLabel "ADLS Gen1"@en ;
+    skos:altLabel "Data Lake Storage Gen1"@en ;
+    skos:topConceptOf v:scheme-azure_service ;
+    dct:source "articles/machine-learning/azure-machine-learning-glossary.md" .
+
+v:azure-key-vault a skos:Concept ;
+    skos:inScheme v:scheme-azure_service ;
+    skos:prefLabel "Azure Key Vault"@en ;
+    skos:altLabel "Key Vault"@en ;
+    skos:topConceptOf v:scheme-azure_service ;
+    dct:source "articles/machine-learning/concept-workspace.md" .
+
+v:azure-container-registry a skos:Concept ;
+    skos:inScheme v:scheme-azure_service ;
+    skos:prefLabel "Azure Container Registry"@en ;
+    skos:altLabel "ACR"@en ;
+    skos:topConceptOf v:scheme-azure_service ;
+    dct:source "articles/machine-learning/concept-workspace.md" .
+
+v:application-insights a skos:Concept ;
+    skos:inScheme v:scheme-azure_service ;
+    skos:prefLabel "Application Insights"@en ;
+    skos:altLabel "Azure Application Insights"@en ;
+    skos:topConceptOf v:scheme-azure_service ;
+    dct:source "articles/machine-learning/concept-workspace.md" .
+
+v:azure-monitor a skos:Concept ;
+    skos:inScheme v:scheme-azure_service ;
+    skos:prefLabel "Azure Monitor"@en ;
+    skos:topConceptOf v:scheme-azure_service ;
+    dct:source "articles/machine-learning/monitor-azure-machine-learning.md" .
+
+v:log-analytics-workspace a skos:Concept ;
+    skos:inScheme v:scheme-azure_service ;
+    skos:prefLabel "Log Analytics workspace"@en ;
+    skos:altLabel "Log Analytics"@en ;
+    skos:topConceptOf v:scheme-azure_service ;
+    dct:source "articles/machine-learning/monitor-azure-machine-learning.md" .
+
+v:azure-kubernetes-service a skos:Concept ;
+    skos:inScheme v:scheme-azure_service ;
+    skos:prefLabel "Azure Kubernetes Service"@en ;
+    skos:altLabel "AKS"@en ;
+    skos:topConceptOf v:scheme-azure_service ;
+    dct:source "articles/machine-learning/how-to-attach-kubernetes-anywhere.md" .
+
+v:azure-arc-enabled-kubernetes a skos:Concept ;
+    skos:inScheme v:scheme-azure_service ;
+    skos:prefLabel "Azure Arc-enabled Kubernetes"@en ;
+    skos:altLabel "Arc Kubernetes"@en ;
+    skos:altLabel "Arc-enabled Kubernetes"@en ;
+    skos:topConceptOf v:scheme-azure_service ;
+    dct:source "articles/machine-learning/how-to-attach-kubernetes-anywhere.md" .
+
+v:azure-synapse-analytics a skos:Concept ;
+    skos:inScheme v:scheme-azure_service ;
+    skos:prefLabel "Azure Synapse Analytics"@en ;
+    skos:altLabel "Azure Synapse"@en ;
+    skos:altLabel "Synapse"@en ;
+    skos:topConceptOf v:scheme-azure_service ;
+    dct:source "articles/machine-learning/how-to-manage-synapse-spark-pool.md" .
+
+v:azure-openai a skos:Concept ;
+    skos:inScheme v:scheme-azure_service ;
+    skos:prefLabel "Azure OpenAI"@en ;
+    skos:altLabel "Azure OpenAI Service"@en ;
+    skos:altLabel "Azure OpenAI in Foundry Models"@en ;
+    skos:topConceptOf v:scheme-azure_service .
+
+v:azure-ai-search a skos:Concept ;
+    skos:inScheme v:scheme-azure_service ;
+    skos:prefLabel "Azure AI Search"@en ;
+    skos:altLabel "AI Search"@en ;
+    skos:altLabel "Azure Cognitive Search"@en ;
+    skos:topConceptOf v:scheme-azure_service .
+
+v:azure-ai-content-safety a skos:Concept ;
+    skos:inScheme v:scheme-azure_service ;
+    skos:prefLabel "Azure AI Content Safety"@en ;
+    skos:altLabel "Content Safety"@en ;
+    skos:topConceptOf v:scheme-azure_service .
+
+v:azure-policy a skos:Concept ;
+    skos:inScheme v:scheme-azure_service ;
+    skos:prefLabel "Azure Policy"@en ;
+    skos:topConceptOf v:scheme-azure_service ;
+    dct:source "articles/machine-learning/how-to-integrate-azure-policy.md" .
+
+v:azure-devops a skos:Concept ;
+    skos:inScheme v:scheme-azure_service ;
+    skos:prefLabel "Azure DevOps"@en ;
+    skos:altLabel "Azure Pipelines"@en ;
+    skos:topConceptOf v:scheme-azure_service ;
+    dct:source "articles/machine-learning/how-to-devops-machine-learning.md" .
+
+v:github-actions a skos:Concept ;
+    skos:inScheme v:scheme-azure_service ;
+    skos:prefLabel "GitHub Actions"@en ;
+    skos:topConceptOf v:scheme-azure_service ;
+    dct:source "articles/machine-learning/how-to-github-actions-machine-learning.md" .
+
+v:azure-event-grid a skos:Concept ;
+    skos:inScheme v:scheme-azure_service ;
+    skos:prefLabel "Azure Event Grid"@en ;
+    skos:altLabel "Event Grid"@en ;
+    skos:topConceptOf v:scheme-azure_service ;
+    dct:source "articles/machine-learning/how-to-use-event-grid.md" .
+
+v:azure-firewall a skos:Concept ;
+    skos:inScheme v:scheme-azure_service ;
+    skos:prefLabel "Azure Firewall"@en ;
+    skos:topConceptOf v:scheme-azure_service ;
+    dct:source "articles/machine-learning/how-to-access-azureml-behind-firewall.md" .
+
+v:azure-private-dns a skos:Concept ;
+    skos:inScheme v:scheme-azure_service ;
+    skos:prefLabel "Azure Private DNS"@en ;
+    skos:altLabel "private DNS zone"@en ;
+    skos:topConceptOf v:scheme-azure_service ;
+    dct:source "articles/machine-learning/how-to-custom-dns.md" .
+
+v:managed-virtual-network a skos:Concept ;
+    skos:inScheme v:scheme-security ;
+    skos:prefLabel "managed virtual network"@en ;
+    skos:altLabel "managed VNet"@en ;
+    skos:altLabel "workspace managed virtual network"@en ;
+    skos:topConceptOf v:scheme-security ;
+    dct:source "articles/machine-learning/how-to-managed-network.md" .
+
+v:allow-internet-outbound a skos:Concept ;
+    skos:inScheme v:scheme-security ;
+    skos:prefLabel "allow internet outbound"@en ;
+    skos:broader v:managed-virtual-network ;
+    dct:source "articles/machine-learning/how-to-managed-network.md" .
+
+v:allow-only-approved-outbound a skos:Concept ;
+    skos:inScheme v:scheme-security ;
+    skos:prefLabel "allow only approved outbound"@en ;
+    skos:broader v:managed-virtual-network ;
+    dct:source "articles/machine-learning/how-to-managed-network.md" .
+
+v:outbound-rule a skos:Concept ;
+    skos:inScheme v:scheme-security ;
+    skos:prefLabel "outbound rule"@en ;
+    skos:topConceptOf v:scheme-security ;
+    dct:source "articles/machine-learning/how-to-managed-network.md" .
+
+v:azure-virtual-network a skos:Concept ;
+    skos:inScheme v:scheme-security ;
+    skos:prefLabel "Azure Virtual Network"@en ;
+    skos:altLabel "virtual network"@en ;
+    skos:altLabel "VNet"@en ;
+    skos:topConceptOf v:scheme-security ;
+    dct:source "articles/machine-learning/how-to-network-security-overview.md" .
+
+v:private-endpoint a skos:Concept ;
+    skos:inScheme v:scheme-security ;
+    skos:prefLabel "private endpoint"@en ;
+    skos:altLabel "Azure Private Link"@en ;
+    skos:altLabel "Private Link"@en ;
+    skos:topConceptOf v:scheme-security ;
+    dct:source "articles/machine-learning/how-to-configure-private-link.md" .
+
+v:service-tag a skos:Concept ;
+    skos:inScheme v:scheme-security ;
+    skos:prefLabel "service tag"@en ;
+    skos:topConceptOf v:scheme-security ;
+    dct:source "articles/machine-learning/how-to-access-azureml-behind-firewall.md" .
+
+v:service-endpoint a skos:Concept ;
+    skos:inScheme v:scheme-security ;
+    skos:prefLabel "service endpoint"@en ;
+    skos:topConceptOf v:scheme-security ;
+    dct:source "articles/machine-learning/how-to-network-security-overview.md" .
+
+v:network-security-group a skos:Concept ;
+    skos:inScheme v:scheme-security ;
+    skos:prefLabel "network security group"@en ;
+    skos:altLabel "NSG"@en ;
+    skos:topConceptOf v:scheme-security ;
+    dct:source "articles/machine-learning/how-to-network-security-overview.md" .
+
+v:no-public-ip a skos:Concept ;
+    skos:inScheme v:scheme-security ;
+    skos:prefLabel "no public IP"@en ;
+    skos:topConceptOf v:scheme-security ;
+    dct:source "articles/machine-learning/how-to-secure-training-vnet.md" .
+
+v:customer-managed-key a skos:Concept ;
+    skos:inScheme v:scheme-security ;
+    skos:prefLabel "customer-managed key"@en ;
+    skos:altLabel "CMK"@en ;
+    skos:altLabel "customer-managed keys"@en ;
+    skos:topConceptOf v:scheme-security ;
+    dct:source "articles/machine-learning/concept-customer-managed-keys.md" .
+
+v:microsoft-managed-key a skos:Concept ;
+    skos:inScheme v:scheme-security ;
+    skos:prefLabel "Microsoft-managed key"@en ;
+    skos:altLabel "Microsoft-managed keys"@en ;
+    skos:topConceptOf v:scheme-security ;
+    dct:source "articles/machine-learning/concept-data-encryption.md" .
+
+v:encryption-at-rest a skos:Concept ;
+    skos:inScheme v:scheme-security ;
+    skos:prefLabel "encryption at rest"@en ;
+    skos:topConceptOf v:scheme-security ;
+    dct:source "articles/machine-learning/concept-data-encryption.md" .
+
+v:encryption-in-transit a skos:Concept ;
+    skos:inScheme v:scheme-security ;
+    skos:prefLabel "encryption in transit"@en ;
+    skos:topConceptOf v:scheme-security ;
+    dct:source "articles/machine-learning/concept-data-encryption.md" .
+
+v:tls a skos:Concept ;
+    skos:inScheme v:scheme-security ;
+    skos:prefLabel "TLS"@en ;
+    skos:altLabel "TLS/SSL"@en ;
+    skos:altLabel "SSL"@en ;
+    skos:topConceptOf v:scheme-security ;
+    dct:source "articles/machine-learning/how-to-secure-kubernetes-online-endpoint.md" .
+
+v:soft-delete a skos:Concept ;
+    skos:inScheme v:scheme-security ;
+    skos:prefLabel "soft delete"@en ;
+    skos:topConceptOf v:scheme-security ;
+    dct:source "articles/machine-learning/concept-soft-delete.md" .
+
+v:disaster-recovery a skos:Concept ;
+    skos:inScheme v:scheme-security ;
+    skos:prefLabel "disaster recovery"@en ;
+    skos:altLabel "failover"@en ;
+    skos:altLabel "business continuity"@en ;
+    skos:topConceptOf v:scheme-security ;
+    dct:source "articles/machine-learning/how-to-high-availability-machine-learning.md" .
+
+v:vulnerability-management a skos:Concept ;
+    skos:inScheme v:scheme-security ;
+    skos:prefLabel "vulnerability management"@en ;
+    skos:topConceptOf v:scheme-security ;
+    dct:source "articles/machine-learning/concept-vulnerability-management.md" .
+
+v:microsoft-entra-id a skos:Concept ;
+    skos:inScheme v:scheme-identity ;
+    skos:prefLabel "Microsoft Entra ID"@en ;
+    skos:altLabel "Azure Active Directory"@en ;
+    skos:altLabel "Azure AD"@en ;
+    skos:altLabel "Microsoft Entra"@en ;
+    skos:topConceptOf v:scheme-identity ;
+    dct:source "articles/machine-learning/how-to-setup-authentication.md" .
+
+v:managed-identity a skos:Concept ;
+    skos:inScheme v:scheme-identity ;
+    skos:prefLabel "managed identity"@en ;
+    skos:altLabel "MSI"@en ;
+    skos:topConceptOf v:scheme-identity ;
+    dct:source "articles/machine-learning/how-to-identity-based-service-authentication.md" .
+
+v:system-assigned-managed-identity a skos:Concept ;
+    skos:inScheme v:scheme-identity ;
+    skos:prefLabel "system-assigned managed identity"@en ;
+    skos:altLabel "system-assigned identity"@en ;
+    skos:broader v:managed-identity ;
+    dct:source "articles/machine-learning/how-to-identity-based-service-authentication.md" .
+
+v:user-assigned-managed-identity a skos:Concept ;
+    skos:inScheme v:scheme-identity ;
+    skos:prefLabel "user-assigned managed identity"@en ;
+    skos:altLabel "user-assigned identity"@en ;
+    skos:altLabel "UAI"@en ;
+    skos:broader v:managed-identity ;
+    dct:source "articles/machine-learning/how-to-identity-based-service-authentication.md" .
+
+v:service-principal a skos:Concept ;
+    skos:inScheme v:scheme-identity ;
+    skos:prefLabel "service principal"@en ;
+    skos:topConceptOf v:scheme-identity ;
+    dct:source "articles/machine-learning/how-to-setup-authentication.md" .
+
+v:azure-rbac a skos:Concept ;
+    skos:inScheme v:scheme-identity ;
+    skos:prefLabel "Azure role-based access control"@en ;
+    skos:altLabel "Azure RBAC"@en ;
+    skos:altLabel "RBAC"@en ;
+    skos:altLabel "role-based access control"@en ;
+    skos:topConceptOf v:scheme-identity ;
+    dct:source "articles/machine-learning/how-to-assign-roles.md" .
+
+v:custom-role a skos:Concept ;
+    skos:inScheme v:scheme-identity ;
+    skos:prefLabel "custom role"@en ;
+    skos:topConceptOf v:scheme-identity ;
+    dct:source "articles/machine-learning/how-to-assign-roles.md" .
+
+v:identity-based-access a skos:Concept ;
+    skos:inScheme v:scheme-identity ;
+    skos:prefLabel "identity-based data access"@en ;
+    skos:altLabel "identity-based authentication"@en ;
+    skos:altLabel "credential-less"@en ;
+    skos:topConceptOf v:scheme-identity ;
+    dct:source "articles/machine-learning/how-to-administrate-data-authentication.md" .
+
+v:credential-based-access a skos:Concept ;
+    skos:inScheme v:scheme-identity ;
+    skos:prefLabel "credential-based data access"@en ;
+    skos:altLabel "credential-based authentication"@en ;
+    skos:topConceptOf v:scheme-identity ;
+    dct:source "articles/machine-learning/how-to-administrate-data-authentication.md" .
+
+v:shared-key a skos:Concept ;
+    skos:inScheme v:scheme-identity ;
+    skos:prefLabel "shared key"@en ;
+    skos:altLabel "account key"@en ;
+    skos:altLabel "storage access key"@en ;
+    skos:topConceptOf v:scheme-identity ;
+    dct:source "articles/machine-learning/how-to-disable-local-auth-storage.md" .
+
+v:sas-token a skos:Concept ;
+    skos:inScheme v:scheme-identity ;
+    skos:prefLabel "SAS token"@en ;
+    skos:altLabel "shared access signature"@en ;
+    skos:topConceptOf v:scheme-identity ;
+    dct:source "articles/machine-learning/how-to-datastore.md" .
+
+v:key-auth a skos:Concept ;
+    skos:inScheme v:scheme-identity ;
+    skos:prefLabel "key-based authentication"@en ;
+    skos:altLabel "endpoint key"@en ;
+    skos:topConceptOf v:scheme-identity ;
+    dct:source "articles/machine-learning/concept-endpoints-online-auth.md" .
+
+v:aml-token a skos:Concept ;
+    skos:inScheme v:scheme-identity ;
+    skos:prefLabel "Azure Machine Learning token"@en ;
+    skos:altLabel "aml_token"@en ;
+    skos:altLabel "AML token"@en ;
+    skos:topConceptOf v:scheme-identity ;
+    dct:source "articles/machine-learning/concept-endpoints-online-auth.md" .
+
+v:entra-token a skos:Concept ;
+    skos:inScheme v:scheme-identity ;
+    skos:prefLabel "Microsoft Entra token"@en ;
+    skos:altLabel "aad_token"@en ;
+    skos:altLabel "Entra token"@en ;
+    skos:topConceptOf v:scheme-identity ;
+    dct:source "articles/machine-learning/concept-endpoints-online-auth.md" .
+
+v:cli-v2 a skos:Concept ;
+    skos:inScheme v:scheme-interface ;
+    skos:prefLabel "Azure Machine Learning CLI v2"@en ;
+    skos:altLabel "CLI v2"@en ;
+    skos:altLabel "CLI (v2)"@en ;
+    skos:altLabel "ml extension"@en ;
+    skos:altLabel "az ml"@en ;
+    skos:topConceptOf v:scheme-interface ;
+    dct:source "articles/machine-learning/concept-v2.md" .
+
+v:python-sdk-v2 a skos:Concept ;
+    skos:inScheme v:scheme-interface ;
+    skos:prefLabel "Azure Machine Learning Python SDK v2"@en ;
+    skos:altLabel "Python SDK v2"@en ;
+    skos:altLabel "SDK v2"@en ;
+    skos:altLabel "azure-ai-ml"@en ;
+    skos:topConceptOf v:scheme-interface ;
+    dct:source "articles/machine-learning/concept-v2.md" .
+
+v:rest-api a skos:Concept ;
+    skos:inScheme v:scheme-interface ;
+    skos:prefLabel "REST API"@en ;
+    skos:altLabel "Azure Machine Learning REST API"@en ;
+    skos:topConceptOf v:scheme-interface ;
+    dct:source "articles/machine-learning/how-to-manage-rest.md" .
+
+v:azure-portal a skos:Concept ;
+    skos:inScheme v:scheme-interface ;
+    skos:prefLabel "Azure portal"@en ;
+    skos:topConceptOf v:scheme-interface .
+
+v:azure-powershell a skos:Concept ;
+    skos:inScheme v:scheme-interface ;
+    skos:prefLabel "Azure PowerShell"@en ;
+    skos:topConceptOf v:scheme-interface ;
+    dct:source "articles/machine-learning/how-to-manage-workspace-powershell.md" .
+
+v:arm-template a skos:Concept ;
+    skos:inScheme v:scheme-interface ;
+    skos:prefLabel "Azure Resource Manager template"@en ;
+    skos:altLabel "ARM template"@en ;
+    skos:altLabel "Resource Manager template"@en ;
+    skos:topConceptOf v:scheme-interface ;
+    dct:source "articles/machine-learning/how-to-create-workspace-template.md" .
+
+v:bicep a skos:Concept ;
+    skos:inScheme v:scheme-interface ;
+    skos:prefLabel "Bicep"@en ;
+    skos:altLabel "Bicep template"@en ;
+    skos:topConceptOf v:scheme-interface ;
+    dct:source "articles/machine-learning/tutorial-create-secure-workspace-vnet.md" .
+
+v:terraform a skos:Concept ;
+    skos:inScheme v:scheme-interface ;
+    skos:prefLabel "Terraform"@en ;
+    skos:topConceptOf v:scheme-interface ;
+    dct:source "articles/machine-learning/how-to-manage-workspace-terraform.md" .
+
+v:vs-code-extension a skos:Concept ;
+    skos:inScheme v:scheme-interface ;
+    skos:prefLabel "Azure Machine Learning extension for Visual Studio Code"@en ;
+    skos:altLabel "VS Code extension"@en ;
+    skos:altLabel "Visual Studio Code extension"@en ;
+    skos:topConceptOf v:scheme-interface ;
+    dct:source "articles/machine-learning/how-to-setup-vs-code.md" .
+
+v:jupyter-notebook a skos:Concept ;
+    skos:inScheme v:scheme-interface ;
+    skos:prefLabel "Jupyter notebook"@en ;
+    skos:altLabel "Jupyter"@en ;
+    skos:altLabel "notebook"@en ;
+    skos:topConceptOf v:scheme-interface ;
+    dct:source "articles/machine-learning/how-to-run-jupyter-notebooks.md" .
+
+v:designer a skos:Concept ;
+    skos:inScheme v:scheme-interface ;
+    skos:prefLabel "designer"@en ;
+    skos:altLabel "Azure Machine Learning designer"@en ;
+    skos:topConceptOf v:scheme-interface ;
+    dct:source "articles/machine-learning/concept-designer.md" .
+
+v:azureml-extension-k8s a skos:Concept ;
+    skos:inScheme v:scheme-interface ;
+    skos:prefLabel "Azure Machine Learning extension"@en ;
+    skos:altLabel "AzureML extension"@en ;
+    skos:altLabel "Kubernetes extension"@en ;
+    skos:topConceptOf v:scheme-interface ;
+    dct:source "articles/machine-learning/how-to-deploy-kubernetes-extension.md" .
+
+v:automated-ml a skos:Concept ;
+    skos:inScheme v:scheme-capability ;
+    skos:prefLabel "automated machine learning"@en ;
+    skos:altLabel "automated ML"@en ;
+    skos:altLabel "AutoML"@en ;
+    skos:topConceptOf v:scheme-capability ;
+    dct:source "articles/machine-learning/concept-automated-ml.md" .
+
+v:distributed-training a skos:Concept ;
+    skos:inScheme v:scheme-capability ;
+    skos:prefLabel "distributed training"@en ;
+    skos:topConceptOf v:scheme-capability ;
+    dct:source "articles/machine-learning/concept-distributed-training.md" .
+
+v:data-labeling a skos:Concept ;
+    skos:inScheme v:scheme-capability ;
+    skos:prefLabel "data labeling"@en ;
+    skos:altLabel "labeling project"@en ;
+    skos:altLabel "data labeling project"@en ;
+    skos:topConceptOf v:scheme-capability ;
+    dct:source "articles/machine-learning/how-to-create-image-labeling-projects.md" .
+
+v:responsible-ai-dashboard a skos:Concept ;
+    skos:inScheme v:scheme-capability ;
+    skos:prefLabel "Responsible AI dashboard"@en ;
+    skos:altLabel "RAI dashboard"@en ;
+    skos:topConceptOf v:scheme-capability ;
+    dct:source "articles/machine-learning/concept-responsible-ai-dashboard.md" .
+
+v:responsible-ai-scorecard a skos:Concept ;
+    skos:inScheme v:scheme-capability ;
+    skos:prefLabel "Responsible AI scorecard"@en ;
+    skos:altLabel "RAI scorecard"@en ;
+    skos:topConceptOf v:scheme-capability ;
+    dct:source "articles/machine-learning/concept-responsible-ai-scorecard.md" .
+
+v:model-interpretability a skos:Concept ;
+    skos:inScheme v:scheme-capability ;
+    skos:prefLabel "model interpretability"@en ;
+    skos:altLabel "explainability"@en ;
+    skos:topConceptOf v:scheme-capability ;
+    dct:source "articles/machine-learning/how-to-machine-learning-interpretability.md" .
+
+v:fairness-assessment a skos:Concept ;
+    skos:inScheme v:scheme-capability ;
+    skos:prefLabel "fairness assessment"@en ;
+    skos:altLabel "fairness"@en ;
+    skos:topConceptOf v:scheme-capability ;
+    dct:source "articles/machine-learning/concept-fairness-ml.md" .
+
+v:error-analysis a skos:Concept ;
+    skos:inScheme v:scheme-capability ;
+    skos:prefLabel "error analysis"@en ;
+    skos:topConceptOf v:scheme-capability ;
+    dct:source "articles/machine-learning/concept-error-analysis.md" .
+
+v:counterfactual-analysis a skos:Concept ;
+    skos:inScheme v:scheme-capability ;
+    skos:prefLabel "counterfactual analysis"@en ;
+    skos:altLabel "what-if analysis"@en ;
+    skos:topConceptOf v:scheme-capability ;
+    dct:source "articles/machine-learning/concept-counterfactual-analysis.md" .
+
+v:causal-inference a skos:Concept ;
+    skos:inScheme v:scheme-capability ;
+    skos:prefLabel "causal inference"@en ;
+    skos:altLabel "causal analysis"@en ;
+    skos:topConceptOf v:scheme-capability ;
+    dct:source "articles/machine-learning/concept-causal-inference.md" .
+
+v:data-collection a skos:Concept ;
+    skos:inScheme v:scheme-capability ;
+    skos:prefLabel "model data collection"@en ;
+    skos:altLabel "data collector"@en ;
+    skos:altLabel "production data collection"@en ;
+    skos:topConceptOf v:scheme-capability ;
+    dct:source "articles/machine-learning/concept-data-collection.md" .
+
+v:retrieval-augmented-generation a skos:Concept ;
+    skos:inScheme v:scheme-capability ;
+    skos:prefLabel "Retrieval Augmented Generation"@en ;
+    skos:altLabel "RAG"@en ;
+    skos:topConceptOf v:scheme-capability ;
+    dct:source "articles/machine-learning/concept-retrieval-augmented-generation.md" .
+
+v:mlops a skos:Concept ;
+    skos:inScheme v:scheme-capability ;
+    skos:prefLabel "MLOps"@en ;
+    skos:altLabel "machine learning operations"@en ;
+    skos:topConceptOf v:scheme-capability ;
+    dct:source "articles/machine-learning/concept-model-management-and-deployment.md" .
+
+v:llmops a skos:Concept ;
+    skos:inScheme v:scheme-capability ;
+    skos:prefLabel "LLMOps"@en ;
+    skos:altLabel "GenAIOps"@en ;
+    skos:topConceptOf v:scheme-capability ;
+    dct:source "articles/machine-learning/prompt-flow/concept-llmops-maturity.md" .
+
+v:experiment-tracking a skos:Concept ;
+    skos:inScheme v:scheme-capability ;
+    skos:prefLabel "experiment tracking"@en ;
+    skos:topConceptOf v:scheme-capability ;
+    dct:source "articles/machine-learning/how-to-use-mlflow-configure-tracking.md" .
+
+v:git-integration a skos:Concept ;
+    skos:inScheme v:scheme-capability ;
+    skos:prefLabel "Git integration"@en ;
+    skos:topConceptOf v:scheme-capability ;
+    dct:source "articles/machine-learning/concept-train-model-git-integration.md" .
+
+v:quota a skos:Concept ;
+    skos:inScheme v:scheme-capability ;
+    skos:prefLabel "quota"@en ;
+    skos:altLabel "resource quota"@en ;
+    skos:topConceptOf v:scheme-capability ;
+    dct:source "articles/machine-learning/how-to-manage-quotas.md" .
+
+v:service-limit a skos:Concept ;
+    skos:inScheme v:scheme-capability ;
+    skos:prefLabel "service limit"@en ;
+    skos:altLabel "service limits"@en ;
+    skos:topConceptOf v:scheme-capability ;
+    dct:source "articles/machine-learning/resource-limits-capacity.md" .
+
+v:idle-shutdown a skos:Concept ;
+    skos:inScheme v:scheme-capability ;
+    skos:prefLabel "idle shutdown"@en ;
+    skos:topConceptOf v:scheme-capability ;
+    dct:source "articles/machine-learning/how-to-create-compute-instance.md" .
+
+v:autoscale a skos:Concept ;
+    skos:inScheme v:scheme-capability ;
+    skos:prefLabel "autoscale"@en ;
+    skos:altLabel "autoscaling"@en ;
+    skos:topConceptOf v:scheme-capability ;
+    dct:source "articles/machine-learning/how-to-autoscale-endpoints.md" .
+
+v:import-data a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Import Data"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/import-data.md" .
+
+v:enter-data-manually a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Enter Data Manually"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/enter-data-manually.md" .
+
+v:export-data a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Export Data"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/export-data.md" .
+
+v:add-columns a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Add Columns"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/add-columns.md" .
+
+v:add-rows a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Add Rows"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/add-rows.md" .
+
+v:apply-math-operation a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Apply Math Operation"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/apply-math-operation.md" .
+
+v:apply-sql-transformation a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Apply SQL Transformation"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/apply-sql-transformation.md" .
+
+v:clean-missing-data a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Clean Missing Data"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/clean-missing-data.md" .
+
+v:clip-values a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Clip Values"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/clip-values.md" .
+
+v:convert-to-csv a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Convert to CSV"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/convert-to-csv.md" .
+
+v:convert-to-dataset a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Convert to Dataset"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/convert-to-dataset.md" .
+
+v:convert-to-indicator-values a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Convert to Indicator Values"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/convert-to-indicator-values.md" .
+
+v:edit-metadata a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Edit Metadata"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/edit-metadata.md" .
+
+v:group-data-into-bins a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Group Data into Bins"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/group-data-into-bins.md" .
+
+v:join-data a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Join Data"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/join-data.md" .
+
+v:normalize-data a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Normalize Data"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/normalize-data.md" .
+
+v:partition-and-sample a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Partition and Sample"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/partition-and-sample.md" .
+
+v:remove-duplicate-rows a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Remove Duplicate Rows"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/remove-duplicate-rows.md" .
+
+v:smote a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "SMOTE"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/smote.md" .
+
+v:select-columns-transform a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Select Columns Transform"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/select-columns-transform.md" .
+
+v:select-columns-in-dataset a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Select Columns in Dataset"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/select-columns-in-dataset.md" .
+
+v:split-data a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Split Data"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/split-data.md" .
+
+v:filter-based-feature-selection a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Filter Based Feature Selection"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/filter-based-feature-selection.md" .
+
+v:permutation-feature-importance a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Permutation Feature Importance"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/permutation-feature-importance.md" .
+
+v:summarize-data a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Summarize Data"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/summarize-data.md" .
+
+v:boosted-decision-tree-regression a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Boosted Decision Tree Regression"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/boosted-decision-tree-regression.md" .
+
+v:decision-forest-regression a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Decision Forest Regression"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/decision-forest-regression.md" .
+
+v:fast-forest-quantile-regression a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Fast Forest Quantile Regression"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/fast-forest-quantile-regression.md" .
+
+v:linear-regression a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Linear Regression"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/linear-regression.md" .
+
+v:neural-network-regression a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Neural Network Regression"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/neural-network-regression.md" .
+
+v:poisson-regression a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Poisson Regression"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/poisson-regression.md" .
+
+v:k-means-clustering a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "K-Means Clustering"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/k-means-clustering.md" .
+
+v:multiclass-boosted-decision-tree a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Multiclass Boosted Decision Tree"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/multiclass-boosted-decision-tree.md" .
+
+v:multiclass-decision-forest a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Multiclass Decision Forest"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/multiclass-decision-forest.md" .
+
+v:multiclass-logistic-regression a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Multiclass Logistic Regression"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/multiclass-logistic-regression.md" .
+
+v:multiclass-neural-network a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Multiclass Neural Network"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/multiclass-neural-network.md" .
+
+v:one-vs-all-multiclass a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "One vs. All Multiclass"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/one-vs-all-multiclass.md" .
+
+v:one-vs-one-multiclass a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "One vs. One Multiclass"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/one-vs-one-multiclass.md" .
+
+v:two-class-averaged-perceptron a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Two-Class Averaged Perceptron"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/two-class-averaged-perceptron.md" .
+
+v:two-class-boosted-decision-tree a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Two-Class Boosted Decision Tree"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/two-class-boosted-decision-tree.md" .
+
+v:two-class-decision-forest a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Two-Class Decision Forest"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/two-class-decision-forest.md" .
+
+v:two-class-logistic-regression a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Two-Class Logistic Regression"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/two-class-logistic-regression.md" .
+
+v:two-class-neural-network a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Two-Class Neural Network"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/two-class-neural-network.md" .
+
+v:two-class-support-vector-machine a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Two Class Support Vector Machine"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/two-class-support-vector-machine.md" .
+
+v:train-clustering-model a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Train Clustering Model"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/train-clustering-model.md" .
+
+v:train-model a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Train Model"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/train-model.md" .
+
+v:train-pytorch-model a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Train PyTorch Model"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/train-pytorch-model.md" .
+
+v:tune-model-hyperparameters a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Tune Model Hyperparameters"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/tune-model-hyperparameters.md" .
+
+v:apply-transformation a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Apply Transformation"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/apply-transformation.md" .
+
+v:assign-data-to-clusters a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Assign Data to Clusters"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/assign-data-to-clusters.md" .
+
+v:cross-validate-model a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Cross Validate Model"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/cross-validate-model.md" .
+
+v:evaluate-model a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Evaluate Model"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/evaluate-model.md" .
+
+v:score-image-model a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Score Image Model"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/score-image-model.md" .
+
+v:score-model a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Score Model"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/score-model.md" .
+
+v:create-python-model a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Create Python Model"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/create-python-model.md" .
+
+v:execute-python-script a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Execute Python Script"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/execute-python-script.md" .
+
+v:execute-r-script a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Execute R Script"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/execute-r-script.md" .
+
+v:convert-word-to-vector a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Convert Word to Vector"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/convert-word-to-vector.md" .
+
+v:extract-n-gram-features-from-text a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Extract N-Gram Features from Text"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/extract-n-gram-features-from-text.md" .
+
+v:feature-hashing a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Feature Hashing"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/feature-hashing.md" .
+
+v:preprocess-text a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Preprocess Text"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/preprocess-text.md" .
+
+v:latent-dirichlet-allocation a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Latent Dirichlet Allocation"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/latent-dirichlet-allocation.md" .
+
+v:score-vowpal-wabbit-model a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Score Vowpal Wabbit Model"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/score-vowpal-wabbit-model.md" .
+
+v:train-vowpal-wabbit-model a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Train Vowpal Wabbit Model"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/train-vowpal-wabbit-model.md" .
+
+v:apply-image-transformation a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Apply Image Transformation"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/apply-image-transformation.md" .
+
+v:convert-to-image-directory a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Convert to Image Directory"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/convert-to-image-directory.md" .
+
+v:init-image-transformation a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Init Image Transformation"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/init-image-transformation.md" .
+
+v:split-image-directory a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Split Image Directory"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/split-image-directory.md" .
+
+v:densenet a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "DenseNet"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/densenet.md" .
+
+v:resnet a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "ResNet"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/resnet.md" .
+
+v:evaluate-recommender a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Evaluate Recommender"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/evaluate-recommender.md" .
+
+v:score-svd-recommender a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Score SVD Recommender"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/score-svd-recommender.md" .
+
+v:score-wide-and-deep-recommender a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Score Wide and Deep Recommender"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/score-wide-and-deep-recommender.md" .
+
+v:train-svd-recommender a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Train SVD Recommender"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/train-svd-recommender.md" .
+
+v:train-wide-and-deep-recommender a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Train Wide and Deep Recommender"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/train-wide-and-deep-recommender.md" .
+
+v:pca-based-anomaly-detection a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "PCA-Based Anomaly Detection"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/pca-based-anomaly-detection.md" .
+
+v:train-anomaly-detection-model a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Train Anomaly Detection Model"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/train-anomaly-detection-model.md" .
+
+v:web-service-input-output a skos:Concept ;
+    skos:inScheme v:scheme-designer_component ;
+    skos:prefLabel "Web Service Input/Output"@en ;
+    skos:topConceptOf v:scheme-designer_component ;
+    dct:source "articles/machine-learning/component-reference/web-service-input-output.md" .
+
+v:role-azureml-compute-operator a skos:Concept ;
+    skos:inScheme v:scheme-role ;
+    skos:prefLabel "AzureML Compute Operator"@en ;
+    skos:topConceptOf v:scheme-role ;
+    dct:source "articles/machine-learning/how-to-assign-roles.md" .
+
+v:role-azureml-data-scientist a skos:Concept ;
+    skos:inScheme v:scheme-role ;
+    skos:prefLabel "AzureML Data Scientist"@en ;
+    skos:topConceptOf v:scheme-role ;
+    dct:source "articles/machine-learning/how-to-assign-roles.md" .
+
+v:role-azureml-registry-user a skos:Concept ;
+    skos:inScheme v:scheme-role ;
+    skos:prefLabel "AzureML Registry User"@en ;
+    skos:topConceptOf v:scheme-role ;
+    dct:source "articles/machine-learning/how-to-assign-roles.md" .
+
+v:role-contributor a skos:Concept ;
+    skos:inScheme v:scheme-role ;
+    skos:prefLabel "Contributor"@en ;
+    skos:topConceptOf v:scheme-role ;
+    dct:source "articles/machine-learning/how-to-assign-roles.md" .
+
+v:role-owner a skos:Concept ;
+    skos:inScheme v:scheme-role ;
+    skos:prefLabel "Owner"@en ;
+    skos:topConceptOf v:scheme-role ;
+    dct:source "articles/machine-learning/how-to-assign-roles.md" .
+
+v:role-reader a skos:Concept ;
+    skos:inScheme v:scheme-role ;
+    skos:prefLabel "Reader"@en ;
+    skos:topConceptOf v:scheme-role ;
+    dct:source "articles/machine-learning/how-to-assign-roles.md" .
+
+v:yaml-component-command a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) command component YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-component-command.md" .
+
+v:yaml-component-pipeline a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) pipeline component YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-component-pipeline.md" .
+
+v:yaml-component-spark a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) Spark component YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-component-spark.md" .
+
+v:yaml-compute-aml a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) compute cluster (AmlCompute) YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-compute-aml.md" .
+
+v:yaml-compute-instance a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) compute instance YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-compute-instance.md" .
+
+v:yaml-compute-kubernetes a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) Attached Kubernetes cluster (KubernetesCompute) YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-compute-kubernetes.md" .
+
+v:yaml-compute-vm a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) attached Virtual Machine YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-compute-vm.md" .
+
+v:yaml-connection-ai-content-safety a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) AI Content Safety connection YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-connection-ai-content-safety.md" .
+
+v:yaml-connection-ai-search a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) AI Search connection YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-connection-ai-search.md" .
+
+v:yaml-connection-ai-services a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) Foundry Tools connection YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-connection-ai-services.md" .
+
+v:yaml-connection-api-key a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) API key connection YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-connection-api-key.md" .
+
+v:yaml-connection-azure-openai a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) Azure OpenAI connection YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-connection-azure-openai.md" .
+
+v:yaml-connection-blob a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) blob store connection YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-connection-blob.md" .
+
+v:yaml-connection-container-registry a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) Azure Container Registry connection YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-connection-container-registry.md" .
+
+v:yaml-connection-custom-key a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) custom key connection YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-connection-custom-key.md" .
+
+v:yaml-connection-data-lake a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) Data Lake Store Gen 2 connection YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-connection-data-lake.md" .
+
+v:yaml-connection-git a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) Git connection YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-connection-git.md" .
+
+v:yaml-connection-onelake a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) OneLake connection YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-connection-onelake.md" .
+
+v:yaml-connection-openai a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) OpenAI connection YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-connection-openai.md" .
+
+v:yaml-connection-python-feed a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) Python feed connection YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-connection-python-feed.md" .
+
+v:yaml-connection-serp a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) Serp connection YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-connection-serp.md" .
+
+v:yaml-connection-serverless a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) serverless connection YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-connection-serverless.md" .
+
+v:yaml-connection-speech a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) AI Speech Services connection YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-connection-speech.md" .
+
+v:yaml-data a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) data YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-data.md" .
+
+v:yaml-datastore-blob a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) Azure Blob datastore YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-datastore-blob.md" .
+
+v:yaml-datastore-data-lake-gen1 a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) Azure Data Lake Gen1 datastore YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-datastore-data-lake-gen1.md" .
+
+v:yaml-datastore-data-lake-gen2 a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) Azure Data Lake Gen2 datastore YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-datastore-data-lake-gen2.md" .
+
+v:yaml-datastore-files a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) Azure Files datastore YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-datastore-files.md" .
+
+v:yaml-deployment-batch a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) batch deployment YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-deployment-batch.md" .
+
+v:yaml-deployment-kubernetes-online a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) Azure Arc-enabled Kubernetes online deployment YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-deployment-kubernetes-online.md" .
+
+v:yaml-deployment-managed-online a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) managed online deployment YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-deployment-managed-online.md" .
+
+v:yaml-deployment-template a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) deployment template YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-deployment-template.md" .
+
+v:yaml-endpoint-batch a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) batch endpoint YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-endpoint-batch.md" .
+
+v:yaml-endpoint-online a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "Online endpoints YAML reference"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-endpoint-online.md" .
+
+v:yaml-environment a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) environment YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-environment.md" .
+
+v:yaml-feature-entity a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) feature entity YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-feature-entity.md" .
+
+v:yaml-feature-retrieval-spec a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) feature retrieval specification YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-feature-retrieval-spec.md" .
+
+v:yaml-feature-set a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) feature set YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-feature-set.md" .
+
+v:yaml-feature-store a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) feature store YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-feature-store.md" .
+
+v:yaml-featureset-spec a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) feature set specification YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-featureset-spec.md" .
+
+v:yaml-job-command a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) command job YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-job-command.md" .
+
+v:yaml-job-parallel a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) parallel job YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-job-parallel.md" .
+
+v:yaml-job-pipeline a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) pipeline job YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-job-pipeline.md" .
+
+v:yaml-job-spark a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) Spark job YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-job-spark.md" .
+
+v:yaml-job-sweep a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) sweep job YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-job-sweep.md" .
+
+v:yaml-mltable a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) MLtable YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-mltable.md" .
+
+v:yaml-model a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) model YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-model.md" .
+
+v:yaml-monitor a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) schedule YAML schema for model monitoring"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-monitor.md" .
+
+v:yaml-registry a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) registry YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-registry.md" .
+
+v:yaml-schedule-data-import a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) schedule YAML schema for data import (preview)"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-schedule-data-import.md" .
+
+v:yaml-schedule a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) schedule YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-schedule.md" .
+
+v:yaml-workspace a skos:Concept ;
+    skos:inScheme v:scheme-yaml_schema ;
+    skos:prefLabel "CLI (v2) workspace YAML schema"@en ;
+    skos:topConceptOf v:scheme-yaml_schema ;
+    dct:source "articles/machine-learning/reference-yaml-workspace.md" .
+
+v:pf-azure-open-ai-gpt-4v-tool a skos:Concept ;
+    skos:inScheme v:scheme-promptflow_tool ;
+    skos:prefLabel "Azure OpenAI GPT-4 Turbo with Vision tool in Azure Machine Learning prompt flow"@en ;
+    skos:topConceptOf v:scheme-promptflow_tool ;
+    dct:source "articles/machine-learning/prompt-flow/tools-reference/azure-open-ai-gpt-4v-tool.md" .
+
+v:pf-content-safety-text-tool a skos:Concept ;
+    skos:inScheme v:scheme-promptflow_tool ;
+    skos:prefLabel "Content Safety (Text) tool in Azure Machine Learning prompt flow"@en ;
+    skos:topConceptOf v:scheme-promptflow_tool ;
+    dct:source "articles/machine-learning/prompt-flow/tools-reference/content-safety-text-tool.md" .
+
+v:pf-embedding-tool a skos:Concept ;
+    skos:inScheme v:scheme-promptflow_tool ;
+    skos:prefLabel "Embedding tool in Azure Machine Learning prompt flow"@en ;
+    skos:topConceptOf v:scheme-promptflow_tool ;
+    dct:source "articles/machine-learning/prompt-flow/tools-reference/embedding-tool.md" .
+
+v:pf-index-lookup-tool a skos:Concept ;
+    skos:inScheme v:scheme-promptflow_tool ;
+    skos:prefLabel "Index lookup tool for flows in Azure Machine Learning"@en ;
+    skos:topConceptOf v:scheme-promptflow_tool ;
+    dct:source "articles/machine-learning/prompt-flow/tools-reference/index-lookup-tool.md" .
+
+v:pf-llm-tool a skos:Concept ;
+    skos:inScheme v:scheme-promptflow_tool ;
+    skos:prefLabel "LLM tool in Azure Machine Learning prompt flow"@en ;
+    skos:topConceptOf v:scheme-promptflow_tool ;
+    dct:source "articles/machine-learning/prompt-flow/tools-reference/llm-tool.md" .
+
+v:pf-open-model-llm-tool a skos:Concept ;
+    skos:inScheme v:scheme-promptflow_tool ;
+    skos:prefLabel "Open Model LLM tool in Azure Machine Learning prompt flow"@en ;
+    skos:topConceptOf v:scheme-promptflow_tool ;
+    dct:source "articles/machine-learning/prompt-flow/tools-reference/open-model-llm-tool.md" .
+
+v:pf-openai-gpt-4v-tool a skos:Concept ;
+    skos:inScheme v:scheme-promptflow_tool ;
+    skos:prefLabel "OpenAI GPT-4V (preview)"@en ;
+    skos:topConceptOf v:scheme-promptflow_tool ;
+    dct:source "articles/machine-learning/prompt-flow/tools-reference/openai-gpt-4v-tool.md" .
+
+v:pf-prompt-tool a skos:Concept ;
+    skos:inScheme v:scheme-promptflow_tool ;
+    skos:prefLabel "Prompt tool in Azure Machine Learning prompt flow"@en ;
+    skos:topConceptOf v:scheme-promptflow_tool ;
+    dct:source "articles/machine-learning/prompt-flow/tools-reference/prompt-tool.md" .
+
+v:pf-python-tool a skos:Concept ;
+    skos:inScheme v:scheme-promptflow_tool ;
+    skos:prefLabel "Python tool in Azure Machine Learning prompt flow"@en ;
+    skos:topConceptOf v:scheme-promptflow_tool ;
+    dct:source "articles/machine-learning/prompt-flow/tools-reference/python-tool.md" .
+
+v:pf-rerank-tool a skos:Concept ;
+    skos:inScheme v:scheme-promptflow_tool ;
+    skos:prefLabel "Rerank tool  in Azure Machine Learning prompt flow"@en ;
+    skos:topConceptOf v:scheme-promptflow_tool ;
+    dct:source "articles/machine-learning/prompt-flow/tools-reference/rerank-tool.md" .
+
+v:pf-serp-api-tool a skos:Concept ;
+    skos:inScheme v:scheme-promptflow_tool ;
+    skos:prefLabel "SerpAPI tool in Azure Machine Learning prompt flow"@en ;
+    skos:topConceptOf v:scheme-promptflow_tool ;
+    dct:source "articles/machine-learning/prompt-flow/tools-reference/serp-api-tool.md" .

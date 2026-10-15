@@ -1,0 +1,3 @@
+# Keep LF everywhere. Chunk offsets and hashes are computed on file bytes,
+# so line endings must not change between checkouts or operating systems.
+* text=auto eol=lf
