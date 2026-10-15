@@ -85,11 +85,28 @@ class Tier2Config(_Strict):
     exclude_classes: list[str]
 
 
+class Tier3Config(_Strict):
+    ollama_url: str
+    model: str
+    prompt_file: Path
+    predicates_file: Path
+    temperature: float = Field(ge=0)
+    seed: int
+    num_ctx: PositiveInt
+    max_output_tokens: PositiveInt
+    max_assertions_per_chunk: PositiveInt
+    timeout_seconds: PositiveInt
+    min_distinct_mentions: PositiveInt
+    omit_code_blocks: bool
+    evidence_whitespace_tolerant: bool
+
+
 class ExtractConfig(_Strict):
     vocabulary: Path
     mask: MaskConfig
     tier1: Tier1Config
     tier2: Tier2Config
+    tier3: Tier3Config
 
 
 class Config(_Strict):

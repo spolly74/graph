@@ -61,6 +61,29 @@ extract:
       YamlSchema: YAML schema
       PromptFlowTool: prompt flow tool
     exclude_classes: []
+  tier3:
+    ollama_url: http://localhost:11434
+    model: qwen2.5:7b-instruct      # Apache 2.0
+    prompt_file: prompts/tier3_system.md
+    predicates_file: schema/generated/ckg.predicates.json
+    temperature: 0
+    seed: 0
+    num_ctx: 8192
+    max_output_tokens: 1536
+    # Upper bound on assertions per chunk, enforced by the output schema, so
+    # long lists don't run into max_output_tokens and get cut off.
+    max_assertions_per_chunk: 12
+    timeout_seconds: 900
+    # Run tier 3 only on chunks with at least this many distinct entities
+    # from tiers 1 and 2 (DESIGN 5.2, gating).
+    min_distinct_mentions: 2
+    # Replace fenced code and Learn code-include lines ([!notebook-python[]...],
+    # [!code-...]) with a short marker in the prompt to save CPU time.
+    # Evidence must still be an exact substring of the original chunk.
+    omit_code_blocks: true
+    # Evidence that differs from the chunk only in whitespace is accepted and
+    # stored as the chunk's exact text. Anything else is rejected.
+    evidence_whitespace_tolerant: true
 
 corpus:
   # Local clone of spolly74/azure-ai-docs in a sibling folder of this repo.

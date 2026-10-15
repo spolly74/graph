@@ -6,6 +6,8 @@ The schema in schema/ is the single source of truth. This writes:
     schema/generated/ckg.schema.json    JSON Schema
     schema/generated/ckg.shacl.ttl      SHACL shapes
     schema/generated/ckg.owl.ttl        OWL ontology
+    schema/generated/ckg.predicates.json  classes, predicates, and condition
+                                          types for tier 3 prompts and output
 
 Do not hand-edit the outputs. Rerun after any schema change:
 
@@ -19,6 +21,7 @@ beyond the schema's slots; domain and range checks still apply.
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import sys
 import warnings
@@ -52,6 +55,7 @@ def generate() -> dict[Path, str]:
             skip_abstract_class_as_unionof_subclasses=True,
         ).serialize()),
     }
+    outputs[ROOT / "schema/generated/ckg.predicates.json"] = (None, predicates_json(schema))
     result = {}
     for path, (comment, text) in outputs.items():
         text = TIMESTAMP_LINES.sub("", text).rstrip() + "\n"
@@ -59,6 +63,49 @@ def generate() -> dict[Path, str]:
             text = f"{comment} {HEADER}\n" + text
         result[path] = text
     return result
+
+
+def predicates_json(schema: str) -> str:
+    """Domain classes, predicates (relationship and attribute slots), and condition types.
+
+    Tier 3 builds its prompt and its JSON output schema from this file, so
+    the extraction code never names a domain term.
+    """
+    from linkml_runtime.utils.schemaview import SchemaView
+
+    sv = SchemaView(schema)
+    domain = sv.schema_map[sv.schema.name]
+    classes = []
+    for name in domain.classes:
+        c = sv.get_class(name)
+        if c.mixin or c.abstract:
+            continue
+        classes.append({"name": name, "is_a": c.is_a, "description": " ".join((c.description or "").split())})
+    class_names = {c["name"] for c in classes} | {n for n in domain.classes}
+    predicates = []
+    for name in domain.slots:
+        s = sv.get_slot(name)
+        kind = "relation" if s.range in class_names else "attribute"
+        concrete = [c["name"] for c in classes]
+        owners = s.domain or None
+        if owners is None:  # attribute slots: every concrete class that has the slot
+            has = [c for c in concrete if name in sv.class_slots(c)]
+            owners = "DomainEntity" if len(has) == len(concrete) else has
+        entry = {
+            "name": name,
+            "kind": kind,
+            "domain": owners,
+            "range": s.range or "string",
+            "description": " ".join((s.description or "").split()),
+        }
+        if s.range in sv.all_enums():
+            entry["values"] = list(sv.get_enum(s.range).permissible_values)
+        predicates.append(entry)
+    condition_types = [
+        {"name": k, "description": " ".join((v.description or "").split())}
+        for k, v in sv.get_enum("ConditionType").permissible_values.items()
+    ]
+    return json.dumps({"classes": classes, "predicates": predicates, "condition_types": condition_types}, indent=2)
 
 
 def main() -> int:

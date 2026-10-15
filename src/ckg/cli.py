@@ -92,27 +92,36 @@ def extract(
     ctx: typer.Context,
     tier: Annotated[Optional[Tier], typer.Option("--tier", help="Run only this tier.")] = None,
     changed_only: Annotated[bool, typer.Option("--changed-only", help="Skip chunks whose hash has not changed.")] = False,
+    limit: Annotated[Optional[int], typer.Option("--limit", min=1, help="Tier 3: run at most N gated chunks, spread evenly (for benchmarks).")] = None,
 ) -> None:
     """Extract mentions (tiers 1 and 2) and assertions (tier 3)."""
     cfg = _load(ctx)
-    if tier is Tier.llm:
-        _not_built("extract --tier 3", 4)
     from ckg.extract.pipeline import run_extract  # deferred: tier 2 imports torch
 
     try:
-        report = run_extract(cfg, [int(tier.value)] if tier else [1, 2], changed_only)
-    except FileNotFoundError as e:
+        report = run_extract(cfg, [int(tier.value)] if tier else [1, 2, 3], changed_only, limit=limit,
+                             progress=lambda line: typer.echo(line, err=True))
+    except (FileNotFoundError, RuntimeError, OSError) as e:
         typer.echo(f"error: {e}", err=True)
         raise typer.Exit(code=2) from e
     for t in report.tiers:
         typer.echo(f"tier {t.tier}: {t.mentions} mentions from {t.processed} chunks processed, {t.reused} reused")
+    if report.tier3:
+        t3 = report.tier3
+        typer.echo(f"tier 3: {t3.gated} chunks gated in, {t3.skipped} gated out; {t3.called} LLM calls this run, "
+                   f"{t3.missing} gated chunks not run yet")
+        typer.echo(f"tier 3: {t3.assertions} assertions kept, {sum(t3.rejected.values())} rejected, {t3.new_mentions} new mentions")
+        for reason, n in sorted(t3.rejected.items()):
+            typer.echo(f"  rejected {n}: {reason}")
+        if t3.timing.get("chunks"):
+            tm = t3.timing
+            typer.echo(f"tier 3 timing over {tm['chunks']} chunks: median {tm['median_seconds']}s, "
+                       f"mean {tm['mean_seconds']}s, p90 {tm['p90_seconds']}s per chunk ({tm['model']})")
     typer.echo(f"merged: {report.merged} mentions")
     for reason, n in sorted(report.dropped.items()):
         typer.echo(f"  dropped {n}: {reason}")
     for path in report.outputs:
         typer.echo(f"  wrote {path}")
-    if tier is None:
-        typer.echo("tier 3: not implemented yet (Phase 4).")
 
 
 @app.command()

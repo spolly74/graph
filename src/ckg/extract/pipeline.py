@@ -1,10 +1,12 @@
-"""Extract stage, tiers 1 and 2: chunks.jsonl -> mentions (DESIGN 5.2).
+"""Extract stage: chunks.jsonl -> mentions and assertions (DESIGN 5.2).
 
 Outputs, in paths.out_dir:
     mentions.tier1.jsonl    every tier 1 mention that passed its checks
     mentions.tier2.jsonl    every tier 2 mention that passed its checks
-    mentions.jsonl          tier 1 mentions plus tier 2 mentions that don't overlap them
+    mentions.jsonl          tier 1 mentions, tier 2 mentions that don't overlap
+                            them, and mentions tier 3 introduced
     mentions.dropped.jsonl  every rejected mention, with the reason
+    (tier 3 outputs: see ckg.extract.tier3_run)
 
 With changed_only, a chunk is reused from the previous tier output when its
 hash and the tier's settings are unchanged since the last run.
@@ -23,6 +25,7 @@ from ckg.config import Config
 from ckg.extract.common import dropped, first_overlap, masked_spans, read_chunks, Span
 from ckg.extract.tier1_vocab import VocabMatcher
 from ckg.extract.tier2_gliner import GlinerExtractor, class_labels, load_gliner
+from ckg.extract.tier3_run import T3_MENTIONS_FILE, Tier3Report, run_tier3
 from ckg.extract.vocab import load_vocabulary
 from ckg.state import StateDB
 
@@ -44,13 +47,15 @@ class TierReport:
 @dataclass
 class ExtractReport:
     tiers: list[TierReport] = field(default_factory=list)
+    tier3: Tier3Report | None = None
     merged: int = 0
     dropped: Counter = field(default_factory=Counter)
     outputs: list[Path] = field(default_factory=list)
 
 
 def run_extract(cfg: Config, tiers: list[int], changed_only: bool = False,
-                gliner_factory: Callable | None = None) -> ExtractReport:
+                gliner_factory: Callable | None = None, llm_factory: Callable | None = None,
+                limit: int | None = None, progress: Callable[[str], None] | None = None) -> ExtractReport:
     out_dir = cfg.resolve(cfg.paths.out_dir)
     chunks = read_chunks(out_dir)
     ex = cfg.extract
@@ -91,6 +96,11 @@ def run_extract(cfg: Config, tiers: list[int], changed_only: bool = False,
                     return extractor.extract(todo, masked)
 
                 report.tiers.append(_run_tier(2, chunks, out_dir, state, settings, changed_only, run2))
+            elif tier == 3:
+                # Tier 3 always reuses cached responses for unchanged chunks, so
+                # --changed-only needs no special handling here.
+                base = _by_chunk(merge(chunks, out_dir, include_tier3=False)[0])
+                report.tier3 = run_tier3(cfg, chunks, base, masked, state, limit, llm_factory, progress)
             else:
                 raise ValueError(f"tier {tier} is not handled by this stage")
     finally:
@@ -141,10 +151,15 @@ def _run_tier(tier, chunks, out_dir, state, settings, changed_only, extract_fn) 
     return rep
 
 
-def merge(chunks: list[dict], out_dir: Path) -> tuple[list[dict], list[dict]]:
-    """Tier 1 wins over tier 2 wherever their spans overlap (tier 1 has exact vocabulary IDs)."""
+def merge(chunks: list[dict], out_dir: Path, include_tier3: bool = True) -> tuple[list[dict], list[dict]]:
+    """Tier 1 wins over tier 2 wherever their spans overlap (tier 1 has exact vocabulary IDs).
+
+    Tier 3 mentions are added as they are: tier 3 only creates a mention for
+    text that matched no earlier mention, and its assertions refer to it.
+    """
     t1 = _by_chunk(_read_jsonl(out_dir / TIER_FILES[1]))
     t2 = _by_chunk(_read_jsonl(out_dir / TIER_FILES[2]))
+    t3 = _by_chunk(_read_jsonl(out_dir / T3_MENTIONS_FILE)) if include_tier3 else {}
     merged, rejected = [], []
     for c in chunks:
         cid = c["chunk_id"]
@@ -156,7 +171,7 @@ def merge(chunks: list[dict], out_dir: Path) -> tuple[list[dict], list[dict]]:
                 rejected.append(dropped(m, "overlaps_tier1"))
             else:
                 extra.append(m)
-        merged += sorted(first + extra, key=lambda m: (m["start"], m["end"], m["method"]))
+        merged += sorted(first + extra + t3.get(cid, []), key=lambda m: (m["start"], m["end"], m["method"]))
     return merged, rejected
 
 

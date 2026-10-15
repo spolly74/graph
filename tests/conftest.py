@@ -41,6 +41,21 @@ def sample_config_dict() -> dict:
                 "label_overrides": {"AzureService": "Azure service"},
                 "exclude_classes": [],
             },
+            "tier3": {
+                "ollama_url": "http://localhost:11434",
+                "model": "qwen2.5:7b-instruct",
+                "prompt_file": str(PROJECT / "prompts" / "tier3_system.md"),
+                "predicates_file": str(PROJECT / "schema" / "generated" / "ckg.predicates.json"),
+                "temperature": 0,
+                "seed": 0,
+                "num_ctx": 8192,
+                "max_output_tokens": 1536,
+                "max_assertions_per_chunk": 12,
+                "timeout_seconds": 900,
+                "min_distinct_mentions": 2,
+                "omit_code_blocks": True,
+                "evidence_whitespace_tolerant": True,
+            },
         },
     }
 

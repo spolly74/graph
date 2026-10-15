@@ -33,10 +33,6 @@ def test_stages_report_not_implemented(cmd: str, sample_config: Path):
     assert "not implemented yet" in result.output
 
 
-def test_extract_tier3_not_built_yet(sample_config: Path):
-    result = runner.invoke(app, ["--config", str(sample_config), "extract", "--tier", "3", "--changed-only"])
-    assert result.exit_code == NOT_IMPLEMENTED
-    assert "Phase 4" in result.output
 
 
 def test_ingest_writes_outputs(sample_config: Path):

@@ -104,9 +104,12 @@ Tier 3 rules:
 - Pass the chunk text plus the mentions found by tiers 1 and 2. Ask the model only for relationships among them, plus any entities it finds that the earlier tiers missed.
 - Every assertion must include an `evidence` field containing text copied from the chunk. Reject any assertion whose evidence is not an exact substring of the chunk.
 - Use temperature 0. Record the model name and version on every assertion.
-- Make the model configurable in `config.yaml`. Default to an Apache 2.0 licensed 7–8B model with 4-bit quantization (Qwen family, chosen for reliable structured JSON output).
+- Make the model configurable in `config.yaml`. Default: `qwen2.5:7b-instruct` (Apache 2.0, Q4_K_M, Ollama digest `845dbda0ea48`), chosen for reliable structured JSON output and no reasoning phase.
 - **Gating.** Run tier 3 only on chunks with at least two distinct mentions from tiers 1 and 2. The threshold is a config setting. Skipped chunks are logged with the reason.
-- **CPU runtime.** Expect roughly 1–2 minutes per chunk on CPU. Phase 1 produced 1,040 chunks for the slice (median about 340 tokens), more than the first estimate of about 450, so tier 3 on the full slice may take 15–30 hours. Benchmark in Phase 4 and record the result here; if it is too slow, raise the gating threshold or run tier 3 on a subset first. Record progress per chunk in SQLite so an interrupted run resumes where it stopped.
+- **CPU runtime (measured in Phase 4).** On an Intel i5-12400F with 16 GB RAM, a 10-chunk benchmark took a median of 30 seconds and a mean of 25 seconds per chunk (about 2,600 prompt and 860 output tokens per chunk). Ollama caches the shared system prompt between calls. Of the slice's 1,040 chunks, 953 pass the gate, so a full slice run takes about 6.5–8 hours.
+- **Prompt and output schema.** Both come from `schema/generated/ckg.predicates.json` (classes, predicates with domain and range, condition types), written by `tools/gen_schema.py`. The instruction text lives in `prompts/tier3_system.md`. The output schema limits predicates, classes, and condition types to schema values, and caps assertions per chunk (`max_assertions_per_chunk`) so long lists don't hit the output token limit.
+- **Checks on each assertion.** Known predicate; evidence found in the chunk (exactly, or differing only in whitespace, in which case the chunk's exact text is stored); subject, and for relations the object, found in the chunk; no self-references; enum values valid; no duplicates. A subject or object that tiers 1 and 2 missed becomes a new `llm` mention, written to `mentions.tier3.jsonl` and merged into `mentions.jsonl`. If a response was cut off, its complete items are still checked and the cut is logged. Assertions refer to mention IDs until resolution replaces them with entity IDs.
+- **Resumable runs.** Each response is stored in SQLite as soon as it arrives, keyed by chunk hash and a settings hash (model digest, system prompt, output schema, tier 3 settings, and a prompt-construction version). Reruns reuse stored responses. `ckg extract --tier 3 --limit N` runs N gated chunks spread evenly through the slice, for benchmarks. Record progress per chunk in SQLite so an interrupted run resumes where it stopped.
 - Chunk hints from ingest (tab interface, preview status) are passed to the model as candidate conditions.
 
 The schema-driven approach follows the SPIRES method used in OntoGPT (Caufield et al., 2024). Consider using OntoGPT directly for tier 3 if it fits; otherwise implement the same pattern.
@@ -223,7 +226,7 @@ The corpus is a separate clone of azure-ai-docs in a sibling folder (`../azure-a
 
 ```
 ckg ingest   --input <dir>
-ckg extract  [--tier 1|2|3] [--changed-only]
+ckg extract  [--tier 1|2|3] [--changed-only] [--limit N]
 ckg resolve
 ckg load
 ckg validate
