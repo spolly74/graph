@@ -127,8 +127,24 @@ def extract(
 @app.command()
 def resolve(ctx: typer.Context) -> None:
     """Resolve mentions to canonical entities."""
-    _load(ctx)
-    _not_built("resolve", 5)
+    cfg = _load(ctx)
+    from ckg.resolve.pipeline import run_resolve  # deferred: loads the embedding model
+
+    try:
+        r = run_resolve(cfg)
+    except FileNotFoundError as e:
+        typer.echo(f"error: {e}", err=True)
+        raise typer.Exit(code=2) from e
+    typer.echo(f"{r.mentions} mentions -> {r.entities} entities ({r.vocabulary_entities} from the vocabulary)")
+    typer.echo(f"merges: {r.auto_merges} automatic, {r.human_merges} from review decisions")
+    for reason, n in sorted(r.unresolved.items()):
+        typer.echo(f"  unresolved {n} mentions: {reason}")
+    typer.echo(f"review queue: {r.queued} pairs to decide, {r.decided} decided")
+    typer.echo(f"{r.assertions_in} assertions -> {r.assertions_out} resolved")
+    for reason, n in sorted(r.assertions_dropped.items()):
+        typer.echo(f"  dropped {n}: {reason}")
+    for path in r.outputs:
+        typer.echo(f"  wrote {path}")
 
 
 @app.command()

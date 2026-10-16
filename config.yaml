@@ -85,6 +85,34 @@ extract:
     # stored as the chunk's exact text. Anything else is rejected.
     evidence_whitespace_tolerant: true
 
+resolution:
+  # IRI base for entities that have no vocabulary concept.
+  entity_base: https://example.org/ckg/entity/  # TODO(Scott): real namespace (DESIGN 12)
+  # Compare names case-insensitively, with the last word singularized
+  # (online endpoints == online endpoint).
+  singularize: true
+  # Names shorter than this (after normalization) are not resolved and are logged.
+  min_name_length: 2
+  embedding_model: sentence-transformers/all-MiniLM-L6-v2   # Apache 2.0
+  embedding_revision: 1110a243fdf4706b3f48f1d95db1a4f5529b4d41
+  # Pair score = string_weight * rapidfuzz similarity + (1 - string_weight) *
+  # embedding cosine similarity. Pairs of names in the same class scoring at
+  # or above merge_threshold merge; pairs between review_threshold and
+  # merge_threshold go to review/resolution_queue.csv; lower pairs stay apart.
+  string_weight: 0.5
+  merge_threshold: 0.9
+  review_threshold: 0.8
+  # Classes whose names are identifiers: near-identical spellings are different
+  # things (East US vs East US 2, .../read vs .../delete), so they resolve by
+  # exact normalized name only and are never fuzzy-matched or queued.
+  exact_match_classes:
+    - Permission
+    - Region
+    - ErrorMessage
+    - Limit
+    - YamlSchema
+  queue_file: review/resolution_queue.csv
+
 corpus:
   # Local clone of spolly74/azure-ai-docs in a sibling folder of this repo.
   repo_root: ../azure-ai-docs

@@ -57,6 +57,18 @@ def sample_config_dict() -> dict:
                 "evidence_whitespace_tolerant": True,
             },
         },
+        "resolution": {
+            "entity_base": "https://example.org/ckg/entity/",
+            "singularize": True,
+            "min_name_length": 2,
+            "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+            "embedding_revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+            "string_weight": 0.5,
+            "merge_threshold": 0.9,
+            "review_threshold": 0.8,
+            "exact_match_classes": ["Permission", "Region", "ErrorMessage", "Limit", "YamlSchema"],
+            "queue_file": "review/resolution_queue.csv",
+        },
     }
 
 

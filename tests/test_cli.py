@@ -10,7 +10,7 @@ from ckg.cli import NOT_IMPLEMENTED, app
 
 runner = CliRunner()
 COMMANDS = ["ingest", "extract", "resolve", "load", "validate", "evaluate", "run"]
-STUBS = [c for c in COMMANDS if c not in ("ingest", "extract")]
+STUBS = [c for c in COMMANDS if c not in ("ingest", "extract", "resolve")]
 
 
 def test_help_lists_every_command():
@@ -48,6 +48,6 @@ def test_ingest_input_outside_repo_is_an_error(sample_config: Path, tmp_path: Pa
 
 
 def test_bad_config_exits_with_error(tmp_path: Path):
-    result = runner.invoke(app, ["--config", str(tmp_path / "missing.yaml"), "resolve"])
+    result = runner.invoke(app, ["--config", str(tmp_path / "missing.yaml"), "load"])
     assert result.exit_code == 2
     assert "config file not found" in result.output

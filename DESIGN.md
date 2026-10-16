@@ -106,7 +106,7 @@ Tier 3 rules:
 - Use temperature 0. Record the model name and version on every assertion.
 - Make the model configurable in `config.yaml`. Default: `qwen2.5:7b-instruct` (Apache 2.0, Q4_K_M, Ollama digest `845dbda0ea48`), chosen for reliable structured JSON output and no reasoning phase.
 - **Gating.** Run tier 3 only on chunks with at least two distinct mentions from tiers 1 and 2. The threshold is a config setting. Skipped chunks are logged with the reason.
-- **CPU runtime (measured in Phase 4).** On an Intel i5-12400F with 16 GB RAM, a 10-chunk benchmark took a median of 30 seconds and a mean of 25 seconds per chunk (about 2,600 prompt and 860 output tokens per chunk). Ollama caches the shared system prompt between calls. Of the slice's 1,040 chunks, 953 pass the gate, so a full slice run takes about 6.5–8 hours.
+- **CPU runtime (measured in Phase 4).** On an Intel i5-12400F with 16 GB RAM, a 10-chunk benchmark took a median of 30 seconds and a mean of 25 seconds per chunk (about 2,600 prompt and 860 output tokens per chunk). Ollama caches the shared system prompt between calls. Of the slice's 1,040 chunks, 953 pass the gate, so a full slice run takes about 6.5–8 hours. The full run took 15.5 hours (mean 58 seconds, median 56, p90 104 per chunk) with the same prompt and output sizes, so treat the benchmark as a lower bound; the machine was likely slower or shared during the long run.
 - **Prompt and output schema.** Both come from `schema/generated/ckg.predicates.json` (classes, predicates with domain and range, condition types), written by `tools/gen_schema.py`. The instruction text lives in `prompts/tier3_system.md`. The output schema limits predicates, classes, and condition types to schema values, and caps assertions per chunk (`max_assertions_per_chunk`) so long lists don't hit the output token limit.
 - **Checks on each assertion.** Known predicate; evidence found in the chunk (exactly, or differing only in whitespace, in which case the chunk's exact text is stored); subject, and for relations the object, found in the chunk; no self-references; enum values valid; no duplicates. A subject or object that tiers 1 and 2 missed becomes a new `llm` mention, written to `mentions.tier3.jsonl` and merged into `mentions.jsonl`. If a response was cut off, its complete items are still checked and the cut is logged. Assertions refer to mention IDs until resolution replaces them with entity IDs.
 - **Resumable runs.** Each response is stored in SQLite as soon as it arrives, keyed by chunk hash and a settings hash (model digest, system prompt, output schema, tier 3 settings, and a prompt-construction version). Reruns reuse stored responses. `ckg extract --tier 3 --limit N` runs N gated chunks spread evenly through the slice, for benchmarks. Record progress per chunk in SQLite so an interrupted run resumes where it stopped.
@@ -121,6 +121,18 @@ The schema-driven approach follows the SPIRES method used in OntoGPT (Caufield e
 3. For unmatched names of the same class, compare with `rapidfuzz` string similarity and embedding similarity. Merge above a high threshold, queue for review between thresholds, and keep separate below a low threshold. Thresholds go in `config.yaml`.
 4. Write unresolved and borderline cases to `review/resolution_queue.csv` for a person to decide.
 5. Keep every original surface form as an alias on the canonical entity.
+
+Resolution details (Phase 5):
+
+- **Normalization** lowercases, collapses whitespace, trims edge punctuation, joins spaced hyphens and slashes, and singularizes the last word. The result is a matching key only; labels and aliases keep the original text.
+- **Vocabulary first.** A mention with a tier 1 vocabulary ID, or whose key equals a vocabulary label's key, gets that concept's ID and class, whatever class an extractor predicted.
+- **Exact names across classes.** Other mentions with the same key become one candidate entity, even if extractors gave them different classes; its class is the majority vote. This prevents duplicates such as "Azure CLI" as both Interface and PromptFlowTool.
+- **Scoring.** Pair score = `string_weight` × rapidfuzz `token_sort_ratio` + (1 − `string_weight`) × embedding cosine (`sentence-transformers/all-MiniLM-L6-v2`, pinned). Unmentioned vocabulary concepts take part, so near-miss names can merge into them.
+- **Guards.** Two vocabulary concepts never merge, directly or through a chain. Names whose numbers or plus signs differ (Gen1 and Gen2, 8B and 405B, R and R+) are queued, never merged automatically. Classes listed in `exact_match_classes` (identifiers such as Permission, Region, ErrorMessage) resolve by exact key only.
+- **Review decisions.** A person writes `merge` or `separate` in the queue's `decision` column. The next run applies the decisions, which override scores, and keeps the decided rows in the file. The queue is meant to be committed.
+- **IDs.** Vocabulary entities use the concept IRI; others use `entity_base` plus a slug of the canonical label (the most frequent surface form).
+- **Assertions.** Subject and object mention IDs become entity IDs. Assertions that become identical are merged, keeping every provenance record. Self-references created by merging and assertions with unresolved ends are dropped and logged.
+- **Outputs.** `entities.jsonl`, `mentions.resolved.jsonl`, `mentions.unresolved.jsonl`, `assertions.resolved.jsonl`, `assertions.unresolved.jsonl`, and `review/resolution_queue.csv`.
 
 ### 5.4 Load
 
@@ -216,7 +228,7 @@ The corpus is a separate clone of azure-ai-docs in a sibling folder (`../azure-a
 | Zero-shot NER | GLiNER 0.2, checkpoint `urchade/gliner_medium-v2.1` pinned to commit `40ec419` (DeBERTa-v3 backbone); runs on CPU PyTorch. GLiNER needs `transformers` below 5 (pinned) and `protobuf` | Apache 2.0 (code and checkpoint); PyTorch BSD; protobuf BSD |
 | LLM runtime | Ollama, CPU | MIT |
 | Fuzzy matching | rapidfuzz | MIT |
-| Embeddings | `sentence-transformers` with an Apache 2.0 model | Apache 2.0 |
+| Embeddings | `sentence-transformers` with `sentence-transformers/all-MiniLM-L6-v2` pinned to commit `1110a24` | Apache 2.0 (library and model) |
 | RDF and SPARQL | rdflib, pyoxigraph | BSD, MIT/Apache 2.0 |
 | Validation | pySHACL | Apache 2.0 |
 | Pipeline state and cache | SQLite | Public domain |

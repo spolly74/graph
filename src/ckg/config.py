@@ -109,11 +109,31 @@ class ExtractConfig(_Strict):
     tier3: Tier3Config
 
 
+class ResolveConfig(_Strict):
+    entity_base: str
+    singularize: bool
+    min_name_length: PositiveInt
+    embedding_model: str
+    embedding_revision: str
+    string_weight: float = Field(ge=0, le=1)
+    merge_threshold: float = Field(ge=0, le=1)
+    review_threshold: float = Field(ge=0, le=1)
+    exact_match_classes: list[str]
+    queue_file: Path
+
+    @model_validator(mode="after")
+    def _check(self) -> "ResolveConfig":
+        if self.review_threshold > self.merge_threshold:
+            raise ValueError("review_threshold must not exceed merge_threshold")
+        return self
+
+
 class Config(_Strict):
     corpus: CorpusConfig
     paths: PathsConfig
     ingest: IngestConfig
     extract: ExtractConfig
+    resolution: ResolveConfig
     config_dir: Path = Field(exclude=True)
 
     @property
