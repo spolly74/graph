@@ -140,10 +140,26 @@ Resolution details (Phase 5):
 - Load each assertion two ways: as an `Assertion` node that carries conditions and provenance, and as a direct triple (subject, predicate, object) for simple queries.
 - Loading a changed chunk first deletes everything previously derived from that chunk.
 
+Load details (Phase 6):
+
+- **Named graphs.** `<graph_base>entities` holds every entity's type, label, vocabulary match, and aliases. `<graph_base>assertions` holds every assertion node with its conditions, plus the direct triple. `<graph_base>chunk/<chunk id>` holds the chunk's mentions and the provenance records of the assertions it supports. Each triple is stored once: Oxigraph's union default graph does not de-duplicate triples repeated across graphs, and repeating entity labels in every chunk graph made joins explode.
+- **No orphans.** Every graph is replaced as a whole when the hash of its quads changes, in one transaction; graphs for chunks that no longer exist are dropped. Unchanged graphs are skipped (tracked in SQLite).
+- **Direct triples.** Negated assertions get none. Conditional assertions do get one; the condition stays on the assertion node.
+- **IRIs and datatypes** come from `schema/generated/ckg.rdf_map.json`, written by `tools/gen_schema.py`, so the loader names no schema terms. Condition and provenance nodes get IRIs derived from the assertion IRI (no blank nodes), so loads are deterministic.
+- **Vocabulary graph.** Optional (`store.load_vocabulary`, off by default). Vocabulary entities reuse concept IRIs, so loading the SKOS file would repeat their labels in a second graph. Turning it off drops a previously loaded vocabulary graph.
+- **Query performance.** pyoxigraph 0.5 largely evaluates triple patterns in the order written, and `ORDER BY` with `OPTIONAL` can be very slow. Put the most selective pattern first and sort results in code. `queries/assertions_with_conditions.rq` runs in about 0.1 s on the slice.
+
 ### 5.5 Validate
 
 - Generate SHACL shapes from the LinkML schema and run them with `pySHACL`.
 - Report violations by type. Domain and range violations (for example, a relationship whose subject is the wrong class) must be listed individually.
+
+Validation details (Phase 6):
+
+- **SHACL** runs with pySHACL over the union of all graphs. The ontology's `rdfs:subClassOf` axioms are mixed into the data graph, which is what SHACL's class checks need for subclasses; no reasoner runs.
+- **Domain check.** The generated shapes are open, so a relationship used on the wrong subject class passes SHACL. A separate check compares each direct triple's subject class with the predicate's domain.
+- **Datatype check.** pySHACL doesn't check lexical forms, so attribute values typed `xsd:date`, `xsd:boolean`, or numbers are checked separately ("September 16, 2024" is not an `xsd:date`).
+- **Report.** `review/validation_report.csv` lists each violation once, with kind (shacl, domain, datatype), constraint, focus and value labels and classes, and the assertion and chunk behind it. `data/out/validation.summary.json` counts by kind, constraint, and predicate.
 
 ### 5.6 Evaluate
 
@@ -210,6 +226,8 @@ Domain classes subclass `DomainEntity`, an abstract subclass of `Entity`. Domain
 ├── data/              sample/, out/ (gitignored)
 ├── review/            resolution_queue.csv, unresolved_includes.csv, unmapped_mentions.csv, spot_check.csv
 ├── eval/              competency_questions.md, competency_questions/ (SPARQL), gold/ (optional)
+├── queries/           reusable SPARQL queries
+├── prompts/           tier3_system.md
 └── tests/
 ```
 
@@ -229,8 +247,8 @@ The corpus is a separate clone of azure-ai-docs in a sibling folder (`../azure-a
 | LLM runtime | Ollama, CPU | MIT |
 | Fuzzy matching | rapidfuzz | MIT |
 | Embeddings | `sentence-transformers` with `sentence-transformers/all-MiniLM-L6-v2` pinned to commit `1110a24` | Apache 2.0 (library and model) |
-| RDF and SPARQL | rdflib, pyoxigraph | BSD, MIT/Apache 2.0 |
-| Validation | pySHACL | Apache 2.0 |
+| RDF and SPARQL | rdflib, pyoxigraph 0.5 | BSD, MIT/Apache 2.0 |
+| Validation | pySHACL 0.40 | Apache 2.0 |
 | Pipeline state and cache | SQLite | Public domain |
 | Tests | pytest | MIT |
 

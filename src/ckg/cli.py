@@ -150,15 +150,34 @@ def resolve(ctx: typer.Context) -> None:
 @app.command()
 def load(ctx: typer.Context) -> None:
     """Load entities and assertions into the Oxigraph store."""
-    _load(ctx)
-    _not_built("load", 6)
+    cfg = _load(ctx)
+    from ckg.load.pipeline import run_load
+
+    try:
+        r = run_load(cfg)
+    except FileNotFoundError as e:
+        typer.echo(f"error: {e}", err=True)
+        raise typer.Exit(code=2) from e
+    typer.echo(f"{r.chunks} graphs: {r.loaded} loaded, {r.unchanged} unchanged, {r.removed} removed")
+    typer.echo(f"store: {r.quads} quads in {r.store}")
 
 
 @app.command()
 def validate(ctx: typer.Context) -> None:
     """Validate the graph against SHACL shapes generated from the schema."""
-    _load(ctx)
-    _not_built("validate", 6)
+    cfg = _load(ctx)
+    import logging
+
+    logging.getLogger("rdflib").setLevel(logging.ERROR)  # ill-typed literals are reported below instead
+    from ckg.validate.pipeline import run_validate
+
+    r = run_validate(cfg)
+    typer.echo(f"{r.triples} triples checked: {'conforms' if r.conforms else f'{r.violations} violations'}")
+    for name, n in r.by_constraint.most_common():
+        typer.echo(f"  {n:5} {name}")
+    typer.echo("most affected predicates: " + ", ".join(f"{p} ({n})" for p, n in r.by_path.most_common(8)))
+    for path in r.outputs:
+        typer.echo(f"  wrote {path}")
 
 
 @app.command()

@@ -1,0 +1,23 @@
+# Assertions that carry at least one condition, with their evidence.
+#
+# Oxigraph 0.5 mostly evaluates triple patterns in the order written, so put
+# the most selective pattern first (here, conditions) and avoid ORDER BY,
+# which made this query take ~50 s instead of ~0.1 s. Sort results in code.
+PREFIX ckg:  <https://example.org/ckg/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?assertion ?subjectLabel ?predicate ?objectLabel ?value ?negated ?conditionType ?conditionValue ?evidence ?chunk
+WHERE {
+  ?assertion ckg:conditions ?c .
+  ?c ckg:type ?conditionType ;
+     ckg:value ?conditionValue .
+  ?assertion ckg:subject ?s ;
+             ckg:predicate ?predicate ;
+             ckg:negated ?negated ;
+             ckg:provenance ?p .
+  ?p ckg:evidence ?evidence ;
+     ckg:chunk_id ?chunk .
+  ?s skos:prefLabel ?subjectLabel .
+  OPTIONAL { ?assertion ckg:object ?o . ?o skos:prefLabel ?objectLabel . }
+  OPTIONAL { ?assertion ckg:object_value ?value . }
+}

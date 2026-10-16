@@ -8,6 +8,7 @@ The schema in schema/ is the single source of truth. This writes:
     schema/generated/ckg.owl.ttl        OWL ontology
     schema/generated/ckg.predicates.json  classes, predicates, and condition
                                           types for tier 3 prompts and output
+    schema/generated/ckg.rdf_map.json     class and slot IRIs for loading RDF
 
 Do not hand-edit the outputs. Rerun after any schema change:
 
@@ -56,6 +57,7 @@ def generate() -> dict[Path, str]:
         ).serialize()),
     }
     outputs[ROOT / "schema/generated/ckg.predicates.json"] = (None, predicates_json(schema))
+    outputs[ROOT / "schema/generated/ckg.rdf_map.json"] = (None, rdf_map_json(schema))
     result = {}
     for path, (comment, text) in outputs.items():
         text = TIMESTAMP_LINES.sub("", text).rstrip() + "\n"
@@ -106,6 +108,27 @@ def predicates_json(schema: str) -> str:
         for k, v in sv.get_enum("ConditionType").permissible_values.items()
     ]
     return json.dumps({"classes": classes, "predicates": predicates, "condition_types": condition_types}, indent=2)
+
+
+def rdf_map_json(schema: str) -> str:
+    """IRIs for every class and slot, plus the schema's prefixes, as the loader needs them."""
+    from linkml_runtime.utils.schemaview import SchemaView
+
+    sv = SchemaView(schema)
+    classes = {name: sv.get_uri(name, expand=True) for name in sorted(sv.all_classes())}
+    slots = {}
+    for name in sorted(sv.all_slots()):
+        slot = sv.get_slot(name)
+        rng = slot.range or sv.schema.default_range or "string"
+        if rng in sv.all_classes():
+            kind, datatype = "class", None
+        elif rng in sv.all_enums():
+            kind, datatype = "enum", None
+        else:
+            kind, datatype = "type", sv.expand_curie(sv.get_type(rng).uri)
+        slots[name] = {"iri": sv.get_uri(slot, expand=True), "range": rng, "kind": kind, "datatype": datatype}
+    prefixes = {p.prefix_prefix: p.prefix_reference for s in sv.all_schema() for p in s.prefixes.values()}
+    return json.dumps({"prefixes": dict(sorted(prefixes.items())), "classes": classes, "slots": slots}, indent=2)
 
 
 def main() -> int:

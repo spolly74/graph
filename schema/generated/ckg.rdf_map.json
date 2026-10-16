@@ -1,0 +1,523 @@
+{
+  "prefixes": {
+    "ckg": "https://example.org/ckg/",
+    "ckgd": "https://example.org/ckg/domain/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "linkml": "https://w3id.org/linkml/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "schema": "http://schema.org/",
+    "shex": "http://www.w3.org/ns/shex#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
+  },
+  "classes": {
+    "Algorithm": "https://example.org/ckg/domain/Algorithm",
+    "Assertion": "https://example.org/ckg/Assertion",
+    "Asset": "https://example.org/ckg/domain/Asset",
+    "AutomlTask": "https://example.org/ckg/domain/AutomlTask",
+    "AzureService": "https://example.org/ckg/domain/AzureService",
+    "Capability": "https://example.org/ckg/domain/Capability",
+    "ComputeTarget": "https://example.org/ckg/domain/ComputeTarget",
+    "Condition": "https://example.org/ckg/Condition",
+    "DataType": "https://example.org/ckg/domain/DataType",
+    "Deployment": "https://example.org/ckg/domain/Deployment",
+    "DesignerComponent": "https://example.org/ckg/domain/DesignerComponent",
+    "DomainEntity": "https://example.org/ckg/domain/DomainEntity",
+    "Endpoint": "https://example.org/ckg/domain/Endpoint",
+    "Entity": "https://example.org/ckg/Entity",
+    "ErrorMessage": "https://example.org/ckg/domain/ErrorMessage",
+    "FeatureStoreEntity": "https://example.org/ckg/domain/FeatureStoreEntity",
+    "Framework": "https://example.org/ckg/domain/Framework",
+    "IdentityConcept": "https://example.org/ckg/domain/IdentityConcept",
+    "Interface": "https://example.org/ckg/domain/Interface",
+    "Job": "https://example.org/ckg/domain/Job",
+    "KnowledgeGraph": "https://example.org/ckg/KnowledgeGraph",
+    "KnownIssue": "https://example.org/ckg/domain/KnownIssue",
+    "Lifecycle": "https://example.org/ckg/domain/Lifecycle",
+    "Limit": "https://example.org/ckg/domain/Limit",
+    "Mention": "https://example.org/ckg/Mention",
+    "Metric": "https://example.org/ckg/domain/Metric",
+    "ModelType": "https://example.org/ckg/domain/ModelType",
+    "Permission": "https://example.org/ckg/domain/Permission",
+    "Policy": "https://example.org/ckg/domain/Policy",
+    "Product": "https://example.org/ckg/domain/Product",
+    "PromptFlowTool": "https://example.org/ckg/domain/PromptFlowTool",
+    "Provenance": "http://www.w3.org/ns/prov#Entity",
+    "Region": "https://example.org/ckg/domain/Region",
+    "Resource": "https://example.org/ckg/domain/Resource",
+    "Role": "https://example.org/ckg/domain/Role",
+    "SecurityConcept": "https://example.org/ckg/domain/SecurityConcept",
+    "Task": "https://example.org/ckg/domain/Task",
+    "YamlSchema": "https://example.org/ckg/domain/YamlSchema"
+  },
+  "slots": {
+    "accepts_input_from": {
+      "iri": "https://example.org/ckg/domain/accepts_input_from",
+      "range": "DomainEntity",
+      "kind": "class",
+      "datatype": null
+    },
+    "adjustable": {
+      "iri": "https://example.org/ckg/domain/adjustable",
+      "range": "boolean",
+      "kind": "type",
+      "datatype": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "affects": {
+      "iri": "https://example.org/ckg/domain/affects",
+      "range": "DomainEntity",
+      "kind": "class",
+      "datatype": null
+    },
+    "aliases": {
+      "iri": "http://www.w3.org/2004/02/skos/core#altLabel",
+      "range": "string",
+      "kind": "type",
+      "datatype": "http://www.w3.org/2001/XMLSchema#string"
+    },
+    "allows_outbound_to": {
+      "iri": "https://example.org/ckg/domain/allows_outbound_to",
+      "range": "DomainEntity",
+      "kind": "class",
+      "datatype": null
+    },
+    "assertions": {
+      "iri": "https://example.org/ckg/assertions",
+      "range": "Assertion",
+      "kind": "class",
+      "datatype": null
+    },
+    "available_in": {
+      "iri": "https://example.org/ckg/domain/available_in",
+      "range": "Region",
+      "kind": "class",
+      "datatype": null
+    },
+    "backed_by": {
+      "iri": "https://example.org/ckg/domain/backed_by",
+      "range": "AzureService",
+      "kind": "class",
+      "datatype": null
+    },
+    "cause_text": {
+      "iri": "https://example.org/ckg/domain/cause_text",
+      "range": "string",
+      "kind": "type",
+      "datatype": "http://www.w3.org/2001/XMLSchema#string"
+    },
+    "chunk_id": {
+      "iri": "https://example.org/ckg/chunk_id",
+      "range": "string",
+      "kind": "type",
+      "datatype": "http://www.w3.org/2001/XMLSchema#string"
+    },
+    "computes_metric": {
+      "iri": "https://example.org/ckg/domain/computes_metric",
+      "range": "Metric",
+      "kind": "class",
+      "datatype": null
+    },
+    "conditions": {
+      "iri": "https://example.org/ckg/conditions",
+      "range": "Condition",
+      "kind": "class",
+      "datatype": null
+    },
+    "confidence": {
+      "iri": "https://example.org/ckg/confidence",
+      "range": "float",
+      "kind": "type",
+      "datatype": "http://www.w3.org/2001/XMLSchema#float"
+    },
+    "contains_framework": {
+      "iri": "https://example.org/ckg/domain/contains_framework",
+      "range": "Framework",
+      "kind": "class",
+      "datatype": null
+    },
+    "defined_by_schema": {
+      "iri": "https://example.org/ckg/domain/defined_by_schema",
+      "range": "YamlSchema",
+      "kind": "class",
+      "datatype": null
+    },
+    "deployable_to": {
+      "iri": "https://example.org/ckg/domain/deployable_to",
+      "range": "Endpoint",
+      "kind": "class",
+      "datatype": null
+    },
+    "differs_from": {
+      "iri": "https://example.org/ckg/domain/differs_from",
+      "range": "DomainEntity",
+      "kind": "class",
+      "datatype": null
+    },
+    "encrypts": {
+      "iri": "https://example.org/ckg/domain/encrypts",
+      "range": "DomainEntity",
+      "kind": "class",
+      "datatype": null
+    },
+    "end": {
+      "iri": "https://example.org/ckg/end",
+      "range": "integer",
+      "kind": "type",
+      "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+    },
+    "enforces": {
+      "iri": "https://example.org/ckg/domain/enforces",
+      "range": "DomainEntity",
+      "kind": "class",
+      "datatype": null
+    },
+    "entities": {
+      "iri": "https://example.org/ckg/entities",
+      "range": "Entity",
+      "kind": "class",
+      "datatype": null
+    },
+    "entity": {
+      "iri": "https://example.org/ckg/entity",
+      "range": "Entity",
+      "kind": "class",
+      "datatype": null
+    },
+    "entity_type": {
+      "iri": "https://example.org/ckg/entity_type",
+      "range": "string",
+      "kind": "type",
+      "datatype": "http://www.w3.org/2001/XMLSchema#string"
+    },
+    "error_code": {
+      "iri": "https://example.org/ckg/domain/error_code",
+      "range": "string",
+      "kind": "type",
+      "datatype": "http://www.w3.org/2001/XMLSchema#string"
+    },
+    "evidence": {
+      "iri": "https://example.org/ckg/evidence",
+      "range": "string",
+      "kind": "type",
+      "datatype": "http://www.w3.org/2001/XMLSchema#string"
+    },
+    "extracted_at": {
+      "iri": "http://www.w3.org/ns/prov#generatedAtTime",
+      "range": "datetime",
+      "kind": "type",
+      "datatype": "http://www.w3.org/2001/XMLSchema#dateTime"
+    },
+    "framework_version": {
+      "iri": "https://example.org/ckg/domain/framework_version",
+      "range": "string",
+      "kind": "type",
+      "datatype": "http://www.w3.org/2001/XMLSchema#string"
+    },
+    "grants": {
+      "iri": "https://example.org/ckg/domain/grants",
+      "range": "DomainEntity",
+      "kind": "class",
+      "datatype": null
+    },
+    "has_gpu_support": {
+      "iri": "https://example.org/ckg/domain/has_gpu_support",
+      "range": "DomainEntity",
+      "kind": "class",
+      "datatype": null
+    },
+    "has_input": {
+      "iri": "https://example.org/ckg/domain/has_input",
+      "range": "DomainEntity",
+      "kind": "class",
+      "datatype": null
+    },
+    "has_limit": {
+      "iri": "https://example.org/ckg/domain/has_limit",
+      "range": "Limit",
+      "kind": "class",
+      "datatype": null
+    },
+    "has_output": {
+      "iri": "https://example.org/ckg/domain/has_output",
+      "range": "DomainEntity",
+      "kind": "class",
+      "datatype": null
+    },
+    "has_part": {
+      "iri": "https://example.org/ckg/domain/has_part",
+      "range": "DomainEntity",
+      "kind": "class",
+      "datatype": null
+    },
+    "hosted_by": {
+      "iri": "https://example.org/ckg/domain/hosted_by",
+      "range": "Endpoint",
+      "kind": "class",
+      "datatype": null
+    },
+    "id": {
+      "iri": "https://example.org/ckg/id",
+      "range": "uriorcurie",
+      "kind": "type",
+      "datatype": "http://www.w3.org/2001/XMLSchema#anyURI"
+    },
+    "include_file": {
+      "iri": "https://example.org/ckg/include_file",
+      "range": "string",
+      "kind": "type",
+      "datatype": "http://www.w3.org/2001/XMLSchema#string"
+    },
+    "incompatible_with": {
+      "iri": "https://example.org/ckg/domain/incompatible_with",
+      "range": "DomainEntity",
+      "kind": "class",
+      "datatype": null
+    },
+    "integrates_with": {
+      "iri": "https://example.org/ckg/domain/integrates_with",
+      "range": "DomainEntity",
+      "kind": "class",
+      "datatype": null
+    },
+    "issue_status": {
+      "iri": "https://example.org/ckg/domain/issue_status",
+      "range": "string",
+      "kind": "type",
+      "datatype": "http://www.w3.org/2001/XMLSchema#string"
+    },
+    "label": {
+      "iri": "http://www.w3.org/2004/02/skos/core#prefLabel",
+      "range": "string",
+      "kind": "type",
+      "datatype": "http://www.w3.org/2001/XMLSchema#string"
+    },
+    "limit_unit": {
+      "iri": "https://example.org/ckg/domain/limit_unit",
+      "range": "string",
+      "kind": "type",
+      "datatype": "http://www.w3.org/2001/XMLSchema#string"
+    },
+    "limit_value": {
+      "iri": "https://example.org/ckg/domain/limit_value",
+      "range": "string",
+      "kind": "type",
+      "datatype": "http://www.w3.org/2001/XMLSchema#string"
+    },
+    "mentions": {
+      "iri": "https://example.org/ckg/mentions",
+      "range": "Mention",
+      "kind": "class",
+      "datatype": null
+    },
+    "method": {
+      "iri": "https://example.org/ckg/method",
+      "range": "ExtractionMethod",
+      "kind": "enum",
+      "datatype": null
+    },
+    "model": {
+      "iri": "https://example.org/ckg/model",
+      "range": "string",
+      "kind": "type",
+      "datatype": "http://www.w3.org/2001/XMLSchema#string"
+    },
+    "negated": {
+      "iri": "https://example.org/ckg/negated",
+      "range": "boolean",
+      "kind": "type",
+      "datatype": "http://www.w3.org/2001/XMLSchema#boolean"
+    },
+    "object": {
+      "iri": "https://example.org/ckg/object",
+      "range": "Entity",
+      "kind": "class",
+      "datatype": null
+    },
+    "object_value": {
+      "iri": "https://example.org/ckg/object_value",
+      "range": "string",
+      "kind": "type",
+      "datatype": "http://www.w3.org/2001/XMLSchema#string"
+    },
+    "part_of": {
+      "iri": "https://example.org/ckg/domain/part_of",
+      "range": "DomainEntity",
+      "kind": "class",
+      "datatype": null
+    },
+    "pipeline_step_type": {
+      "iri": "https://example.org/ckg/domain/pipeline_step_type",
+      "range": "Job",
+      "kind": "class",
+      "datatype": null
+    },
+    "policy_effect": {
+      "iri": "https://example.org/ckg/domain/policy_effect",
+      "range": "string",
+      "kind": "type",
+      "datatype": "http://www.w3.org/2001/XMLSchema#string"
+    },
+    "precedes": {
+      "iri": "https://example.org/ckg/domain/precedes",
+      "range": "Task",
+      "kind": "class",
+      "datatype": null
+    },
+    "predicate": {
+      "iri": "https://example.org/ckg/predicate",
+      "range": "uriorcurie",
+      "kind": "type",
+      "datatype": "http://www.w3.org/2001/XMLSchema#anyURI"
+    },
+    "predicted_class": {
+      "iri": "https://example.org/ckg/predicted_class",
+      "range": "string",
+      "kind": "type",
+      "datatype": "http://www.w3.org/2001/XMLSchema#string"
+    },
+    "provenance": {
+      "iri": "https://example.org/ckg/provenance",
+      "range": "Provenance",
+      "kind": "class",
+      "datatype": null
+    },
+    "release_status": {
+      "iri": "https://example.org/ckg/domain/release_status",
+      "range": "ReleaseStatus",
+      "kind": "enum",
+      "datatype": null
+    },
+    "replaced_by": {
+      "iri": "https://example.org/ckg/domain/replaced_by",
+      "range": "DomainEntity",
+      "kind": "class",
+      "datatype": null
+    },
+    "requires": {
+      "iri": "https://example.org/ckg/domain/requires",
+      "range": "DomainEntity",
+      "kind": "class",
+      "datatype": null
+    },
+    "requires_role": {
+      "iri": "https://example.org/ckg/domain/requires_role",
+      "range": "Role",
+      "kind": "class",
+      "datatype": null
+    },
+    "resolution_text": {
+      "iri": "https://example.org/ckg/domain/resolution_text",
+      "range": "string",
+      "kind": "type",
+      "datatype": "http://www.w3.org/2001/XMLSchema#string"
+    },
+    "retirement_date": {
+      "iri": "https://example.org/ckg/domain/retirement_date",
+      "range": "date",
+      "kind": "type",
+      "datatype": "http://www.w3.org/2001/XMLSchema#date"
+    },
+    "runs_on": {
+      "iri": "https://example.org/ckg/domain/runs_on",
+      "range": "ComputeTarget",
+      "kind": "class",
+      "datatype": null
+    },
+    "score": {
+      "iri": "https://example.org/ckg/score",
+      "range": "float",
+      "kind": "type",
+      "datatype": "http://www.w3.org/2001/XMLSchema#float"
+    },
+    "secures": {
+      "iri": "https://example.org/ckg/domain/secures",
+      "range": "DomainEntity",
+      "kind": "class",
+      "datatype": null
+    },
+    "shareable_via": {
+      "iri": "https://example.org/ckg/domain/shareable_via",
+      "range": "Resource",
+      "kind": "class",
+      "datatype": null
+    },
+    "source_doc": {
+      "iri": "http://www.w3.org/ns/prov#hadPrimarySource",
+      "range": "string",
+      "kind": "type",
+      "datatype": "http://www.w3.org/2001/XMLSchema#string"
+    },
+    "start": {
+      "iri": "https://example.org/ckg/start",
+      "range": "integer",
+      "kind": "type",
+      "datatype": "http://www.w3.org/2001/XMLSchema#integer"
+    },
+    "subject": {
+      "iri": "https://example.org/ckg/subject",
+      "range": "Entity",
+      "kind": "class",
+      "datatype": null
+    },
+    "supports": {
+      "iri": "https://example.org/ckg/domain/supports",
+      "range": "DomainEntity",
+      "kind": "class",
+      "datatype": null
+    },
+    "supports_auth_method": {
+      "iri": "https://example.org/ckg/domain/supports_auth_method",
+      "range": "IdentityConcept",
+      "kind": "class",
+      "datatype": null
+    },
+    "supports_task": {
+      "iri": "https://example.org/ckg/domain/supports_task",
+      "range": "AutomlTask",
+      "kind": "class",
+      "datatype": null
+    },
+    "text": {
+      "iri": "https://example.org/ckg/text",
+      "range": "string",
+      "kind": "type",
+      "datatype": "http://www.w3.org/2001/XMLSchema#string"
+    },
+    "type": {
+      "iri": "https://example.org/ckg/type",
+      "range": "ConditionType",
+      "kind": "enum",
+      "datatype": null
+    },
+    "uses_algorithm": {
+      "iri": "https://example.org/ckg/domain/uses_algorithm",
+      "range": "Algorithm",
+      "kind": "class",
+      "datatype": null
+    },
+    "uses_identity": {
+      "iri": "https://example.org/ckg/domain/uses_identity",
+      "range": "IdentityConcept",
+      "kind": "class",
+      "datatype": null
+    },
+    "value": {
+      "iri": "https://example.org/ckg/value",
+      "range": "string",
+      "kind": "type",
+      "datatype": "http://www.w3.org/2001/XMLSchema#string"
+    },
+    "vocab_id": {
+      "iri": "http://www.w3.org/2004/02/skos/core#exactMatch",
+      "range": "uriorcurie",
+      "kind": "type",
+      "datatype": "http://www.w3.org/2001/XMLSchema#anyURI"
+    },
+    "workaround": {
+      "iri": "https://example.org/ckg/domain/workaround",
+      "range": "string",
+      "kind": "type",
+      "datatype": "http://www.w3.org/2001/XMLSchema#string"
+    }
+  }
+}

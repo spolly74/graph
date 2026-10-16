@@ -69,6 +69,19 @@ def sample_config_dict() -> dict:
             "exact_match_classes": ["Permission", "Region", "ErrorMessage", "Limit", "YamlSchema"],
             "queue_file": "review/resolution_queue.csv",
         },
+        "store": {
+            "path": "out/oxigraph",
+            "rdf_map": str(PROJECT / "schema" / "generated" / "ckg.rdf_map.json"),
+            "graph_base": "https://example.org/ckg/graph/",
+            "load_mentions": True,
+            "load_vocabulary": False,
+        },
+        "validation": {
+            "shapes": str(PROJECT / "schema" / "generated" / "ckg.shacl.ttl"),
+            "ontology": str(PROJECT / "schema" / "generated" / "ckg.owl.ttl"),
+            "report_file": "review/validation_report.csv",
+            "summary_file": "out/validation.summary.json",
+        },
     }
 
 

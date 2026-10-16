@@ -128,12 +128,29 @@ class ResolveConfig(_Strict):
         return self
 
 
+class StoreConfig(_Strict):
+    path: Path
+    rdf_map: Path
+    graph_base: str
+    load_mentions: bool
+    load_vocabulary: bool
+
+
+class ValidateConfig(_Strict):
+    shapes: Path
+    ontology: Path
+    report_file: Path
+    summary_file: Path
+
+
 class Config(_Strict):
     corpus: CorpusConfig
     paths: PathsConfig
     ingest: IngestConfig
     extract: ExtractConfig
     resolution: ResolveConfig
+    store: StoreConfig
+    validation: ValidateConfig
     config_dir: Path = Field(exclude=True)
 
     @property

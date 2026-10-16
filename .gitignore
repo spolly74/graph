@@ -5,3 +5,4 @@ __pycache__/
 data/out/
 azure-ai-docs/
 review/unresolved_includes.csv
+review/validation_report.csv

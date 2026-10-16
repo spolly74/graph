@@ -113,6 +113,24 @@ resolution:
     - YamlSchema
   queue_file: review/resolution_queue.csv
 
+store:
+  path: data/out/oxigraph
+  rdf_map: schema/generated/ckg.rdf_map.json
+  # Each chunk's triples go in their own named graph, so reloading a chunk
+  # is "drop its graph, insert the new triples" and nothing is orphaned.
+  graph_base: https://example.org/ckg/graph/  # TODO(Scott): real namespace (DESIGN 12)
+  load_mentions: true
+  # Off by default: vocabulary entities reuse concept IRIs, so loading the SKOS
+  # file would repeat their labels in a second graph (the union default graph
+  # does not de-duplicate).
+  load_vocabulary: false
+
+validation:
+  shapes: schema/generated/ckg.shacl.ttl
+  ontology: schema/generated/ckg.owl.ttl   # subclass axioms for RDFS inference
+  report_file: review/validation_report.csv
+  summary_file: data/out/validation.summary.json
+
 corpus:
   # Local clone of spolly74/azure-ai-docs in a sibling folder of this repo.
   repo_root: ../azure-ai-docs
