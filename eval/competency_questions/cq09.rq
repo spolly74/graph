@@ -1,0 +1,23 @@
+# CQ 9: What can a batch endpoint deploy (model, pipeline component), and what input data sources does it accept?
+# Approach: What deploys to, feeds, or runs behind a batch endpoint.
+#
+# Every query starts from assertion nodes (selective, and fast in Oxigraph),
+# so negation and conditions stay visible. No ORDER BY: results are sorted
+# by `ckg evaluate`.
+PREFIX ckg:  <https://example.org/ckg/>
+PREFIX ckgd: <https://example.org/ckg/domain/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX v:    <https://example.org/ckg/vocab/>
+
+SELECT DISTINCT ?subject ?predicate ?object ?value ?negated ?conditionType ?conditionValue
+WHERE {
+  ?a ckg:predicate ?p ;
+     ckg:subject ?s ;
+     ckg:negated ?negated .
+  ?s skos:prefLabel ?subject .
+  OPTIONAL { ?a ckg:object ?o . ?o skos:prefLabel ?object . }
+  OPTIONAL { ?a ckg:object_value ?value . }
+  OPTIONAL { ?a ckg:conditions ?c . ?c ckg:type ?conditionType ; ckg:value ?conditionValue . }
+  FILTER (?p IN (ckgd:deployable_to, ckgd:accepts_input_from, ckgd:hosted_by, ckgd:has_input) && (?s IN (v:batch-endpoint, v:batch-deployment, v:pipeline-component-deployment) || ?o IN (v:batch-endpoint, v:batch-deployment)))
+  BIND (STRAFTER(STR(?p), STR(ckgd:)) AS ?predicate)
+}

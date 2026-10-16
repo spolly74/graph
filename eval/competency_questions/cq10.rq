@@ -1,0 +1,23 @@
+# CQ 10: Which steps and settings make up a safe (blue-green) rollout for an online endpoint?
+# Approach: Assertions about safe rollout, or about online deployments' steps and requirements.
+#
+# Every query starts from assertion nodes (selective, and fast in Oxigraph),
+# so negation and conditions stay visible. No ORDER BY: results are sorted
+# by `ckg evaluate`.
+PREFIX ckg:  <https://example.org/ckg/>
+PREFIX ckgd: <https://example.org/ckg/domain/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX v:    <https://example.org/ckg/vocab/>
+
+SELECT DISTINCT ?subject ?predicate ?object ?value ?negated ?conditionType ?conditionValue
+WHERE {
+  ?a ckg:predicate ?p ;
+     ckg:subject ?s ;
+     ckg:negated ?negated .
+  ?s skos:prefLabel ?subject .
+  OPTIONAL { ?a ckg:object ?o . ?o skos:prefLabel ?object . }
+  OPTIONAL { ?a ckg:object_value ?value . }
+  OPTIONAL { ?a ckg:conditions ?c . ?c ckg:type ?conditionType ; ckg:value ?conditionValue . }
+  FILTER (?s = v:safe-rollout || ?o = v:safe-rollout || (?p IN (ckgd:requires, ckgd:precedes) && ?s IN (v:online-deployment, v:managed-online-endpoint)))
+  BIND (STRAFTER(STR(?p), STR(ckgd:)) AS ?predicate)
+}

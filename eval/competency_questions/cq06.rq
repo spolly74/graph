@@ -1,0 +1,23 @@
+# CQ 6: What are the differences between managed online endpoints, Kubernetes online endpoints, batch endpoints, and serverless API endpoints?
+# Approach: Every assertion whose subject is one of the endpoint types.
+#
+# Every query starts from assertion nodes (selective, and fast in Oxigraph),
+# so negation and conditions stay visible. No ORDER BY: results are sorted
+# by `ckg evaluate`.
+PREFIX ckg:  <https://example.org/ckg/>
+PREFIX ckgd: <https://example.org/ckg/domain/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX v:    <https://example.org/ckg/vocab/>
+
+SELECT DISTINCT ?subject ?predicate ?object ?value ?negated ?conditionType ?conditionValue
+WHERE {
+  ?a ckg:predicate ?p ;
+     ckg:subject ?s ;
+     ckg:negated ?negated .
+  ?s skos:prefLabel ?subject .
+  OPTIONAL { ?a ckg:object ?o . ?o skos:prefLabel ?object . }
+  OPTIONAL { ?a ckg:object_value ?value . }
+  OPTIONAL { ?a ckg:conditions ?c . ?c ckg:type ?conditionType ; ckg:value ?conditionValue . }
+  FILTER (?s IN (v:online-endpoint, v:managed-online-endpoint, v:kubernetes-online-endpoint, v:batch-endpoint, v:serverless-api-endpoint))
+  BIND (STRAFTER(STR(?p), STR(ckgd:)) AS ?predicate)
+}

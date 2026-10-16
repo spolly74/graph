@@ -1,0 +1,23 @@
+# CQ 4: What do I need to set up before attaching an Arc-enabled or AKS Kubernetes cluster, and in what order?
+# Approach: requires/precedes assertions about Kubernetes compute, Arc, AKS, or the Azure Machine Learning extension.
+#
+# Every query starts from assertion nodes (selective, and fast in Oxigraph),
+# so negation and conditions stay visible. No ORDER BY: results are sorted
+# by `ckg evaluate`.
+PREFIX ckg:  <https://example.org/ckg/>
+PREFIX ckgd: <https://example.org/ckg/domain/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX v:    <https://example.org/ckg/vocab/>
+
+SELECT DISTINCT ?subject ?predicate ?object ?value ?negated ?conditionType ?conditionValue
+WHERE {
+  ?a ckg:predicate ?p ;
+     ckg:subject ?s ;
+     ckg:negated ?negated .
+  ?s skos:prefLabel ?subject .
+  OPTIONAL { ?a ckg:object ?o . ?o skos:prefLabel ?object . }
+  OPTIONAL { ?a ckg:object_value ?value . }
+  OPTIONAL { ?a ckg:conditions ?c . ?c ckg:type ?conditionType ; ckg:value ?conditionValue . }
+  FILTER (?p IN (ckgd:requires, ckgd:precedes) && (?s IN (v:kubernetes-compute, v:azure-arc-enabled-kubernetes, v:azure-kubernetes-service, v:azureml-extension-k8s) || ?o IN (v:kubernetes-compute, v:azureml-extension-k8s)))
+  BIND (STRAFTER(STR(?p), STR(ckgd:)) AS ?predicate)
+}

@@ -1,8 +1,10 @@
 # Design: Content Knowledge Graph
 
-Status: Draft v0.2
+Status: v0.3, all phases built
 Owner: Scott
-Last updated: 2026-10-15
+Last updated: 2026-10-16
+
+Changes in v0.3: phases 1–7 built; implementation details recorded under each stage (5.1–5.6) and in sections 6–9.
 
 Changes in v0.2: corpus, scope, hardware, and evaluation decided (section 2); include resolution and docs-specific Markdown handling added to ingest (5.1); tier 3 gating and CPU defaults (5.2); gold set made optional (5.6); domain condition types added (6); open questions resolved (12).
 
@@ -171,6 +173,14 @@ There is no gold set for this version. Evaluation uses checks that need no annot
 - **Unmapped mentions.** Log mentions that did not map to any schema class to `review/unmapped_mentions.csv`, with counts. Frequent unmapped mentions suggest missing classes.
 - **Optional gold set.** The comparison code (precision, recall, and F1 per entity class and relationship type against `eval/gold/`) may be built, but no phase waits on it.
 
+Evaluation details (Phase 7):
+
+- **Competency queries.** `eval/competency_questions/cqNN.rq`, one per question. Each starts from assertion nodes (fast in Oxigraph, and keeps negation and conditions visible) and filters by predicate, subject, or class. A question counts as answered when its query returns rows; whether the rows answer it is for a person to judge.
+- **Spot check.** `review/spot_check.csv` holds a seeded random sample of resolved assertions with their evidence. A person marks `correct` yes or no; marks are kept on rerun and give the precision estimate in the report.
+- **Unmapped mentions.** Every mention is mapped to a schema class by the extractors, so "unmapped" means mapped to no vocabulary concept. `review/unmapped_mentions.csv` lists those entities by mention count: frequent real terms are vocabulary candidates, frequent generic words are tier 2 noise.
+- **Gold set format** (optional): `eval/gold/mentions.jsonl` with `chunk_id`, `start`, `end`, `class`; `eval/gold/assertions.jsonl` with `chunk_id`, `subject`, `predicate`, `object` or `object_value`, `negated`. Only chunks present in the gold files are scored.
+- **Outputs.** `review/evaluation_report.md` (readable summary, per-question results, unmapped entities, rejections) and `data/out/evaluation.json` (every number and all query results).
+
 ## 6. Schema
 
 The schema is written in LinkML and is the single source of truth (Moxon et al., 2021). Generate Pydantic models, JSON Schema, SHACL, and OWL from it with the LinkML generators. Do not hand-edit generated files.
@@ -263,6 +273,8 @@ ckg validate
 ckg evaluate
 ckg run      # all stages, changed content only
 ```
+
+`ckg run` calls ingest, extract (all tiers, `--changed-only`), resolve, load, validate, and evaluate in order. On an unchanged slice it finishes in under two minutes, with no LLM calls and no graphs reloaded.
 
 All settings come from `config.yaml`. No setting may be hardcoded.
 

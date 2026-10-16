@@ -1,7 +1,7 @@
 """Command-line interface (DESIGN section 9).
 
-Every command loads and validates the config. Stages that are not built
-yet report the phase that builds them and exit with NOT_IMPLEMENTED.
+Every command loads and validates the config, then runs its stage.
+`ckg run` runs every stage in order, reprocessing changed content only.
 """
 
 from __future__ import annotations
@@ -15,8 +15,6 @@ import typer
 from ckg import __version__
 from ckg.config import Config, ConfigError, load_config
 from ckg.ingest.pipeline import run_ingest
-
-NOT_IMPLEMENTED = 3
 
 app = typer.Typer(
     help="Build a knowledge graph from a content corpus.",
@@ -57,11 +55,6 @@ def _load(ctx: typer.Context) -> Config:
     except ConfigError as e:
         typer.echo(f"error: {e}", err=True)
         raise typer.Exit(code=2) from e
-
-
-def _not_built(stage: str, phase: int) -> None:
-    typer.echo(f"{stage}: not implemented yet (Phase {phase}).", err=True)
-    raise typer.Exit(code=NOT_IMPLEMENTED)
 
 
 @app.command()
@@ -183,15 +176,32 @@ def validate(ctx: typer.Context) -> None:
 @app.command()
 def evaluate(ctx: typer.Context) -> None:
     """Run competency questions and write review reports."""
-    _load(ctx)
-    _not_built("evaluate", 7)
+    cfg = _load(ctx)
+    from ckg.evaluate.pipeline import run_evaluate
+
+    try:
+        r = run_evaluate(cfg)
+    except FileNotFoundError as e:
+        typer.echo(f"error: {e}", err=True)
+        raise typer.Exit(code=2) from e
+    typer.echo(f"competency questions: {r.answered} of {r.questions} return results"
+               + (f" (no results: {', '.join(f'CQ {n}' for n in r.unanswered)})" if r.unanswered else ""))
+    spot = r.spot
+    typer.echo(f"spot check: {spot['sample']} assertions, {spot['marked']} marked"
+               + (f", precision {spot['precision']:.0%}" if spot["precision"] is not None else ""))
+    typer.echo(f"unmapped: {r.unmapped['entities']} entities without a vocabulary concept "
+               f"({r.unmapped['share_of_mentions']:.0%} of mentions)")
+    typer.echo("gold set: " + ("not present, skipped" if r.gold is None else
+                               ", ".join(f"{k} F1 {v['micro']['f1']}" for k, v in r.gold.items())))
+    for path in r.outputs:
+        typer.echo(f"  wrote {path}")
 
 
 @app.command()
 def run(ctx: typer.Context) -> None:
     """Run all stages on changed content only."""
-    _load(ctx)
-    _not_built("run", 7)
+    for stage in (ingest, lambda c: extract(c, None, True, None), resolve, load, validate, evaluate):
+        stage(ctx)
 
 
 if __name__ == "__main__":

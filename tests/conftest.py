@@ -82,6 +82,18 @@ def sample_config_dict() -> dict:
             "report_file": "review/validation_report.csv",
             "summary_file": "out/validation.summary.json",
         },
+        "evaluation": {
+            "questions_file": str(PROJECT / "eval" / "competency_questions.md"),
+            "queries_dir": str(PROJECT / "eval" / "competency_questions"),
+            "rows_in_report": 12,
+            "spot_check_file": "review/spot_check.csv",
+            "spot_check_size": 50,
+            "seed": 42,
+            "unmapped_file": "review/unmapped_mentions.csv",
+            "report_file": "review/evaluation_report.md",
+            "metrics_file": "out/evaluation.json",
+            "gold_dir": "eval/gold",
+        },
     }
 
 

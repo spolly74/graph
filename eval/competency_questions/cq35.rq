@@ -1,0 +1,23 @@
+# CQ 35: For each troubleshooting error message, what causes it and how do I fix it?
+# Approach: Causes, resolutions, and codes of error messages.
+#
+# Every query starts from assertion nodes (selective, and fast in Oxigraph),
+# so negation and conditions stay visible. No ORDER BY: results are sorted
+# by `ckg evaluate`.
+PREFIX ckg:  <https://example.org/ckg/>
+PREFIX ckgd: <https://example.org/ckg/domain/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX v:    <https://example.org/ckg/vocab/>
+
+SELECT DISTINCT ?subject ?predicate ?object ?value ?negated ?conditionType ?conditionValue
+WHERE {
+  ?a ckg:predicate ?p ;
+     ckg:subject ?s ;
+     ckg:negated ?negated .
+  ?s skos:prefLabel ?subject .
+  OPTIONAL { ?a ckg:object ?o . ?o skos:prefLabel ?object . }
+  OPTIONAL { ?a ckg:object_value ?value . }
+  OPTIONAL { ?a ckg:conditions ?c . ?c ckg:type ?conditionType ; ckg:value ?conditionValue . }
+  FILTER (EXISTS { ?s a ckgd:ErrorMessage } || ?p IN (ckgd:cause_text, ckgd:resolution_text, ckgd:error_code))
+  BIND (STRAFTER(STR(?p), STR(ckgd:)) AS ?predicate)
+}

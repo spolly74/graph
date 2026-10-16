@@ -131,6 +131,22 @@ validation:
   report_file: review/validation_report.csv
   summary_file: data/out/validation.summary.json
 
+evaluation:
+  questions_file: eval/competency_questions.md
+  queries_dir: eval/competency_questions     # cqNN.rq, one per question
+  rows_in_report: 12                         # result rows shown per question
+  # Random assertions for a person to mark correct or not (fixed seed, so the
+  # sample is stable). Marks in the `correct` column (yes/no) are kept on
+  # rerun and give a precision estimate.
+  spot_check_file: review/spot_check.csv
+  spot_check_size: 50
+  seed: 42
+  unmapped_file: review/unmapped_mentions.csv
+  report_file: review/evaluation_report.md
+  metrics_file: data/out/evaluation.json
+  # Optional hand-annotated gold set (DESIGN 5.6). Skipped when absent.
+  gold_dir: eval/gold
+
 corpus:
   # Local clone of spolly74/azure-ai-docs in a sibling folder of this repo.
   repo_root: ../azure-ai-docs

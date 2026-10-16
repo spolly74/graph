@@ -143,6 +143,19 @@ class ValidateConfig(_Strict):
     summary_file: Path
 
 
+class EvaluateConfig(_Strict):
+    questions_file: Path
+    queries_dir: Path
+    rows_in_report: PositiveInt
+    spot_check_file: Path
+    spot_check_size: PositiveInt
+    seed: int
+    unmapped_file: Path
+    report_file: Path
+    metrics_file: Path
+    gold_dir: Path
+
+
 class Config(_Strict):
     corpus: CorpusConfig
     paths: PathsConfig
@@ -151,6 +164,7 @@ class Config(_Strict):
     resolution: ResolveConfig
     store: StoreConfig
     validation: ValidateConfig
+    evaluation: EvaluateConfig
     config_dir: Path = Field(exclude=True)
 
     @property

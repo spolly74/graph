@@ -6,11 +6,10 @@ import pytest
 from typer.testing import CliRunner
 
 from ckg import __version__
-from ckg.cli import NOT_IMPLEMENTED, app
+from ckg.cli import app
 
 runner = CliRunner()
 COMMANDS = ["ingest", "extract", "resolve", "load", "validate", "evaluate", "run"]
-STUBS = ["evaluate", "run"]
 
 
 def test_help_lists_every_command():
@@ -24,13 +23,6 @@ def test_version():
     result = runner.invoke(app, ["--version"])
     assert result.exit_code == 0
     assert __version__ in result.output
-
-
-@pytest.mark.parametrize("cmd", STUBS)
-def test_stages_report_not_implemented(cmd: str, sample_config: Path):
-    result = runner.invoke(app, ["--config", str(sample_config), cmd])
-    assert result.exit_code == NOT_IMPLEMENTED
-    assert "not implemented yet" in result.output
 
 
 
@@ -48,6 +40,6 @@ def test_ingest_input_outside_repo_is_an_error(sample_config: Path, tmp_path: Pa
 
 
 def test_bad_config_exits_with_error(tmp_path: Path):
-    result = runner.invoke(app, ["--config", str(tmp_path / "missing.yaml"), "evaluate"])
+    result = runner.invoke(app, ["--config", str(tmp_path / "missing.yaml"), "resolve"])
     assert result.exit_code == 2
     assert "config file not found" in result.output
